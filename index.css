@@ -1,0 +1,125 @@
+body {
+	background-color: black;
+}
+
+.unselectable {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;           /* Non-prefixed version, currently
+								  not supported by any browser */
+}
+
+
+
+.saveButton {
+	position: absolute;
+	border: none;
+	outline: none;
+}
+
+.saveButton:not(:hover) {
+	background-color: green;
+}
+
+.saveButton:hover {
+	background-color: limegreen;
+}
+
+.sidePanel {
+	position: absolute;
+	width: 200px;
+	height: calc(100% - 40px);
+	background-color: rgba(70, 70, 70, 0.7);
+
+	padding: 20px;
+	overflow-y: scroll;
+}
+
+.sidePanel .block:not(:first-child) {
+	margin-top: 20px;
+}
+
+
+
+.blocksArea {
+	width: 100vw;
+	height: 100vh;
+	background-color: black;
+}
+
+.block {
+}
+
+.block .content {
+	display: flex;
+	justify-content: space-around;
+	align-content: center;
+
+	background-color: lightgrey;
+
+	width: 100%;
+	height: 100%;
+	padding: 15px 0px;
+
+	border-radius: 45px;
+	outline: none;
+}
+
+@font-face {
+  font-family: 'element_font';
+  font-style: normal;
+  font-weight: 400;
+  src: url(KumarOneOutline-Regular.ttf) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+.block .name {
+	font-family: 'element_font';
+	font-weight: bold;
+	font-size: 30px;
+	color: black;
+	margin-top: auto;
+	margin-bottom: auto;
+	padding: 0 8px;
+}
+
+.inputs,
+.outputs {
+	height: 100%;
+	margin: 0;
+	padding: 0px 15px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.input,
+.output {
+	width: 30px;
+	height: 30px;
+	border: solid black 15px;
+	border-radius: 50%;
+}
+
+.input:not(:last-child),
+.output:not(:last-child) {
+	margin-bottom: 12px;
+}
+
+.input {
+	background-color: limegreen;
+}
+
+.output {
+	background-color: deepskyblue;
+}
+
+.wire {
+	position: absolute;
+	height: 14px;
+	background: linear-gradient(90deg, deepskyblue 15px, limegreen calc(100% - 15px));
+	transform-origin: left center 0;
+}
