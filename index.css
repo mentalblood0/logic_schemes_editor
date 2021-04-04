@@ -14,19 +14,7 @@ body {
 
 
 
-.saveButton {
-	position: absolute;
-	border: none;
-	outline: none;
-}
 
-.saveButton:not(:hover) {
-	background-color: green;
-}
-
-.saveButton:hover {
-	background-color: limegreen;
-}
 
 .sidePanel {
 	position: absolute;
@@ -38,8 +26,38 @@ body {
 	overflow-y: scroll;
 }
 
+.sidePanel .block:not(:hover) {
+	transition-duration: 0.3s;
+}
+
+.sidePanel .block:hover {
+	transition-duration: 0.5s;
+	transform: scale(1.15);
+}
+
 .sidePanel .block:not(:first-child) {
 	margin-top: 20px;
+}
+
+.saveButton {
+	width: 100%;
+	font-family: element_font;
+	font-weight: bold;
+	font-size: 25px;
+	border: none;
+	border-radius: 50px;
+	outline: none;
+}
+
+.saveButton:not(:hover) {
+	transition-duration: 0.3s;
+	background-color: limegreen;
+}
+
+.saveButton:hover {
+	transition-duration: 0.5s;
+	background-color: rgb(150, 220, 150, 1);
+	transform: scale(1.15);
 }
 
 

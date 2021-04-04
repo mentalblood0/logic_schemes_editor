@@ -148,8 +148,8 @@ class BlocksArea extends React.Component {
 
 	render() {
 		return <div className="blocksArea">
-			<button className="saveButton" onClick={this.saveToJson}>save</button>
 			<div className="sidePanel">
+				<button className="saveButton unselectable" onClick={this.saveToJson}>save</button>
 				{
 					Object.entries(defaultElements).map(
 						(element_type_and_element, i) =>

@@ -144,12 +144,12 @@ class BlocksArea extends React.Component {
   render() {
     return /*#__PURE__*/React.createElement("div", {
       className: "blocksArea"
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "saveButton",
-      onClick: this.saveToJson
-    }, "save"), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("div", {
       className: "sidePanel"
-    }, Object.entries(defaultElements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "saveButton unselectable",
+      onClick: this.saveToJson
+    }, "save"), Object.entries(defaultElements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
       key: i,
       className: "block"
     }, /*#__PURE__*/React.createElement("div", {
