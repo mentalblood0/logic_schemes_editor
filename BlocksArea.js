@@ -35,6 +35,7 @@ class BlocksArea extends React.Component {
       'blocks': {},
       'wires': {},
       'adding_block': false,
+      'adding_wire': false,
       'adding_wire_info': undefined
     };
     this.onBlockStateChange = this.onBlockStateChange.bind(this);
@@ -178,27 +179,24 @@ class BlocksArea extends React.Component {
     }
   }
 
-  handleMouseUp() {// if (this.state.adding_wire_info)
-    // 	this.setState({'adding_wire_info': undefined});
+  handleMouseUp() {
+    this.setState({
+      'adding_wire': false
+    });
   }
 
   handleMouseUpOnInputOutput(input_output_info) {
-    if (this.state.adding_wire_info) {
-      this.setState({
-        'adding_wire_info': undefined
-      });
-      const new_wire_info = Object.assign({}, this.state.adding_wire_info);
+    const new_wire_info = Object.assign({}, this.state.adding_wire_info);
 
-      for (const key in input_output_info) new_wire_info[key] = input_output_info[key];
+    for (const key in input_output_info) new_wire_info[key] = input_output_info[key];
 
-      if (!('to_block_id' in new_wire_info) || !('from_block_id' in new_wire_info)) return;
-      console.log('new_wire_info', new_wire_info);
-      delete new_wire_info['from_point'];
-      delete new_wire_info['to_point'];
-      this.add({
-        'wires': [new_wire_info]
-      });
-    }
+    if (!('to_block_id' in new_wire_info) || !('from_block_id' in new_wire_info)) return;
+    console.log('new_wire_info', new_wire_info);
+    delete new_wire_info['from_point'];
+    delete new_wire_info['to_point'];
+    this.add({
+      'wires': [new_wire_info]
+    });
   }
 
   deleteBlock(id) {
@@ -211,6 +209,7 @@ class BlocksArea extends React.Component {
 
   startAddingWire(wire_info) {
     this.setState({
+      'adding_wire': true,
       'adding_wire_info': wire_info
     });
   }
@@ -260,7 +259,7 @@ class BlocksArea extends React.Component {
       key: wire.id,
       from_point: wire.from_point,
       to_point: wire.to_point
-    })), this.state.adding_wire_info ? /*#__PURE__*/React.createElement(Wire, {
+    })), this.state.adding_wire ? /*#__PURE__*/React.createElement(Wire, {
       key: -1,
       from_point: this.state.adding_wire_info.from_point,
       to_point: this.state.adding_wire_info.to_point
