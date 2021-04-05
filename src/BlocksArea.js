@@ -40,7 +40,7 @@ class BlocksArea extends React.Component {
 		};
 		this.onBlockStateChange = this.onBlockStateChange.bind(this);
 		this.onBlockMounted = this.onBlockMounted.bind(this);
-		this.saveToJson = this.saveToJson.bind(this);
+		this.save = this.save.bind(this);
 		this.handleMouseDown = this.handleMouseDown.bind(this);
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.startAddingWire = this.startAddingWire.bind(this);
@@ -50,43 +50,6 @@ class BlocksArea extends React.Component {
 	}
 
 	componentDidMount() {
-		this.add({
-			// 'blocks': [{
-			// 		'name': 'INPUT',
-			// 		'x': 250,
-			// 		'y': 150
-			// 	},{
-			// 		'name': 'INPUT',
-			// 		'x': 250,
-			// 		'y': 150
-			// 	},{
-			// 		'name': 'OUTPUT',
-			// 		'x': 250,
-			// 		'y': 150
-			// 	},{
-			// 		'name': 'AND',
-			// 		'x': 250,
-			// 		'y': 150
-			// 	}
-			// ],
-			// 'wires': [{
-			// 		'from_block_id': 0,
-			// 		'to_block_id': 3,
-			// 		'from_output_id': 0,
-			// 		'to_input_id': 0
-			// 	},{
-			// 		'from_block_id': 1,
-			// 		'to_block_id': 3,
-			// 		'from_output_id': 0,
-			// 		'to_input_id': 1
-			// 	},{
-			// 		'from_block_id': 3,
-			// 		'to_block_id': 2,
-			// 		'from_output_id': 0,
-			// 		'to_input_id': 0
-			// 	},
-			// ]
-		});
 		this.state.event_listeners = [
 			[this._ref.current, 'contextmenu', e => e.preventDefault()],
 			[this._ref.current, 'mousemove', this.handleMouseMove],
@@ -178,15 +141,33 @@ class BlocksArea extends React.Component {
 		});
 	}
 
-	saveToJson() {
+	getSaveData() {
 		const blocks = this.state.blocks;
-		const data_for_save = {
+		const result = [{
 			'name': this.state.name,
 			'wires': Object.values(this.state.wires).map(w => ({
 				'from': blocks[w.from_block_id].name + '_' + w.from_block_id + '[' + w.from_output_id + ']',
 				'to': blocks[w.to_block_id].name + '_' + w.to_block_id + '[' + w.to_input_id + ']'
 			})),
-		}
+		}]
+		return result;
+	}
+
+	save() {
+		const save_data = this.getSaveData();
+		const save_data_text = JSON.stringify(save_data, null, '\t');
+        const today = new Date();
+        const current_date = today.getFullYear().toString()
+            + '-' + (today.getMonth() + 1).toString()
+            + '-' + today.getDate().toString();
+        const current_time = today.getHours()
+            + ":" + today.getMinutes()
+            + ":" + today.getSeconds();
+        downloadFile('logic-scheme'
+        	+ '-' + this.state.name
+            + '-' + current_date
+            + '-' + current_time
+            + '.json', save_data_text);
 	}
 
 	handleMouseDown(e, element_type) {
@@ -254,7 +235,7 @@ class BlocksArea extends React.Component {
 	render() {
 		return <div className="blocksArea" ref={this._ref}>
 			<div className="sidePanel">
-				<button className="saveButton unselectable" onClick={this.saveToJson}>save</button>
+				<button className="saveButton unselectable" onClick={this.save}>save</button>
 				{
 					Object.entries(defaultElements).map(
 						(element_type_and_element, i) =>
