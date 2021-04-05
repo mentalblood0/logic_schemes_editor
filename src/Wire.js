@@ -13,8 +13,8 @@ function Wire(props) {
 		<div className="wire" style={{
 			'left': 'calc(' + from_point.x + 'px' + ' + ' + '0vmin)',
 			'top': 'calc(' + from_point.y + 'px' + ' - ' + '7px)',
-			'width': length + 'px',
-			'transform': 'rotate(' + angle + 'rad)'
+			'width': length - 12 * 2 + 'px',
+			'transform': 'rotate(' + angle + 'rad) translate(12px, 0)'
 		}}></div>
 	)
 }

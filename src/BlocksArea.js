@@ -23,6 +23,10 @@ const defaultElements = {
 	}
 }
 
+function getUniqueId(some_dict) {
+	return Object.keys(some_dict).length == 0 ? 0 : String(Math.max(...Object.keys(some_dict)) + 1);
+}
+
 class BlocksArea extends React.Component {
 	constructor(props) {
 		super(props);
@@ -30,67 +34,94 @@ class BlocksArea extends React.Component {
 		this.state = {
 			'name': 'test',
 			'blocks': {},
-			'wires': {}
+			'wires': {},
+			'adding_block': false
 		};
 		this.onBlockStateChange = this.onBlockStateChange.bind(this);
 		this.onBlockMounted = this.onBlockMounted.bind(this);
 		this.saveToJson = this.saveToJson.bind(this);
-		this.building_queue = false;
+		this.handleMouseDown = this.handleMouseDown.bind(this);
+		this.startAddingWire = this.startAddingWire.bind(this);
+
+		this._ref = React.createRef();
 	}
 
 	componentDidMount() {
 		this.add({
 			'blocks': [{
-					'id': 1,
-					'name': 'INPUT'
+					'name': 'INPUT',
+					'x': 250,
+					'y': 150
 				},{
-					'id': 2,
-					'name': 'INPUT'
+					'name': 'INPUT',
+					'x': 250,
+					'y': 150
 				},{
-					'id': 3,
-					'name': 'OUTPUT'
+					'name': 'OUTPUT',
+					'x': 250,
+					'y': 150
 				},{
-					'id': 4,
-					'name': 'AND'
+					'name': 'AND',
+					'x': 250,
+					'y': 150
 				}
 			],
 			'wires': [{
-					'from_block_id': 1,
-					'to_block_id': 4,
+					'from_block_id': 0,
+					'to_block_id': 3,
 					'from_output_id': 0,
 					'to_input_id': 0
 				},{
-					'from_block_id': 2,
-					'to_block_id': 4,
+					'from_block_id': 1,
+					'to_block_id': 3,
 					'from_output_id': 0,
 					'to_input_id': 1
 				},{
-					'from_block_id': 4,
-					'to_block_id': 3,
+					'from_block_id': 3,
+					'to_block_id': 2,
 					'from_output_id': 0,
 					'to_input_id': 0
 				},
 			]
 		});
+		this.state.event_listeners = [
+			[this._ref.current, 'contextmenu', e => e.preventDefault()]
+		];
+		for (const e_l of this.state.event_listeners)
+			e_l[0].addEventListener(e_l[1], e_l[2]);
 	}
 
-	add(data) {
+	componentWillUnmount() {
+		for (const e_l of this.state.event_listeners)
+			e_l[0].removeEventListener(e_l[1], e_l[2]);
+	}
+
+	add(data, function_after_adding) {
 		this.setState(state => {
+			if (!('blocks' in data))
+				return state;
 			for (const b of data.blocks) {
-				const id = b.id;
+				const id = getUniqueId(state.blocks);
 				const id_string = String(id);
 				if (state.blocks[id_string] != undefined)
 					return state;
 				state.blocks[id_string] = {
-					'name': b.name
+					'name': b.name,
+					'x': b.x,
+					'y': b.y
 				};
+				if (b.dragging) {
+					state.blocks[id_string].dragging = true;
+				}
 			}
 			return state;
 		}, () => {
+			if (!('wires' in data))
+				return;
 			this.render();
 			this.setState(state => {
 				for (const w of data.wires) {
-					const new_id = Object.keys(state.wires).length == 0 ? 0 : String(Math.max(...Object.keys(state.wires)) + 1);
+					const new_id = getUniqueId(state.wires);
 					state.wires[new_id] = {
 						'id': new_id,
 						'from_block_id': String(w.from_block_id),
@@ -101,7 +132,7 @@ class BlocksArea extends React.Component {
 					this.updateWireCoordinates(state, new_id);
 				}
 				return state;
-			});
+			}, function_after_adding);
 		});
 	}
 
@@ -146,14 +177,49 @@ class BlocksArea extends React.Component {
 		console.log(data_for_save);
 	}
 
+	handleMouseDown(e, element_type) {
+		this.add({
+			'blocks': [{
+				'name': element_type,
+				'x': e.clientX,
+				'y': e.clientY,
+				'dragging': true
+			}]
+		});
+	}
+
+	handleMouseMove(e) {
+		if (this.state.adding_block) {
+			this.state.adding_block_ref
+		}
+	}
+
+	deleteBlock(id) {
+		this.setState(state => {
+			delete state.blocks[id];
+			state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k,v]) => 
+				(
+					(v.from_block_id != id) &&
+					(v.to_block_id != id)
+				)
+			));
+			return state;
+		});
+	}
+
+	startAddingWire(wire_info) {
+		console.log('startAddingWire', wire_info);
+	}
+
 	render() {
-		return <div className="blocksArea">
+		return <div className="blocksArea" ref={this._ref}>
 			<div className="sidePanel">
 				<button className="saveButton unselectable" onClick={this.saveToJson}>save</button>
 				{
 					Object.entries(defaultElements).map(
 						(element_type_and_element, i) =>
-						<div key={i} className="block">
+						<div key={i} className="block"
+							onMouseDown={e => this.handleMouseDown(e, element_type_and_element[0])}>
 							<div className="content">
 								<div className="name unselectable">{element_type_and_element[0]}</div>
 							</div>
@@ -166,6 +232,11 @@ class BlocksArea extends React.Component {
 					block_id_and_block =>
 					<Block key={block_id_and_block[0]} id={block_id_and_block[0]}
 						name={block_id_and_block[1].name}
+						x={block_id_and_block[1].x}
+						y={block_id_and_block[1].y}
+						dragging={block_id_and_block[1].dragging}
+						function_to_delete_self={() => this.deleteBlock(block_id_and_block[0])}
+						startAddingWire={this.startAddingWire}
 						onMount={this.onBlockMounted}
 						onStateChange={this.onBlockStateChange}></Block>
 				)

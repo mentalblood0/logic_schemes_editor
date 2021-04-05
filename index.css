@@ -23,7 +23,7 @@ body {
 	background-color: rgba(70, 70, 70, 0.7);
 
 	padding: 20px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .sidePanel .block:not(:hover) {
@@ -138,6 +138,6 @@ body {
 .wire {
 	position: absolute;
 	height: 14px;
-	background: linear-gradient(90deg, deepskyblue 15px, limegreen calc(100% - 15px));
-	transform-origin: left center 0;
+	background: linear-gradient(90deg, deepskyblue 3px, limegreen calc(100% - 3px));
+	transform-origin: 0 center 0;
 }
