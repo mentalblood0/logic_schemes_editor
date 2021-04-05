@@ -25,6 +25,7 @@ class Block extends React.Component {
 			'name': props.name,
 			'x': props.x,
 			'y': props.y,
+			'scale': props.scale,
 			'dragging': false,
 			'initital_dragging': props.dragging || false,
 			'gripX': undefined,
@@ -56,8 +57,6 @@ class Block extends React.Component {
 		return {
 			'id': state.id,
 			'name': state.name,
-			'width': state.width,
-			'height': state.height,
 			'x': state.x,
 			'y': state.y,
 			'input_connectors_coordinates':
@@ -68,8 +67,6 @@ class Block extends React.Component {
 	}
 
 	componentDidMount() {
-		this.state.width = this._ref.current.offsetWidth;
-		this.state.height = this._ref.current.offsetHeight;
 		this.state.onMount(this.getInfo());
 
 		const content_element = this._ref.current.children[0];
@@ -174,16 +171,18 @@ class Block extends React.Component {
 	render() {
 		const x = this.state.x;
 		const y = this.state.y;
+		const scale = this.state.scale;
 		const name = this.state.name;
 		return (
 			<div ref={this._ref} className="block"
 				style={{
 					'position': 'absolute',
-				 	'left': x,
-				 	'top': y
+					'transform': 'scale(' + scale + ')',
+				 	'left': x * scale,
+				 	'top': y * scale
 				}}>
-				<div className="content">
-					<div className="inputs">
+				<div className="content" style={{'transform': 'scale(' + scale + ')'}}>
+					<div className="inputs" style={{'transform': 'scale(' + scale + ')'}}>
 					{
 						this.state.inputs.map(
 							(input, i) =>
@@ -192,21 +191,25 @@ class Block extends React.Component {
 								onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
 									'to_block_id': this.state.id,
 									'to_input_id': i
-								})}></div>
+							})}
+								style={{'transform': 'scale(' + scale + ')'}}>
+							</div>
 						)
 					}
 					</div>
-					<div className="name unselectable">{name}</div>
-					<div className="outputs">
+					<div className="name unselectable" style={{'transform': 'scale(' + scale + ')'}}>{name}</div>
+					<div className="outputs" style={{'transform': 'scale(' + scale + ')'}}>
 						{
 							this.state.outputs.map(
 								(output, i) =>
 								<div ref={this.output_connectors_refs[i]} key={i} className="output"
 									onMouseDown={e => this.handleMouseDownOnInputOutput('output', i, e)}
-								onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
-									'from_block_id': this.state.id,
-									'from_output_id': i
-								})}></div>
+									onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
+										'from_block_id': this.state.id,
+										'from_output_id': i
+									})}
+									style={{'transform': 'scale(' + scale + ')'}}>
+								</div>
 							)
 						}
 					</div>

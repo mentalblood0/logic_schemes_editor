@@ -37,7 +37,8 @@ class BlocksArea extends React.Component {
 			'wires': {},
 			'adding_block': false,
 			'adding_wire': false,
-			'adding_wire_info': undefined
+			'adding_wire_info': undefined,
+			'scale': 1
 		};
 		this.onBlockStateChange = this.onBlockStateChange.bind(this);
 		this.onBlockMounted = this.onBlockMounted.bind(this);
@@ -48,6 +49,7 @@ class BlocksArea extends React.Component {
 		this.startAddingWire = this.startAddingWire.bind(this);
 		this.handleMouseUpOnInputOutput = this.handleMouseUpOnInputOutput.bind(this);
 		this.handleNameInputChange = this.handleNameInputChange.bind(this);
+		this.handleMouseWheel = this.handleMouseWheel.bind(this);
 		this.remove_wires = this.remove_wires.bind(this);
 
 		this._ref = React.createRef();
@@ -58,6 +60,7 @@ class BlocksArea extends React.Component {
 			[this._ref.current, 'contextmenu', e => e.preventDefault()],
 			[this._ref.current, 'mousemove', this.handleMouseMove],
 			[this._ref.current, 'mouseup', this.handleMouseUp],
+			[this._ref.current, 'mousewheel', this.handleMouseWheel],
 			//fucking drag and drop
 			[this._ref.current, 'drag', e => e.preventDefault()],
 			[this._ref.current, 'dragstart', e => e.preventDefault()],
@@ -263,6 +266,14 @@ class BlocksArea extends React.Component {
 		this.setState({'name': e.target.value});
 	}
 
+	handleMouseWheel(e) {
+		e.preventDefault()
+		this.setState(state => {
+			state.scale += e.deltaY / 1000;
+			return state;
+		});
+	}
+
 	render() {
 		return <div className="blocksArea" ref={this._ref}>
 			<div className="sidePanel">
@@ -288,10 +299,11 @@ class BlocksArea extends React.Component {
 			{
 				Object.entries(this.state.blocks).map(
 					block_id_and_block =>
-					<Block key={block_id_and_block[0]} id={block_id_and_block[0]}
+					<Block key={block_id_and_block[0] + '_' + this.state.scale} id={block_id_and_block[0]}
 						name={block_id_and_block[1].name}
 						x={block_id_and_block[1].x}
 						y={block_id_and_block[1].y}
+						scale={this.state.scale}
 						dragging={block_id_and_block[1].dragging}
 						function_to_delete_self={() => this.deleteBlock(block_id_and_block[0])}
 						start_adding_wire_function={this.startAddingWire}

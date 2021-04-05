@@ -24,6 +24,7 @@ class Block extends React.Component {
       'name': props.name,
       'x': props.x,
       'y': props.y,
+      'scale': props.scale,
       'dragging': false,
       'initital_dragging': props.dragging || false,
       'gripX': undefined,
@@ -52,8 +53,6 @@ class Block extends React.Component {
     return {
       'id': state.id,
       'name': state.name,
-      'width': state.width,
-      'height': state.height,
       'x': state.x,
       'y': state.y,
       'input_connectors_coordinates': this.input_connectors_refs.map(r => getElementCenter(r.current)),
@@ -62,8 +61,6 @@ class Block extends React.Component {
   }
 
   componentDidMount() {
-    this.state.width = this._ref.current.offsetWidth;
-    this.state.height = this._ref.current.offsetHeight;
     this.state.onMount(this.getInfo());
     const content_element = this._ref.current.children[0];
     const name_element = this._ref.current.children[0].children[1];
@@ -155,19 +152,27 @@ class Block extends React.Component {
   render() {
     const x = this.state.x;
     const y = this.state.y;
+    const scale = this.state.scale;
     const name = this.state.name;
     return /*#__PURE__*/React.createElement("div", {
       ref: this._ref,
       className: "block",
       style: {
         'position': 'absolute',
-        'left': x,
-        'top': y
+        'transform': 'scale(' + scale + ')',
+        'left': x * scale,
+        'top': y * scale
       }
     }, /*#__PURE__*/React.createElement("div", {
-      className: "content"
+      className: "content",
+      style: {
+        'transform': 'scale(' + scale + ')'
+      }
     }, /*#__PURE__*/React.createElement("div", {
-      className: "inputs"
+      className: "inputs",
+      style: {
+        'transform': 'scale(' + scale + ')'
+      }
     }, this.state.inputs.map((input, i) => /*#__PURE__*/React.createElement("div", {
       ref: this.input_connectors_refs[i],
       key: i,
@@ -176,11 +181,20 @@ class Block extends React.Component {
       onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
         'to_block_id': this.state.id,
         'to_input_id': i
-      })
+      }),
+      style: {
+        'transform': 'scale(' + scale + ')'
+      }
     }))), /*#__PURE__*/React.createElement("div", {
-      className: "name unselectable"
+      className: "name unselectable",
+      style: {
+        'transform': 'scale(' + scale + ')'
+      }
     }, name), /*#__PURE__*/React.createElement("div", {
-      className: "outputs"
+      className: "outputs",
+      style: {
+        'transform': 'scale(' + scale + ')'
+      }
     }, this.state.outputs.map((output, i) => /*#__PURE__*/React.createElement("div", {
       ref: this.output_connectors_refs[i],
       key: i,
@@ -189,7 +203,10 @@ class Block extends React.Component {
       onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
         'from_block_id': this.state.id,
         'from_output_id': i
-      })
+      }),
+      style: {
+        'transform': 'scale(' + scale + ')'
+      }
     })))));
   }
 
