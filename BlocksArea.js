@@ -42,8 +42,8 @@ class BlocksArea extends React.Component {
     this.saveToJson = this.saveToJson.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleMouseUp = this.handleMouseUp.bind(this);
     this.startAddingWire = this.startAddingWire.bind(this);
+    this.handleMouseUpOnInputOutput = this.handleMouseUpOnInputOutput.bind(this);
     this._ref = React.createRef();
   }
 
@@ -84,7 +84,8 @@ class BlocksArea extends React.Component {
       // 	},
       // ]
     });
-    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [this._ref.current, 'mousemove', this.handleMouseMove], [this._ref.current, 'mouseup', this.handleMouseUp], //fucking drag and drop
+    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [this._ref.current, 'mousemove', this.handleMouseMove], // [this._ref.current, 'mouseup', this.handleMouseUp],
+    //fucking drag and drop
     [this._ref.current, 'drag', e => e.preventDefault()], [this._ref.current, 'dragstart', e => e.preventDefault()], [this._ref.current, 'dragend', e => e.preventDefault()], [this._ref.current, 'dragover', e => e.preventDefault()], [this._ref.current, 'dragenter', e => e.preventDefault()], [this._ref.current, 'dragleave', e => e.preventDefault()], [this._ref.current, 'drop', e => e.preventDefault()]];
 
     for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
@@ -94,7 +95,7 @@ class BlocksArea extends React.Component {
     for (const e_l of this.state.event_listeners) e_l[0].removeEventListener(e_l[1], e_l[2]);
   }
 
-  add(data, function_after_adding) {
+  add(data) {
     this.setState(state => {
       if (!('blocks' in data)) return state;
 
@@ -131,7 +132,7 @@ class BlocksArea extends React.Component {
         }
 
         return state;
-      }, function_after_adding);
+      });
     });
   }
 
@@ -170,7 +171,6 @@ class BlocksArea extends React.Component {
         'to': blocks[w.to_block_id].name + '_' + w.to_block_id + '[' + w.to_input_id + ']'
       }))
     };
-    console.log(data_for_save);
   }
 
   handleMouseDown(e, element_type) {
@@ -203,10 +203,19 @@ class BlocksArea extends React.Component {
     }
   }
 
-  handleMouseUp(e) {
+  handleMouseUpOnInputOutput(input_output_info) {
     if (this.state.adding_wire_info) {
+      const new_wire_info = Object.assign({}, this.state.adding_wire_info);
+
+      for (const key in input_output_info) new_wire_info[key] = input_output_info[key];
+
       this.setState({
         'adding_wire_info': undefined
+      });
+      delete new_wire_info['from_point'];
+      delete new_wire_info['to_point'];
+      this.add({
+        'wires': [new_wire_info]
       });
     }
   }
@@ -220,7 +229,6 @@ class BlocksArea extends React.Component {
   }
 
   startAddingWire(wire_info) {
-    console.log('startAddingWire', wire_info);
     this.setState({
       'adding_wire_info': wire_info
     });
@@ -251,7 +259,8 @@ class BlocksArea extends React.Component {
       y: block_id_and_block[1].y,
       dragging: block_id_and_block[1].dragging,
       function_to_delete_self: () => this.deleteBlock(block_id_and_block[0]),
-      startAddingWire: this.startAddingWire,
+      start_adding_wire_function: this.startAddingWire,
+      handle_mouse_up_on_input_output_function: this.handleMouseUpOnInputOutput,
       onMount: this.onBlockMounted,
       onStateChange: this.onBlockStateChange
     })), Object.values(this.state.wires).filter(w => w.from_point).map(wire => /*#__PURE__*/React.createElement(Wire, {

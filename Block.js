@@ -33,7 +33,8 @@ class Block extends React.Component {
       'onStateChange': props.onStateChange,
       'onMount': props.onMount,
       'function_to_delete_self': props.function_to_delete_self,
-      'startAddingWire': props.startAddingWire
+      'start_adding_wire_function': props.start_adding_wire_function,
+      'handle_mouse_up_on_input_output_function': props.handle_mouse_up_on_input_output_function
     };
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -99,7 +100,7 @@ class Block extends React.Component {
   }
 
   handleMouseUp(e) {
-    this.setState({
+    if (this.state.dragging) this.setState({
       'dragging': false
     });
   }
@@ -139,16 +140,18 @@ class Block extends React.Component {
       ref: this.input_connectors_refs[i],
       key: i,
       className: "input",
-      onMouseDown: e => this.state.startAddingWire({
-        'from_block_id': undefined,
+      onMouseDown: e => this.state.start_adding_wire_function({
         'to_block_id': this.state.id,
-        'from_input_id': undefined,
-        'to_output_id': i,
+        'to_input_id': i,
         'from_point': {
           'x': e.clientX,
           'y': e.clientY
         },
         'to_point': getElementCenter(this.input_connectors_refs[i].current)
+      }),
+      onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
+        'to_block_id': this.state.id,
+        'to_input_id': i
       })
     }))), /*#__PURE__*/React.createElement("div", {
       className: "name unselectable"
@@ -158,16 +161,18 @@ class Block extends React.Component {
       ref: this.output_connectors_refs[i],
       key: i,
       className: "output",
-      onMouseDown: e => this.state.startAddingWire({
+      onMouseDown: e => this.state.start_adding_wire_function({
         'from_block_id': this.state.id,
-        'to_block_id': undefined,
-        'from_input_id': i,
-        'to_output_id': undefined,
+        'from_output_id': i,
         'from_point': getElementCenter(this.output_connectors_refs[i].current),
         'to_point': {
           'x': e.clientX,
           'y': e.clientY
         }
+      }),
+      onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
+        'from_block_id': this.state.id,
+        'from_output_id': i
       })
     })))));
   }
