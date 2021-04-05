@@ -186,15 +186,9 @@ class Block extends React.Component {
         'transform': 'scale(' + scale + ')'
       }
     }))), /*#__PURE__*/React.createElement("div", {
-      className: "name unselectable",
-      style: {
-        'transform': 'scale(' + scale + ')'
-      }
+      className: "name unselectable"
     }, name), /*#__PURE__*/React.createElement("div", {
-      className: "outputs",
-      style: {
-        'transform': 'scale(' + scale + ')'
-      }
+      className: "outputs"
     }, this.state.outputs.map((output, i) => /*#__PURE__*/React.createElement("div", {
       ref: this.output_connectors_refs[i],
       key: i,
@@ -203,10 +197,7 @@ class Block extends React.Component {
       onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
         'from_block_id': this.state.id,
         'from_output_id': i
-      }),
-      style: {
-        'transform': 'scale(' + scale + ')'
-      }
+      })
     })))));
   }
 

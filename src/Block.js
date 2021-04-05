@@ -197,8 +197,8 @@ class Block extends React.Component {
 						)
 					}
 					</div>
-					<div className="name unselectable" style={{'transform': 'scale(' + scale + ')'}}>{name}</div>
-					<div className="outputs" style={{'transform': 'scale(' + scale + ')'}}>
+					<div className="name unselectable">{name}</div>
+					<div className="outputs">
 						{
 							this.state.outputs.map(
 								(output, i) =>
@@ -207,8 +207,7 @@ class Block extends React.Component {
 									onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
 										'from_block_id': this.state.id,
 										'from_output_id': i
-									})}
-									style={{'transform': 'scale(' + scale + ')'}}>
+									})}>
 								</div>
 							)
 						}
