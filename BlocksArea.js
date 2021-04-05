@@ -42,6 +42,7 @@ class BlocksArea extends React.Component {
     this.save = this.save.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
     this.startAddingWire = this.startAddingWire.bind(this);
     this.handleMouseUpOnInputOutput = this.handleMouseUpOnInputOutput.bind(this);
     this.remove_wires = this.remove_wires.bind(this);
@@ -49,8 +50,7 @@ class BlocksArea extends React.Component {
   }
 
   componentDidMount() {
-    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [this._ref.current, 'mousemove', this.handleMouseMove], // [this._ref.current, 'mouseup', this.handleMouseUp],
-    //fucking drag and drop
+    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [this._ref.current, 'mousemove', this.handleMouseMove], [this._ref.current, 'mouseup', this.handleMouseUp], //fucking drag and drop
     [this._ref.current, 'drag', e => e.preventDefault()], [this._ref.current, 'dragstart', e => e.preventDefault()], [this._ref.current, 'dragend', e => e.preventDefault()], [this._ref.current, 'dragover', e => e.preventDefault()], [this._ref.current, 'dragenter', e => e.preventDefault()], [this._ref.current, 'dragleave', e => e.preventDefault()], [this._ref.current, 'drop', e => e.preventDefault()]];
 
     for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
@@ -178,15 +178,21 @@ class BlocksArea extends React.Component {
     }
   }
 
+  handleMouseUp() {// if (this.state.adding_wire_info)
+    // 	this.setState({'adding_wire_info': undefined});
+  }
+
   handleMouseUpOnInputOutput(input_output_info) {
     if (this.state.adding_wire_info) {
+      this.setState({
+        'adding_wire_info': undefined
+      });
       const new_wire_info = Object.assign({}, this.state.adding_wire_info);
 
       for (const key in input_output_info) new_wire_info[key] = input_output_info[key];
 
-      this.setState({
-        'adding_wire_info': undefined
-      });
+      if (!('to_block_id' in new_wire_info) || !('from_block_id' in new_wire_info)) return;
+      console.log('new_wire_info', new_wire_info);
       delete new_wire_info['from_point'];
       delete new_wire_info['to_point'];
       this.add({
