@@ -34,53 +34,58 @@ class BlocksArea extends React.Component {
       'name': 'test',
       'blocks': {},
       'wires': {},
-      'adding_block': false
+      'adding_block': false,
+      'adding_wire_info': undefined
     };
     this.onBlockStateChange = this.onBlockStateChange.bind(this);
     this.onBlockMounted = this.onBlockMounted.bind(this);
     this.saveToJson = this.saveToJson.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
     this.startAddingWire = this.startAddingWire.bind(this);
     this._ref = React.createRef();
   }
 
   componentDidMount() {
-    this.add({
-      'blocks': [{
-        'name': 'INPUT',
-        'x': 250,
-        'y': 150
-      }, {
-        'name': 'INPUT',
-        'x': 250,
-        'y': 150
-      }, {
-        'name': 'OUTPUT',
-        'x': 250,
-        'y': 150
-      }, {
-        'name': 'AND',
-        'x': 250,
-        'y': 150
-      }],
-      'wires': [{
-        'from_block_id': 0,
-        'to_block_id': 3,
-        'from_output_id': 0,
-        'to_input_id': 0
-      }, {
-        'from_block_id': 1,
-        'to_block_id': 3,
-        'from_output_id': 0,
-        'to_input_id': 1
-      }, {
-        'from_block_id': 3,
-        'to_block_id': 2,
-        'from_output_id': 0,
-        'to_input_id': 0
-      }]
+    this.add({// 'blocks': [{
+      // 		'name': 'INPUT',
+      // 		'x': 250,
+      // 		'y': 150
+      // 	},{
+      // 		'name': 'INPUT',
+      // 		'x': 250,
+      // 		'y': 150
+      // 	},{
+      // 		'name': 'OUTPUT',
+      // 		'x': 250,
+      // 		'y': 150
+      // 	},{
+      // 		'name': 'AND',
+      // 		'x': 250,
+      // 		'y': 150
+      // 	}
+      // ],
+      // 'wires': [{
+      // 		'from_block_id': 0,
+      // 		'to_block_id': 3,
+      // 		'from_output_id': 0,
+      // 		'to_input_id': 0
+      // 	},{
+      // 		'from_block_id': 1,
+      // 		'to_block_id': 3,
+      // 		'from_output_id': 0,
+      // 		'to_input_id': 1
+      // 	},{
+      // 		'from_block_id': 3,
+      // 		'to_block_id': 2,
+      // 		'from_output_id': 0,
+      // 		'to_input_id': 0
+      // 	},
+      // ]
     });
-    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()]];
+    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [this._ref.current, 'mousemove', this.handleMouseMove], [this._ref.current, 'mouseup', this.handleMouseUp], //fucking drag and drop
+    [this._ref.current, 'drag', e => e.preventDefault()], [this._ref.current, 'dragstart', e => e.preventDefault()], [this._ref.current, 'dragend', e => e.preventDefault()], [this._ref.current, 'dragover', e => e.preventDefault()], [this._ref.current, 'dragenter', e => e.preventDefault()], [this._ref.current, 'dragleave', e => e.preventDefault()], [this._ref.current, 'drop', e => e.preventDefault()]];
 
     for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
   }
@@ -180,8 +185,29 @@ class BlocksArea extends React.Component {
   }
 
   handleMouseMove(e) {
-    if (this.state.adding_block) {
-      this.state.adding_block_ref;
+    if (this.state.adding_wire_info) {
+      const info = this.state.adding_wire_info;
+      if (info.from_block_id == undefined) this.setState(state => {
+        state.adding_wire_info.from_point = {
+          'x': e.clientX,
+          'y': e.clientY
+        };
+        return state;
+      });else this.setState(state => {
+        state.adding_wire_info.to_point = {
+          'x': e.clientX,
+          'y': e.clientY
+        };
+        return state;
+      });
+    }
+  }
+
+  handleMouseUp(e) {
+    if (this.state.adding_wire_info) {
+      this.setState({
+        'adding_wire_info': undefined
+      });
     }
   }
 
@@ -195,6 +221,9 @@ class BlocksArea extends React.Component {
 
   startAddingWire(wire_info) {
     console.log('startAddingWire', wire_info);
+    this.setState({
+      'adding_wire_info': wire_info
+    });
   }
 
   render() {
@@ -229,7 +258,11 @@ class BlocksArea extends React.Component {
       key: wire.id,
       from_point: wire.from_point,
       to_point: wire.to_point
-    })));
+    })), this.state.adding_wire_info ? /*#__PURE__*/React.createElement(Wire, {
+      key: -1,
+      from_point: this.state.adding_wire_info.from_point,
+      to_point: this.state.adding_wire_info.to_point
+    }) : null);
   }
 
 }

@@ -48,7 +48,6 @@ class Block extends React.Component {
 	}
 
 	getInfo(state) {
-		console.log('width', this.state.width, 'height', this.state.height);
 		if (state == undefined)
 			state = this.state;
 		return {
@@ -152,7 +151,12 @@ class Block extends React.Component {
 									'from_block_id': undefined,
 									'to_block_id': this.state.id,
 									'from_input_id': undefined,
-									'to_output_id': i
+									'to_output_id': i,
+									'from_point': {
+										'x': e.clientX,
+										'y': e.clientY
+									},
+									'to_point': getElementCenter(this.input_connectors_refs[i].current)
 								})}></div>
 						)
 					}
@@ -167,7 +171,12 @@ class Block extends React.Component {
 									'from_block_id': this.state.id,
 									'to_block_id': undefined,
 									'from_input_id': i,
-									'to_output_id': undefined
+									'to_output_id': undefined,
+									'from_point': getElementCenter(this.output_connectors_refs[i].current),
+									'to_point': {
+										'x': e.clientX,
+										'y': e.clientY
+									}
 								})}></div>
 							)
 						}
