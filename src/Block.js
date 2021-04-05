@@ -35,13 +35,15 @@ class Block extends React.Component {
 			'onMount': props.onMount,
 			'function_to_delete_self': props.function_to_delete_self,
 			'start_adding_wire_function': props.start_adding_wire_function,
-			'handle_mouse_up_on_input_output_function': props.handle_mouse_up_on_input_output_function
+			'handle_mouse_up_on_input_output_function': props.handle_mouse_up_on_input_output_function,
+			'remove_wires_function': props.remove_wires_function
 		}
 
 		this.handleMouseDown = this.handleMouseDown.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
+		this.handleMouseDownOnInputOutput = this.handleMouseDownOnInputOutput.bind(this);
 
 		this._ref = React.createRef();
 		this.input_connectors_refs = Array(Object.keys(this.state.inputs).length).fill(undefined).map(e => React.createRef());
@@ -132,6 +134,43 @@ class Block extends React.Component {
 		this.handleMouseMove(e);
 	}
 
+	handleMouseDownOnInputOutput(type, i, e) {
+		if (type == 'input') {
+			if (e.button == 0)
+				this.state.start_adding_wire_function({
+					'to_block_id': this.state.id,
+					'to_input_id': i,
+					'from_point': {
+						'x': e.clientX,
+						'y': e.clientY
+					},
+					'to_point': getElementCenter(this.input_connectors_refs[i].current)
+				})
+			else if (e.button == 2)
+				this.state.remove_wires_function({
+					'to_block_id': this.state.id,
+					'to_input_id': i
+				})
+		}
+		else if (type == 'output') {
+			if (e.button == 0)
+				this.state.start_adding_wire_function({
+					'from_block_id': this.state.id,
+					'from_output_id': i,
+					'from_point': getElementCenter(this.output_connectors_refs[i].current),
+					'to_point': {
+						'x': e.clientX,
+						'y': e.clientY
+					}
+				})
+			else if (e.button == 2)
+				this.state.remove_wires_function({
+					'from_block_id': this.state.id,
+					'from_output_id': i
+				})
+		}
+	}
+
 	render() {
 		const x = this.state.x;
 		const y = this.state.y;
@@ -149,15 +188,7 @@ class Block extends React.Component {
 						this.state.inputs.map(
 							(input, i) =>
 							<div ref={this.input_connectors_refs[i]} key={i} className="input"
-								onMouseDown={e => this.state.start_adding_wire_function({
-									'to_block_id': this.state.id,
-									'to_input_id': i,
-									'from_point': {
-										'x': e.clientX,
-										'y': e.clientY
-									},
-									'to_point': getElementCenter(this.input_connectors_refs[i].current)
-								})}
+								onMouseDown={e => this.handleMouseDownOnInputOutput('input', i, e)}
 								onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
 									'to_block_id': this.state.id,
 									'to_input_id': i
@@ -171,15 +202,7 @@ class Block extends React.Component {
 							this.state.outputs.map(
 								(output, i) =>
 								<div ref={this.output_connectors_refs[i]} key={i} className="output"
-									onMouseDown={e => this.state.start_adding_wire_function({
-									'from_block_id': this.state.id,
-									'from_output_id': i,
-									'from_point': getElementCenter(this.output_connectors_refs[i].current),
-									'to_point': {
-										'x': e.clientX,
-										'y': e.clientY
-									}
-								})}
+									onMouseDown={e => this.handleMouseDownOnInputOutput('output', i, e)}
 								onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
 									'from_block_id': this.state.id,
 									'from_output_id': i

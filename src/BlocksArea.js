@@ -45,6 +45,7 @@ class BlocksArea extends React.Component {
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.startAddingWire = this.startAddingWire.bind(this);
 		this.handleMouseUpOnInputOutput = this.handleMouseUpOnInputOutput.bind(this);
+		this.remove_wires = this.remove_wires.bind(this);
 
 		this._ref = React.createRef();
 	}
@@ -232,6 +233,18 @@ class BlocksArea extends React.Component {
 		this.setState({'adding_wire_info': wire_info});
 	}
 
+	remove_wires(mask) {
+		this.setState(state => {
+			state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k,v]) => {
+				for (const mask_key in mask)
+					if (mask[mask_key] == v[mask_key])
+						return false;
+					return true;
+			}));
+			return state;
+		});
+	}
+
 	render() {
 		return <div className="blocksArea" ref={this._ref}>
 			<div className="sidePanel">
@@ -259,6 +272,7 @@ class BlocksArea extends React.Component {
 						function_to_delete_self={() => this.deleteBlock(block_id_and_block[0])}
 						start_adding_wire_function={this.startAddingWire}
 						handle_mouse_up_on_input_output_function={this.handleMouseUpOnInputOutput}
+						remove_wires_function={this.remove_wires}
 						onMount={this.onBlockMounted}
 						onStateChange={this.onBlockStateChange}></Block>
 				)
