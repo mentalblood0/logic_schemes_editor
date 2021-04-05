@@ -181,8 +181,8 @@ class Block extends React.Component {
 				 	'left': x * scale,
 				 	'top': y * scale
 				}}>
-				<div className="content" style={{'transform': 'scale(' + scale + ')'}}>
-					<div className="inputs" style={{'transform': 'scale(' + scale + ')'}}>
+				<div className="content">
+					<div className="inputs">
 					{
 						this.state.inputs.map(
 							(input, i) =>
@@ -191,8 +191,7 @@ class Block extends React.Component {
 								onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
 									'to_block_id': this.state.id,
 									'to_input_id': i
-							})}
-								style={{'transform': 'scale(' + scale + ')'}}>
+							})}>
 							</div>
 						)
 					}
