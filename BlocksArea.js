@@ -187,6 +187,9 @@ class BlocksArea extends React.Component {
 
   handleMouseUpOnInputOutput(input_output_info) {
     const new_wire_info = Object.assign({}, this.state.adding_wire_info);
+    this.setState({
+      'adding_wire_info': undefined
+    });
 
     for (const key in input_output_info) new_wire_info[key] = input_output_info[key];
 
@@ -215,11 +218,22 @@ class BlocksArea extends React.Component {
   }
 
   remove_wires(mask) {
+    console.log('remove_wires', mask);
     this.setState(state => {
       state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => {
-        for (const mask_key in mask) if (mask[mask_key] == v[mask_key]) return false;
+        console.log('[', k, v, ']');
 
-        return true;
+        for (const mask_key in mask) {
+          console.log('mask_key', mask_key, ':', mask[mask_key], v[mask_key]);
+
+          if (mask[mask_key] != v[mask_key]) {
+            console.log('true');
+            return true;
+          }
+        }
+
+        console.log('false');
+        return false;
       }));
       return state;
     });

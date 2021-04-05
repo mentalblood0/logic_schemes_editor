@@ -211,16 +211,16 @@ class BlocksArea extends React.Component {
 	}
 
 	handleMouseUpOnInputOutput(input_output_info) {
-			const new_wire_info = Object.assign({}, this.state.adding_wire_info);
-			for (const key in input_output_info)
-				new_wire_info[key] = input_output_info[key];
-			if (!('to_block_id' in new_wire_info) || !('from_block_id' in new_wire_info))
-				return;
-			console.log('new_wire_info', new_wire_info);
-			delete new_wire_info['from_point'];
-			delete new_wire_info['to_point'];
-			this.add({'wires': [new_wire_info]});
-		
+		const new_wire_info = Object.assign({}, this.state.adding_wire_info);
+		this.setState({'adding_wire_info': undefined});
+		for (const key in input_output_info)
+			new_wire_info[key] = input_output_info[key];
+		if (!('to_block_id' in new_wire_info) || !('from_block_id' in new_wire_info))
+			return;
+		console.log('new_wire_info', new_wire_info);
+		delete new_wire_info['from_point'];
+		delete new_wire_info['to_point'];
+		this.add({'wires': [new_wire_info]});
 	}
 
 	deleteBlock(id) {
@@ -244,12 +244,19 @@ class BlocksArea extends React.Component {
 	}
 
 	remove_wires(mask) {
+		console.log('remove_wires', mask);
 		this.setState(state => {
 			state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k,v]) => {
-				for (const mask_key in mask)
-					if (mask[mask_key] == v[mask_key])
-						return false;
-					return true;
+				console.log('[', k, v, ']')
+				for (const mask_key in mask) {
+					console.log('mask_key', mask_key, ':', mask[mask_key], v[mask_key]);
+					if (mask[mask_key] != v[mask_key]){
+						console.log('true');
+						return true;
+					}
+				}
+				console.log('false');
+				return false;
 			}));
 			return state;
 		});
