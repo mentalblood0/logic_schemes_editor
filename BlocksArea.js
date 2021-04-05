@@ -67,8 +67,9 @@ class BlocksArea extends React.Component {
       if (!('blocks' in data)) return state;
 
       for (const b of data.blocks) {
-        const id = getUniqueId(state.blocks);
-        const id_string = String(id);
+        const dict_with_blocks_with_such_name = Object.fromEntries(Object.entries(this.state.blocks).filter(([k, v]) => v.name == b.name));
+        const id = Object.keys(dict_with_blocks_with_such_name).length;
+        const id_string = b.name + '_' + String(id);
         if (state.blocks[id_string] != undefined) return state;
         state.blocks[id_string] = {
           'name': b.name,
@@ -131,14 +132,14 @@ class BlocksArea extends React.Component {
 
   getSaveData() {
     const blocks = this.state.blocks;
-    const result = [{
-      'name': this.state.name,
-      'wires': Object.values(this.state.wires).map(w => ({
-        'from': blocks[w.from_block_id].name + '_' + w.from_block_id + '[' + w.from_output_id + ']',
-        'to': blocks[w.to_block_id].name + '_' + w.to_block_id + '[' + w.to_input_id + ']'
-      }))
-    }];
-    return result;
+    return {
+      [this.state.name]: {
+        'wires': Object.values(this.state.wires).map(w => ({
+          'from': w.from_block_id + '[' + w.from_output_id + ']',
+          'to': w.to_block_id + '[' + w.to_input_id + ']'
+        }))
+      }
+    };
   }
 
   save() {
@@ -195,7 +196,6 @@ class BlocksArea extends React.Component {
     for (const key in input_output_info) new_wire_info[key] = input_output_info[key];
 
     if (!('to_block_id' in new_wire_info) || !('from_block_id' in new_wire_info)) return;
-    console.log('new_wire_info', new_wire_info);
     delete new_wire_info['from_point'];
     delete new_wire_info['to_point'];
     this.add({
