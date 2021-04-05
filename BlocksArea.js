@@ -46,6 +46,7 @@ class BlocksArea extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.startAddingWire = this.startAddingWire.bind(this);
     this.handleMouseUpOnInputOutput = this.handleMouseUpOnInputOutput.bind(this);
+    this.handleNameInputChange = this.handleNameInputChange.bind(this);
     this.remove_wires = this.remove_wires.bind(this);
     this._ref = React.createRef();
   }
@@ -218,24 +219,19 @@ class BlocksArea extends React.Component {
   }
 
   remove_wires(mask) {
-    console.log('remove_wires', mask);
     this.setState(state => {
       state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => {
-        console.log('[', k, v, ']');
+        for (const mask_key in mask) if (mask[mask_key] != v[mask_key]) return true;
 
-        for (const mask_key in mask) {
-          console.log('mask_key', mask_key, ':', mask[mask_key], v[mask_key]);
-
-          if (mask[mask_key] != v[mask_key]) {
-            console.log('true');
-            return true;
-          }
-        }
-
-        console.log('false');
         return false;
       }));
       return state;
+    });
+  }
+
+  handleNameInputChange(e) {
+    this.setState({
+      'name': e.target.value
     });
   }
 
@@ -245,10 +241,19 @@ class BlocksArea extends React.Component {
       ref: this._ref
     }, /*#__PURE__*/React.createElement("div", {
       className: "sidePanel"
-    }, /*#__PURE__*/React.createElement("button", {
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "controls"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      className: "schemeName unselectable",
+      value: this.state.name,
+      onChange: this.handleNameInputChange
+    }), /*#__PURE__*/React.createElement("button", {
       className: "saveButton unselectable",
       onClick: this.save
-    }, "save"), Object.entries(defaultElements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
+    }, "save")), /*#__PURE__*/React.createElement("div", {
+      className: "blocks"
+    }, Object.entries(defaultElements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
       key: i,
       className: "block",
       onMouseDown: e => this.handleMouseDown(e, element_type_and_element[0])
@@ -256,7 +261,7 @@ class BlocksArea extends React.Component {
       className: "content"
     }, /*#__PURE__*/React.createElement("div", {
       className: "name unselectable"
-    }, element_type_and_element[0]))))), Object.entries(this.state.blocks).map(block_id_and_block => /*#__PURE__*/React.createElement(Block, {
+    }, element_type_and_element[0])))))), Object.entries(this.state.blocks).map(block_id_and_block => /*#__PURE__*/React.createElement(Block, {
       key: block_id_and_block[0],
       id: block_id_and_block[0],
       name: block_id_and_block[1].name,

@@ -47,6 +47,7 @@ class BlocksArea extends React.Component {
 		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.startAddingWire = this.startAddingWire.bind(this);
 		this.handleMouseUpOnInputOutput = this.handleMouseUpOnInputOutput.bind(this);
+		this.handleNameInputChange = this.handleNameInputChange.bind(this);
 		this.remove_wires = this.remove_wires.bind(this);
 
 		this._ref = React.createRef();
@@ -244,39 +245,42 @@ class BlocksArea extends React.Component {
 	}
 
 	remove_wires(mask) {
-		console.log('remove_wires', mask);
 		this.setState(state => {
 			state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k,v]) => {
-				console.log('[', k, v, ']')
-				for (const mask_key in mask) {
-					console.log('mask_key', mask_key, ':', mask[mask_key], v[mask_key]);
-					if (mask[mask_key] != v[mask_key]){
-						console.log('true');
+				for (const mask_key in mask)
+					if (mask[mask_key] != v[mask_key])
 						return true;
-					}
-				}
-				console.log('false');
 				return false;
 			}));
 			return state;
 		});
 	}
 
+	handleNameInputChange(e) {
+		this.setState({'name': e.target.value});
+	}
+
 	render() {
 		return <div className="blocksArea" ref={this._ref}>
 			<div className="sidePanel">
-				<button className="saveButton unselectable" onClick={this.save}>save</button>
-				{
-					Object.entries(defaultElements).map(
-						(element_type_and_element, i) =>
-						<div key={i} className="block"
-							onMouseDown={e => this.handleMouseDown(e, element_type_and_element[0])}>
-							<div className="content">
-								<div className="name unselectable">{element_type_and_element[0]}</div>
+				<div className="controls">
+					<input type="text" className="schemeName unselectable"
+						value={this.state.name} onChange={this.handleNameInputChange}></input>
+					<button className="saveButton unselectable" onClick={this.save}>save</button>
+				</div>
+				<div className="blocks">
+					{
+						Object.entries(defaultElements).map(
+							(element_type_and_element, i) =>
+							<div key={i} className="block"
+								onMouseDown={e => this.handleMouseDown(e, element_type_and_element[0])}>
+								<div className="content">
+									<div className="name unselectable">{element_type_and_element[0]}</div>
+								</div>
 							</div>
-						</div>
-					)
-				}
+						)
+					}
+				</div>
 			</div>
 			{
 				Object.entries(this.state.blocks).map(

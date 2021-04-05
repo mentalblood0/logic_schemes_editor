@@ -26,21 +26,39 @@ body {
 	overflow-y: auto;
 }
 
-.sidePanel .block:not(:hover) {
-	transition-duration: 0.3s;
+.sidePanel>* {
+	width: 100%;
 }
 
-.sidePanel .block:hover {
-	transition-duration: 0.5s;
-	transform: scale(1.15);
+.sidePanel .controls>* {
+	width: 100%;
 }
 
-.sidePanel .block:not(:first-child) {
+.sidePanel>*:not(:first-child) {
+	margin-top: 40px;
+}
+
+.sidePanel .controls>*:not(:first-child) {
 	margin-top: 20px;
 }
 
+.sidePanel .schemeName {
+	width: calc(100% - calc(2 * 6px));
+	padding: 0 6px;
+
+	font-family: element_font;
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+
+	background-color: lightgrey;
+
+	border: none;
+	border-radius: 6px;
+	outline: none;
+}
+
 .saveButton {
-	width: 100%;
 	font-family: element_font;
 	font-weight: bold;
 	font-size: 25px;
@@ -58,6 +76,19 @@ body {
 	transition-duration: 0.5s;
 	background-color: rgb(150, 220, 150, 1);
 	transform: scale(1.15);
+}
+
+.sidePanel .block:not(:hover) {
+	transition-duration: 0.3s;
+}
+
+.sidePanel .block:hover {
+	transition-duration: 0.5s;
+	transform: scale(1.15);
+}
+
+.sidePanel .block:not(:first-child) {
+	margin-top: 20px;
 }
 
 
