@@ -92,6 +92,9 @@ class Block extends React.Component {
 				'clientY': center.y
 			});
 		}
+
+		this.render();
+		this.state.onStateChange(this.getInfo());
 	}
 
 	componentWillUnmount() {

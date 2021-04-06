@@ -5,6 +5,7 @@ function distance(a, b) {
 }
 
 function Wire(props) {
+  const scale = props.scale;
   const from_point = props.from_point;
   const to_point = props.to_point;
   const length = distance(from_point, to_point);
@@ -13,9 +14,11 @@ function Wire(props) {
     className: "wire",
     style: {
       'left': 'calc(' + from_point.x + 'px' + ' + ' + '0vmin)',
-      'top': 'calc(' + from_point.y + 'px' + ' - ' + '7px)',
-      'width': length - 12 * 2 + 'px',
-      'transform': 'rotate(' + angle + 'rad) translate(12px, 0)'
+      'top': 'calc(' + from_point.y + 'px' + ' - ' + 7 * scale + 'px)',
+      'width': length - 12 * 2 * scale + 'px',
+      'height': 14 * scale + 'px',
+      'transform': 'rotate(' + angle + 'rad) translate(' + 12 * scale + 'px, 0)',
+      'background': 'linear-gradient(90deg, deepskyblue ' + 3 * scale + 'px, limegreen calc(100% - ' + 3 * scale + 'px))'
     }
   });
 }

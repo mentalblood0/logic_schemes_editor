@@ -135,6 +135,7 @@ class BlocksArea extends React.Component {
 	}
 
 	onBlockMounted(detail) {
+		console.log('onBlockMounted', detail);
 		this.setState(state => {
 			state.blocks[detail.id] = detail;
 			return state;
@@ -142,6 +143,7 @@ class BlocksArea extends React.Component {
 	}
 
 	onBlockStateChange(detail) {
+		console.log('onBlockStateChange');
 		this.setState(state => {
 			state.blocks[detail.id] = detail;
 			Object.values(state.wires).forEach(w => {
@@ -275,6 +277,8 @@ class BlocksArea extends React.Component {
 	}
 
 	render() {
+		const scale = this.state.scale;
+
 		return <div className="blocksArea" ref={this._ref}>
 			<div className="sidePanel">
 				<div className="controls">
@@ -299,11 +303,11 @@ class BlocksArea extends React.Component {
 			{
 				Object.entries(this.state.blocks).map(
 					block_id_and_block =>
-					<Block key={block_id_and_block[0] + '_' + this.state.scale} id={block_id_and_block[0]}
+					<Block key={block_id_and_block[0] + '_' + scale} id={block_id_and_block[0]}
 						name={block_id_and_block[1].name}
 						x={block_id_and_block[1].x}
 						y={block_id_and_block[1].y}
-						scale={this.state.scale}
+						scale={scale}
 						dragging={block_id_and_block[1].dragging}
 						function_to_delete_self={() => this.deleteBlock(block_id_and_block[0])}
 						start_adding_wire_function={this.startAddingWire}
@@ -316,14 +320,16 @@ class BlocksArea extends React.Component {
 			{
 				Object.values(this.state.wires).filter(w => w.from_point).map(
 					wire =>
-					<Wire key={wire.id} from_point={wire.from_point} to_point={wire.to_point}></Wire>
+					<Wire key={wire.id} from_point={wire.from_point} to_point={wire.to_point}
+						scale={scale}></Wire>
 				)
 			}
 			{
 				this.state.adding_wire ?
 				<Wire key={-1}
 					from_point={this.state.adding_wire_info.from_point}
-					to_point={this.state.adding_wire_info.to_point}></Wire>
+					to_point={this.state.adding_wire_info.to_point}
+					scale={scale}></Wire>
 				: null
 			}
 		</div>;

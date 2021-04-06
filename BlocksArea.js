@@ -116,6 +116,7 @@ class BlocksArea extends React.Component {
   }
 
   onBlockMounted(detail) {
+    console.log('onBlockMounted', detail);
     this.setState(state => {
       state.blocks[detail.id] = detail;
       return state;
@@ -123,6 +124,7 @@ class BlocksArea extends React.Component {
   }
 
   onBlockStateChange(detail) {
+    console.log('onBlockStateChange');
     this.setState(state => {
       state.blocks[detail.id] = detail;
       Object.values(state.wires).forEach(w => {
@@ -246,6 +248,7 @@ class BlocksArea extends React.Component {
   }
 
   render() {
+    const scale = this.state.scale;
     return /*#__PURE__*/React.createElement("div", {
       className: "blocksArea",
       ref: this._ref
@@ -272,12 +275,12 @@ class BlocksArea extends React.Component {
     }, /*#__PURE__*/React.createElement("div", {
       className: "name unselectable"
     }, element_type_and_element[0])))))), Object.entries(this.state.blocks).map(block_id_and_block => /*#__PURE__*/React.createElement(Block, {
-      key: block_id_and_block[0] + '_' + this.state.scale,
+      key: block_id_and_block[0] + '_' + scale,
       id: block_id_and_block[0],
       name: block_id_and_block[1].name,
       x: block_id_and_block[1].x,
       y: block_id_and_block[1].y,
-      scale: this.state.scale,
+      scale: scale,
       dragging: block_id_and_block[1].dragging,
       function_to_delete_self: () => this.deleteBlock(block_id_and_block[0]),
       start_adding_wire_function: this.startAddingWire,
@@ -288,11 +291,13 @@ class BlocksArea extends React.Component {
     })), Object.values(this.state.wires).filter(w => w.from_point).map(wire => /*#__PURE__*/React.createElement(Wire, {
       key: wire.id,
       from_point: wire.from_point,
-      to_point: wire.to_point
+      to_point: wire.to_point,
+      scale: scale
     })), this.state.adding_wire ? /*#__PURE__*/React.createElement(Wire, {
       key: -1,
       from_point: this.state.adding_wire_info.from_point,
-      to_point: this.state.adding_wire_info.to_point
+      to_point: this.state.adding_wire_info.to_point,
+      scale: scale
     }) : null);
   }
 

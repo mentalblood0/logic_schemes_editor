@@ -168,7 +168,5 @@ body {
 
 .wire {
 	position: absolute;
-	height: 14px;
-	background: linear-gradient(90deg, deepskyblue 3px, limegreen calc(100% - 3px));
 	transform-origin: 0 center 0;
 }
