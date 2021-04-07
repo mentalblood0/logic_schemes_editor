@@ -25,12 +25,17 @@ const default_elements = {
 const custom_elements = {};
 
 function getTypeInfo(type_name) {
-  console.log('getTypeInfo', type_name, default_elements, custom_elements);
-  if (type_name in default_elements) return default_elements[type_name];else return custom_elements[type_name];
+  if (type_name in default_elements) return default_elements[type_name];else if (type_name in custom_elements) return custom_elements[type_name];
 }
 
 function getUniqueId(some_dict) {
   return Object.keys(some_dict).length == 0 ? 0 : String(Math.max(...Object.keys(some_dict)) + 1);
+}
+
+function filledArray(l, n) {
+  return Array.from({
+    length: l
+  }, (_, i) => n);
 }
 
 class BlocksArea extends React.Component {
@@ -38,7 +43,7 @@ class BlocksArea extends React.Component {
     super(props);
     this.state = {
       'name': 'test',
-      'new_element_name': 'new',
+      'new_element_type': 'new',
       'new_element_inputs_number': 1,
       'new_element_outputs_number': 1,
       'blocks': {},
@@ -82,14 +87,16 @@ class BlocksArea extends React.Component {
       if (!('blocks' in data)) return state;
 
       for (const b of data.blocks) {
-        const dict_with_blocks_with_such_name = Object.fromEntries(Object.entries(this.state.blocks).filter(([k, v]) => v.name == b.name));
+        const dict_with_blocks_with_such_name = Object.fromEntries(Object.entries(this.state.blocks).filter(([k, v]) => v.type == b.type));
         const id = Object.keys(dict_with_blocks_with_such_name).length;
-        const id_string = b.name + '_' + String(id);
+        const id_string = b.type + '_' + String(id);
         if (state.blocks[id_string] != undefined) return state;
         state.blocks[id_string] = {
           'type': b.type,
           'x': b.x,
-          'y': b.y
+          'y': b.y,
+          'inputs': b.inputs,
+          'outputs': b.outputs
         };
 
         if (b.dragging) {
@@ -166,13 +173,15 @@ class BlocksArea extends React.Component {
     downloadFile('logic-scheme' + '-' + this.state.name + '-' + current_date + '-' + current_time + '.json', save_data_text);
   }
 
-  handleMouseDown(e, element_type) {
+  handleMouseDown(e, element_type, inputs_number, outputs_number) {
     this.add({
       'blocks': [{
         'type': element_type,
         'x': e.clientX,
         'y': e.clientY,
-        'dragging': true
+        'dragging': true,
+        'inputs': filledArray(inputs_number, ''),
+        'outputs': filledArray(outputs_number, '')
       }]
     });
   }
@@ -252,7 +261,7 @@ class BlocksArea extends React.Component {
 
   handleNewElementNameInputChange(e) {
     this.setState({
-      'new_element_name': e.target.value
+      'new_element_type': e.target.value
     });
   }
 
@@ -272,25 +281,18 @@ class BlocksArea extends React.Component {
     const delta = e.deltaY;
     this.setState(state => {
       state.scale += delta / 1000;
-      console.log(state.scale);
       return state;
     });
   }
 
   handleAddBlockButtonClick() {
-    const name = this.state.new_element_name;
+    const name = this.state.new_element_type;
     const inputs_number = this.state.new_element_inputs_number;
     const outputs_number = this.state.new_element_outputs_number;
-    console.log(inputs_number, outputs_number);
     const new_element_info = {
-      'inputs': Array.from({
-        length: inputs_number
-      }, (_, i) => ''),
-      'outputs': Array.from({
-        length: outputs_number
-      }, (_, i) => '')
+      'inputs': filledArray(inputs_number, ''),
+      'outputs': filledArray(outputs_number, '')
     };
-    console.log(new_element_info);
     custom_elements[name] = new_element_info;
     this.forceUpdate();
   }
@@ -315,14 +317,18 @@ class BlocksArea extends React.Component {
     }, "save")), /*#__PURE__*/React.createElement("div", {
       className: "blocks"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "block blockToAdd"
+      className: "block blockToAdd",
+      onMouseDown: e => this.handleMouseDown(e, this.state.new_element_type, this.state.new_element_inputs_number, this.state.new_element_outputs_number)
     }, /*#__PURE__*/React.createElement("div", {
       className: "content"
     }, /*#__PURE__*/React.createElement("input", {
       type: "text",
       className: "name",
-      value: this.state.new_element_name,
-      onChange: this.handleNewElementNameInputChange
+      value: this.state.new_element_type,
+      onChange: this.handleNewElementNameInputChange,
+      onMouseDown: e => {
+        e.stopPropagation();
+      }
     }))), /*#__PURE__*/React.createElement("div", {
       className: "inputsOutputsNumber"
     }, /*#__PURE__*/React.createElement("div", {
@@ -369,6 +375,8 @@ class BlocksArea extends React.Component {
       y: block_id_and_block[1].y,
       scale: scale,
       dragging: block_id_and_block[1].dragging,
+      inputs: block_id_and_block[1].inputs,
+      outputs: block_id_and_block[1].outputs,
       function_to_delete_self: () => this.deleteBlock(block_id_and_block[0]),
       start_adding_wire_function: this.startAddingWire,
       handle_mouse_up_on_input_output_function: this.handleMouseUpOnInputOutput,

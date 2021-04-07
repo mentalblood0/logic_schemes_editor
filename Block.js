@@ -19,7 +19,9 @@ function getElementRelativeCenter(e) {
 class Block extends React.Component {
   constructor(props) {
     super(props);
+    console.log('Block', props);
     const type_info = getTypeInfo(props.type);
+    console.log('type_info', type_info);
     this.state = {
       'id': props.id,
       'type': props.type,
@@ -30,8 +32,8 @@ class Block extends React.Component {
       'initital_dragging': props.dragging || false,
       'gripX': undefined,
       'gripY': undefined,
-      'inputs': type_info['inputs'],
-      'outputs': type_info['outputs'],
+      'inputs': props.inputs ? props.inputs : type_info['inputs'],
+      'outputs': props.outputs ? props.outputs : type_info['outputs'],
       'onStateChange': props.onStateChange,
       'onMount': props.onMount,
       'function_to_delete_self': props.function_to_delete_self,
@@ -39,6 +41,7 @@ class Block extends React.Component {
       'handle_mouse_up_on_input_output_function': props.handle_mouse_up_on_input_output_function,
       'remove_wires_function': props.remove_wires_function
     };
+    console.log('state', this.state);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);

@@ -112,6 +112,7 @@ body {
 	width: 100%;
 	background: linear-gradient(90deg, transparent 0%, deepskyblue 30%, limegreen 70%, transparent 100%);
 	margin-top: 10px;
+	border-radius: 20%;
 }
 
 .inputsOutputsNumber>* {
