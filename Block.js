@@ -19,9 +19,10 @@ function getElementRelativeCenter(e) {
 class Block extends React.Component {
   constructor(props) {
     super(props);
-    console.log('Block', props);
+    console.log(props.id, props.const_id);
     const type_info = getTypeInfo(props.type);
     this.state = {
+      'const_id': props.const_id,
       'id': props.id,
       'type': props.type,
       'x': props.x,
@@ -54,7 +55,7 @@ class Block extends React.Component {
   getInfo(state) {
     if (state == undefined) state = this.state;
     return {
-      'id': state.id,
+      'const_id': state.const_id,
       'x': state.x,
       'y': state.y,
       'input_connectors_coordinates': this.input_connectors_refs.map(r => getElementCenter(r.current)),
@@ -78,7 +79,6 @@ class Block extends React.Component {
         'clientX': center.x,
         'clientY': center.y
       }, () => {
-        console.log('after', center);
         const info = this.getInfo();
         this.state.onMount(info);
         this.state.onStateChange(info);
@@ -108,7 +108,7 @@ class Block extends React.Component {
   }
 
   handleMouseUp(e) {
-    if (this.state.initital_dragging) this.state.onStopInitialDragging(this.state.id);
+    if (this.state.initital_dragging) this.state.onStopInitialDragging(this.state.const_id);
     if (this.state.dragging) this.setState({
       'dragging': false,
       'initital_dragging': false
@@ -133,7 +133,7 @@ class Block extends React.Component {
   handleMouseDownOnInputOutput(type, i, e) {
     if (type == 'input') {
       if (e.button == 0) this.state.start_adding_wire_function({
-        'to_block_id': this.state.id,
+        'to_block_id': this.state.const_id,
         'to_input_id': i,
         'from_point': {
           'x': e.clientX,
@@ -141,12 +141,12 @@ class Block extends React.Component {
         },
         'to_point': getElementCenter(this.input_connectors_refs[i].current)
       });else if (e.button == 2) this.state.remove_wires_function({
-        'to_block_id': this.state.id,
+        'to_block_id': this.state.const_id,
         'to_input_id': i
       });
     } else if (type == 'output') {
       if (e.button == 0) this.state.start_adding_wire_function({
-        'from_block_id': this.state.id,
+        'from_block_id': this.state.const_id,
         'from_output_id': i,
         'from_point': getElementCenter(this.output_connectors_refs[i].current),
         'to_point': {
@@ -154,7 +154,7 @@ class Block extends React.Component {
           'y': e.clientY
         }
       });else if (e.button == 2) this.state.remove_wires_function({
-        'from_block_id': this.state.id,
+        'from_block_id': this.state.const_id,
         'from_output_id': i
       });
     }
@@ -187,7 +187,7 @@ class Block extends React.Component {
       className: "input",
       onMouseDown: e => this.handleMouseDownOnInputOutput('input', i, e),
       onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
-        'to_block_id': this.state.id,
+        'to_block_id': this.state.const_id,
         'to_input_id': i
       })
     }))), /*#__PURE__*/React.createElement("div", {
@@ -200,7 +200,7 @@ class Block extends React.Component {
       className: "output",
       onMouseDown: e => this.handleMouseDownOnInputOutput('output', i, e),
       onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
-        'from_block_id': this.state.id,
+        'from_block_id': this.state.const_id,
         'from_output_id': i
       })
     })))));

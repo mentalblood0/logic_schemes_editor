@@ -29,7 +29,7 @@ function getTypeInfo(type_name) {
 }
 
 function getUniqueId(some_dict) {
-  return Object.keys(some_dict).length == 0 ? 0 : String(Math.max(...Object.keys(some_dict)) + 1);
+  return Object.keys(some_dict).length == 0 ? 0 : Math.max(...Object.keys(some_dict)) + 1;
 }
 
 function filledArray(l, n) {
@@ -92,10 +92,12 @@ class BlocksArea extends React.Component {
 
       for (const b of data.blocks) {
         const dict_with_blocks_with_such_name = Object.fromEntries(Object.entries(this.state.blocks).filter(([k, v]) => v.type == b.type));
-        const id = Object.keys(dict_with_blocks_with_such_name).length + 1;
-        const id_string = b.type + '_' + String(id);
-        if (state.blocks[id_string] != undefined) return state;
+        const current_const_ids = Object.values(state.blocks).map(v => v.const_id);
+        const const_id = current_const_ids.length == 0 ? 1 : Math.max(...current_const_ids) + 1;
+        const id = b.type + '_' + (Object.keys(dict_with_blocks_with_such_name).length + 1);
+        if (state.blocks[const_id] != undefined) return state;
         const block = {
+          'id': id,
           'type': b.type,
           'x': b.x,
           'y': b.y,
@@ -103,8 +105,7 @@ class BlocksArea extends React.Component {
           'outputs': b.outputs
         };
         if (b.dragging) block['dragging'] = true;
-        console.log('add block', block);
-        state.blocks[id_string] = block;
+        state.blocks[const_id] = block;
       }
 
       return state;
@@ -140,7 +141,7 @@ class BlocksArea extends React.Component {
 
   onBlockMounted(detail) {
     this.setState(state => {
-      for (const key in detail) state.blocks[detail.id][key] = detail[key];
+      for (const key in detail) state.blocks[detail.const_id][key] = detail[key];
 
       return state;
     });
@@ -148,10 +149,10 @@ class BlocksArea extends React.Component {
 
   onBlockStateChange(detail) {
     this.setState(state => {
-      for (const key in detail) state.blocks[detail.id][key] = detail[key];
+      for (const key in detail) state.blocks[detail.const_id][key] = detail[key];
 
       Object.values(state.wires).forEach(w => {
-        if (detail.id == w.from_block_id || detail.id == w.to_block_id) this.updateWireCoordinates(state, w.id);
+        if (detail.const_id == w.from_block_id || detail.const_id == w.to_block_id) this.updateWireCoordinates(state, w.id);
       });
       return state;
     });
@@ -290,10 +291,20 @@ class BlocksArea extends React.Component {
     });
   }
 
-  deleteBlock(id) {
+  removeBlock(const_id) {
     this.setState(state => {
-      delete state.blocks[id];
-      state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => v.from_block_id != id && v.to_block_id != id));
+      if (!state.blocks[const_id]) return state;
+      const type = state.blocks[const_id].type;
+      const id = state.blocks[const_id].id;
+      const number = Number.parseInt(id.split('_').pop(), 10);
+      delete state.blocks[const_id];
+      state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => v.from_block_id != const_id && v.to_block_id != const_id));
+
+      for (const k in state.blocks) if (state.blocks[k].type == type) if (state.blocks[k].id > id) {
+        const n = Number.parseInt(state.blocks[k].id.split('_').pop(), 10);
+        state.blocks[k].id = state.blocks[k].type + '_' + (n - 1);
+      }
+
       return state;
     });
   }
@@ -446,9 +457,10 @@ class BlocksArea extends React.Component {
     }, element_type_and_element[0])))))), /*#__PURE__*/React.createElement("div", {
       className: "schemeArea",
       onWheel: this.handleMouseWheel
-    }, Object.entries(this.state.blocks).map(block_id_and_block => /*#__PURE__*/React.createElement(Block, {
-      key: block_id_and_block[0] + '_' + scale,
-      id: block_id_and_block[0],
+    }, Object.entries(this.state.blocks).map((block_id_and_block, i) => /*#__PURE__*/React.createElement(Block, {
+      key: block_id_and_block[0] + '_' + block_id_and_block[1].id + '_' + scale,
+      const_id: block_id_and_block[0],
+      id: block_id_and_block[1].id,
       type: block_id_and_block[1].type,
       x: block_id_and_block[1].x,
       y: block_id_and_block[1].y,
@@ -456,7 +468,7 @@ class BlocksArea extends React.Component {
       dragging: block_id_and_block[1].dragging,
       inputs: block_id_and_block[1].inputs,
       outputs: block_id_and_block[1].outputs,
-      function_to_delete_self: () => this.deleteBlock(block_id_and_block[0]),
+      function_to_delete_self: () => this.removeBlock(block_id_and_block[0]),
       start_adding_wire_function: this.startAddingWire,
       handle_mouse_up_on_input_output_function: this.handleMouseUpOnInputOutput,
       remove_wires_function: this.remove_wires,
