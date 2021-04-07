@@ -52,7 +52,8 @@ class BlocksArea extends React.Component {
 			'adding_block': false,
 			'adding_wire': false,
 			'adding_wire_info': undefined,
-			'scale': 1
+			'scale': 1,
+			'tests_editor_opened': false
 		};
 		this.onBlockStateChange = this.onBlockStateChange.bind(this);
 		this.onBlockMounted = this.onBlockMounted.bind(this);
@@ -412,14 +413,18 @@ class BlocksArea extends React.Component {
 				<div className="controls">
 					<input type="text" className="schemeName unselectable"
 						value={this.state.name} onChange={this.handleSchemeNameInputChange}></input>
+					<button className="exportButton animated animated-lightblue unselectable"
+						onClick={this.export}>export</button>
 					<button className="saveButton animated animated-green unselectable"
 						onClick={this.save}>save</button>
 					<button className="loadButton animated animated-blue unselectable"
 						onClick={this.load}>load</button>
-					<button className="exportButton animated animated-lightblue unselectable"
-						onClick={this.export}>export</button>
 					<button className="clearButton animated animated-red unselectable"
 						onClick={this.clear}>clear</button>
+				</div>
+				<div className="tests">
+					<button className="editTestsButton animated animated-lightblue"
+						onClick={() => this.setState({'tests_editor_opened': true})}>edit tests</button>
 				</div>
 				<div className="blocks">
 					<div className="block blockToAdd"
@@ -473,6 +478,20 @@ class BlocksArea extends React.Component {
 				}
 				</div>
 			</div>
+		{
+			this.state.tests_editor_opened ?
+			<ModalWindow
+				close_function={() => this.setState({'tests_editor_opened': false})}>
+				<TestsEditor
+					inputs={['i1', 'i2', 'i3']}
+					outputs={['o1', 'o2']}
+					tests={[
+						[0, 0, 0, 0, 0],
+						[1, 1, 1, 1, 1]
+					]}></TestsEditor>
+			</ModalWindow>
+			: null
+		}
 			<div className="schemeArea" onWheel={this.handleMouseWheel}>
 			{
 				Object.entries(this.state.blocks).map(

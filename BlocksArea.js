@@ -51,7 +51,8 @@ class BlocksArea extends React.Component {
       'adding_block': false,
       'adding_wire': false,
       'adding_wire_info': undefined,
-      'scale': 1
+      'scale': 1,
+      'tests_editor_opened': false
     };
     this.onBlockStateChange = this.onBlockStateChange.bind(this);
     this.onBlockMounted = this.onBlockMounted.bind(this);
@@ -393,18 +394,25 @@ class BlocksArea extends React.Component {
       value: this.state.name,
       onChange: this.handleSchemeNameInputChange
     }), /*#__PURE__*/React.createElement("button", {
+      className: "exportButton animated animated-lightblue unselectable",
+      onClick: this.export
+    }, "export"), /*#__PURE__*/React.createElement("button", {
       className: "saveButton animated animated-green unselectable",
       onClick: this.save
     }, "save"), /*#__PURE__*/React.createElement("button", {
       className: "loadButton animated animated-blue unselectable",
       onClick: this.load
     }, "load"), /*#__PURE__*/React.createElement("button", {
-      className: "exportButton animated animated-lightblue unselectable",
-      onClick: this.export
-    }, "export"), /*#__PURE__*/React.createElement("button", {
       className: "clearButton animated animated-red unselectable",
       onClick: this.clear
     }, "clear")), /*#__PURE__*/React.createElement("div", {
+      className: "tests"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "editTestsButton animated animated-lightblue",
+      onClick: () => this.setState({
+        'tests_editor_opened': true
+      })
+    }, "edit tests")), /*#__PURE__*/React.createElement("div", {
       className: "blocks"
     }, /*#__PURE__*/React.createElement("div", {
       className: "block blockToAdd",
@@ -454,7 +462,15 @@ class BlocksArea extends React.Component {
       className: "content"
     }, /*#__PURE__*/React.createElement("div", {
       className: "name unselectable"
-    }, element_type_and_element[0])))))), /*#__PURE__*/React.createElement("div", {
+    }, element_type_and_element[0])))))), this.state.tests_editor_opened ? /*#__PURE__*/React.createElement(ModalWindow, {
+      close_function: () => this.setState({
+        'tests_editor_opened': false
+      })
+    }, /*#__PURE__*/React.createElement(TestsEditor, {
+      inputs: ['i1', 'i2', 'i3'],
+      outputs: ['o1', 'o2'],
+      tests: [[0, 0, 0, 0, 0], [1, 1, 1, 1, 1]]
+    })) : null, /*#__PURE__*/React.createElement("div", {
       className: "schemeArea",
       onWheel: this.handleMouseWheel
     }, Object.entries(this.state.blocks).map((block_id_and_block, i) => /*#__PURE__*/React.createElement(Block, {
