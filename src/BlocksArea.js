@@ -58,6 +58,7 @@ class BlocksArea extends React.Component {
 		this.onBlockMounted = this.onBlockMounted.bind(this);
 		this.onBlockStopInitialDragging = this.onBlockStopInitialDragging.bind(this);
 		this.save = this.save.bind(this);
+		this.clear = this.clear.bind(this);
 		this.handleMouseDown = this.handleMouseDown.bind(this);
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -338,6 +339,13 @@ class BlocksArea extends React.Component {
 		this.forceUpdate();
 	}
 
+	clear() {
+		this.setState({
+			'blocks': {},
+			'wires': {}
+		});
+	}
+
 	render() {
 		const scale = this.state.scale;
 
@@ -346,7 +354,8 @@ class BlocksArea extends React.Component {
 				<div className="controls">
 					<input type="text" className="schemeName unselectable"
 						value={this.state.name} onChange={this.handleSchemeNameInputChange}></input>
-					<button className="saveButton animated unselectable" onClick={this.save}>save</button>
+					<button className="saveButton animated animated-green unselectable" onClick={this.save}>save</button>
+					<button className="clearButton animated animated-red unselectable" onClick={this.clear}>clear</button>
 				</div>
 				<div className="blocks">
 					<div className="block blockToAdd"
@@ -375,7 +384,7 @@ class BlocksArea extends React.Component {
 								onChange={this.handleNewElementOutputsNumberInputChange}></input>
 						</div>
 					</div>
-					<button className="addBlockButton animated" onClick={this.handleAddBlockButtonClick}>+</button>
+					<button className="addBlockButton animated animated-green" onClick={this.handleAddBlockButtonClick}>+</button>
 				{
 					Object.entries(custom_elements).map(
 						(element_type_and_element, i) =>

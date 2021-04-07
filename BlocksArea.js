@@ -57,6 +57,7 @@ class BlocksArea extends React.Component {
     this.onBlockMounted = this.onBlockMounted.bind(this);
     this.onBlockStopInitialDragging = this.onBlockStopInitialDragging.bind(this);
     this.save = this.save.bind(this);
+    this.clear = this.clear.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -321,6 +322,13 @@ class BlocksArea extends React.Component {
     this.forceUpdate();
   }
 
+  clear() {
+    this.setState({
+      'blocks': {},
+      'wires': {}
+    });
+  }
+
   render() {
     const scale = this.state.scale;
     return /*#__PURE__*/React.createElement("div", {
@@ -336,9 +344,12 @@ class BlocksArea extends React.Component {
       value: this.state.name,
       onChange: this.handleSchemeNameInputChange
     }), /*#__PURE__*/React.createElement("button", {
-      className: "saveButton animated unselectable",
+      className: "saveButton animated animated-green unselectable",
       onClick: this.save
-    }, "save")), /*#__PURE__*/React.createElement("div", {
+    }, "save"), /*#__PURE__*/React.createElement("button", {
+      className: "clearButton animated animated-red unselectable",
+      onClick: this.clear
+    }, "clear")), /*#__PURE__*/React.createElement("div", {
       className: "blocks"
     }, /*#__PURE__*/React.createElement("div", {
       className: "block blockToAdd",
@@ -370,7 +381,7 @@ class BlocksArea extends React.Component {
       value: this.state.new_element_outputs_number,
       onChange: this.handleNewElementOutputsNumberInputChange
     }))), /*#__PURE__*/React.createElement("button", {
-      className: "addBlockButton animated",
+      className: "addBlockButton animated animated-green",
       onClick: this.handleAddBlockButtonClick
     }, "+"), Object.entries(custom_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
       key: element_type_and_element[0],
