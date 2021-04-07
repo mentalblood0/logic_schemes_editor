@@ -89,7 +89,7 @@ class BlocksArea extends React.Component {
 
       for (const b of data.blocks) {
         const dict_with_blocks_with_such_name = Object.fromEntries(Object.entries(this.state.blocks).filter(([k, v]) => v.type == b.type));
-        const id = Object.keys(dict_with_blocks_with_such_name).length;
+        const id = Object.keys(dict_with_blocks_with_such_name).length + 1;
         const id_string = b.type + '_' + String(id);
         if (state.blocks[id_string] != undefined) return state;
         const block = {
@@ -166,20 +166,34 @@ class BlocksArea extends React.Component {
     return {
       [this.state.name]: {
         'wires': Object.values(this.state.wires).map(w => ({
-          'from': w.from_block_id + '[' + w.from_output_id + ']',
-          'to': w.to_block_id + '[' + w.to_input_id + ']'
+          'from': w.from_block_id + '[' + (w.from_output_id + 1) + ']',
+          'to': w.to_block_id + '[' + (w.to_input_id + 1) + ']'
         }))
       }
     };
   }
 
+  getSaveName() {
+    // const today = new Date();
+    // const current_date = today.getFullYear().toString()
+    // 	+ '-' + (today.getMonth() + 1).toString()
+    // 	+ '-' + today.getDate().toString();
+    // const current_time = today.getHours()
+    // 	+ ":" + today.getMinutes()
+    // 	+ ":" + today.getSeconds();
+    // return 'logic-scheme'
+    // 	+ '-' + this.state.name
+    // 	+ '-' + current_date
+    // 	+ '-' + current_time
+    // 	+ '.json';
+    return this.state.name + '.json';
+  }
+
   save() {
     const save_data = this.getSaveData();
     const save_data_text = JSON.stringify(save_data, null, '\t');
-    const today = new Date();
-    const current_date = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString() + '-' + today.getDate().toString();
-    const current_time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    downloadFile('logic-scheme' + '-' + this.state.name + '-' + current_date + '-' + current_time + '.json', save_data_text);
+    const save_name = this.getSaveName();
+    downloadFile(save_name, save_data_text);
   }
 
   handleMouseDown(e, element_type, inputs_number, outputs_number) {
