@@ -1,6 +1,6 @@
 'use strict';
 
-const defaultElements = {
+const default_elements = {
   'INPUT': {
     'inputs': [],
     'outputs': ['x']
@@ -22,6 +22,12 @@ const defaultElements = {
     'outputs': ['x || y']
   }
 };
+const custom_elements = {};
+
+function getTypeInfo(type_name) {
+  console.log('getTypeInfo', type_name, default_elements, custom_elements);
+  if (type_name in default_elements) return default_elements[type_name];else return custom_elements[type_name];
+}
 
 function getUniqueId(some_dict) {
   return Object.keys(some_dict).length == 0 ? 0 : String(Math.max(...Object.keys(some_dict)) + 1);
@@ -32,6 +38,9 @@ class BlocksArea extends React.Component {
     super(props);
     this.state = {
       'name': 'test',
+      'new_element_name': 'new',
+      'new_element_inputs_number': 1,
+      'new_element_outputs_number': 1,
       'blocks': {},
       'wires': {},
       'adding_block': false,
@@ -47,14 +56,18 @@ class BlocksArea extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.startAddingWire = this.startAddingWire.bind(this);
     this.handleMouseUpOnInputOutput = this.handleMouseUpOnInputOutput.bind(this);
-    this.handleNameInputChange = this.handleNameInputChange.bind(this);
+    this.handleSchemeNameInputChange = this.handleSchemeNameInputChange.bind(this);
+    this.handleNewElementNameInputChange = this.handleNewElementNameInputChange.bind(this);
+    this.handleNewElementInputsNumberInputChange = this.handleNewElementInputsNumberInputChange.bind(this);
+    this.handleNewElementOutputsNumberInputChange = this.handleNewElementOutputsNumberInputChange.bind(this);
+    this.handleAddBlockButtonClick = this.handleAddBlockButtonClick.bind(this);
     this.handleMouseWheel = this.handleMouseWheel.bind(this);
     this.remove_wires = this.remove_wires.bind(this);
     this._ref = React.createRef();
   }
 
   componentDidMount() {
-    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [this._ref.current, 'mousemove', this.handleMouseMove], [this._ref.current, 'mouseup', this.handleMouseUp], [this._ref.current, 'mousewheel', this.handleMouseWheel], //fucking drag and drop
+    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [this._ref.current, 'mousemove', this.handleMouseMove], [this._ref.current, 'mouseup', this.handleMouseUp], //fucking drag and drop
     [this._ref.current, 'drag', e => e.preventDefault()], [this._ref.current, 'dragstart', e => e.preventDefault()], [this._ref.current, 'dragend', e => e.preventDefault()], [this._ref.current, 'dragover', e => e.preventDefault()], [this._ref.current, 'dragenter', e => e.preventDefault()], [this._ref.current, 'dragleave', e => e.preventDefault()], [this._ref.current, 'drop', e => e.preventDefault()]];
 
     for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
@@ -74,7 +87,7 @@ class BlocksArea extends React.Component {
         const id_string = b.name + '_' + String(id);
         if (state.blocks[id_string] != undefined) return state;
         state.blocks[id_string] = {
-          'name': b.name,
+          'type': b.type,
           'x': b.x,
           'y': b.y
         };
@@ -116,7 +129,6 @@ class BlocksArea extends React.Component {
   }
 
   onBlockMounted(detail) {
-    console.log('onBlockMounted', detail);
     this.setState(state => {
       state.blocks[detail.id] = detail;
       return state;
@@ -124,7 +136,6 @@ class BlocksArea extends React.Component {
   }
 
   onBlockStateChange(detail) {
-    console.log('onBlockStateChange');
     this.setState(state => {
       state.blocks[detail.id] = detail;
       Object.values(state.wires).forEach(w => {
@@ -158,7 +169,7 @@ class BlocksArea extends React.Component {
   handleMouseDown(e, element_type) {
     this.add({
       'blocks': [{
-        'name': element_type,
+        'type': element_type,
         'x': e.clientX,
         'y': e.clientY,
         'dragging': true
@@ -233,18 +244,55 @@ class BlocksArea extends React.Component {
     });
   }
 
-  handleNameInputChange(e) {
+  handleSchemeNameInputChange(e) {
     this.setState({
       'name': e.target.value
     });
   }
 
+  handleNewElementNameInputChange(e) {
+    this.setState({
+      'new_element_name': e.target.value
+    });
+  }
+
+  handleNewElementInputsNumberInputChange(e) {
+    this.setState({
+      'new_element_inputs_number': e.target.value
+    });
+  }
+
+  handleNewElementOutputsNumberInputChange(e) {
+    this.setState({
+      'new_element_outputs_number': e.target.value
+    });
+  }
+
   handleMouseWheel(e) {
-    e.preventDefault();
+    const delta = e.deltaY;
     this.setState(state => {
-      state.scale += e.deltaY / 1000;
+      state.scale += delta / 1000;
+      console.log(state.scale);
       return state;
     });
+  }
+
+  handleAddBlockButtonClick() {
+    const name = this.state.new_element_name;
+    const inputs_number = this.state.new_element_inputs_number;
+    const outputs_number = this.state.new_element_outputs_number;
+    console.log(inputs_number, outputs_number);
+    const new_element_info = {
+      'inputs': Array.from({
+        length: inputs_number
+      }, (_, i) => ''),
+      'outputs': Array.from({
+        length: outputs_number
+      }, (_, i) => '')
+    };
+    console.log(new_element_info);
+    custom_elements[name] = new_element_info;
+    this.forceUpdate();
   }
 
   render() {
@@ -260,24 +308,63 @@ class BlocksArea extends React.Component {
       type: "text",
       className: "schemeName unselectable",
       value: this.state.name,
-      onChange: this.handleNameInputChange
+      onChange: this.handleSchemeNameInputChange
     }), /*#__PURE__*/React.createElement("button", {
-      className: "saveButton unselectable",
+      className: "saveButton animated unselectable",
       onClick: this.save
     }, "save")), /*#__PURE__*/React.createElement("div", {
       className: "blocks"
-    }, Object.entries(defaultElements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
-      key: i,
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "block blockToAdd"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "content"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      className: "name",
+      value: this.state.new_element_name,
+      onChange: this.handleNewElementNameInputChange
+    }))), /*#__PURE__*/React.createElement("div", {
+      className: "inputsOutputsNumber"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "inputsNumber"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      min: "1",
+      value: this.state.new_element_inputs_number,
+      onChange: this.handleNewElementInputsNumberInputChange
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "outputsNumber"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      min: "1",
+      value: this.state.new_element_outputs_number,
+      onChange: this.handleNewElementOutputsNumberInputChange
+    }))), /*#__PURE__*/React.createElement("button", {
+      className: "addBlockButton animated",
+      onClick: this.handleAddBlockButtonClick
+    }, "+"), Object.entries(custom_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
+      key: element_type_and_element[0],
       className: "block",
       onMouseDown: e => this.handleMouseDown(e, element_type_and_element[0])
     }, /*#__PURE__*/React.createElement("div", {
       className: "content"
     }, /*#__PURE__*/React.createElement("div", {
       className: "name unselectable"
-    }, element_type_and_element[0])))))), Object.entries(this.state.blocks).map(block_id_and_block => /*#__PURE__*/React.createElement(Block, {
+    }, element_type_and_element[0])))), Object.entries(default_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
+      key: element_type_and_element[0],
+      className: "block",
+      onMouseDown: e => this.handleMouseDown(e, element_type_and_element[0])
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "content"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "name unselectable"
+    }, element_type_and_element[0])))))), /*#__PURE__*/React.createElement("div", {
+      className: "schemeArea",
+      onWheel: this.handleMouseWheel
+    }, Object.entries(this.state.blocks).map(block_id_and_block => /*#__PURE__*/React.createElement(Block, {
       key: block_id_and_block[0] + '_' + scale,
       id: block_id_and_block[0],
-      name: block_id_and_block[1].name,
+      type: block_id_and_block[1].type,
       x: block_id_and_block[1].x,
       y: block_id_and_block[1].y,
       scale: scale,
@@ -298,7 +385,7 @@ class BlocksArea extends React.Component {
       from_point: this.state.adding_wire_info.from_point,
       to_point: this.state.adding_wire_info.to_point,
       scale: scale
-    }) : null);
+    }) : null));
   }
 
 }

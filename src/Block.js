@@ -20,9 +20,10 @@ class Block extends React.Component {
 	constructor(props) {
 		super(props);
 
+		const type_info = getTypeInfo(props.type);
 		this.state = {
 			'id': props.id,
-			'name': props.name,
+			'type': props.type,
 			'x': props.x,
 			'y': props.y,
 			'scale': props.scale,
@@ -30,8 +31,8 @@ class Block extends React.Component {
 			'initital_dragging': props.dragging || false,
 			'gripX': undefined,
 			'gripY': undefined,
-			'inputs': defaultElements[props.name].inputs,
-			'outputs': defaultElements[props.name].outputs,
+			'inputs': type_info['inputs'],
+			'outputs': type_info['outputs'],
 			'onStateChange': props.onStateChange,
 			'onMount': props.onMount,
 			'function_to_delete_self': props.function_to_delete_self,
@@ -56,7 +57,7 @@ class Block extends React.Component {
 			state = this.state;
 		return {
 			'id': state.id,
-			'name': state.name,
+			'type': state.type,
 			'x': state.x,
 			'y': state.y,
 			'input_connectors_coordinates':
@@ -175,7 +176,8 @@ class Block extends React.Component {
 		const x = this.state.x;
 		const y = this.state.y;
 		const scale = this.state.scale;
-		const name = this.state.name;
+		const name = this.state.type;
+		const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
 		return (
 			<div ref={this._ref} className="block"
 				style={{
@@ -201,18 +203,18 @@ class Block extends React.Component {
 					</div>
 					<div className="name unselectable">{name}</div>
 					<div className="outputs">
-						{
-							this.state.outputs.map(
-								(output, i) =>
-								<div ref={this.output_connectors_refs[i]} key={i} className="output"
-									onMouseDown={e => this.handleMouseDownOnInputOutput('output', i, e)}
-									onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
-										'from_block_id': this.state.id,
-										'from_output_id': i
-									})}>
-								</div>
-							)
-						}
+					{
+						this.state.outputs.map(
+							(output, i) =>
+							<div ref={this.output_connectors_refs[i]} key={i} className="output"
+								onMouseDown={e => this.handleMouseDownOnInputOutput('output', i, e)}
+								onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
+									'from_block_id': this.state.id,
+									'from_output_id': i
+								})}>
+							</div>
+						)
+					}
 					</div>
 				</div>
 			</div>

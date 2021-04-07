@@ -19,9 +19,10 @@ function getElementRelativeCenter(e) {
 class Block extends React.Component {
   constructor(props) {
     super(props);
+    const type_info = getTypeInfo(props.type);
     this.state = {
       'id': props.id,
-      'name': props.name,
+      'type': props.type,
       'x': props.x,
       'y': props.y,
       'scale': props.scale,
@@ -29,8 +30,8 @@ class Block extends React.Component {
       'initital_dragging': props.dragging || false,
       'gripX': undefined,
       'gripY': undefined,
-      'inputs': defaultElements[props.name].inputs,
-      'outputs': defaultElements[props.name].outputs,
+      'inputs': type_info['inputs'],
+      'outputs': type_info['outputs'],
       'onStateChange': props.onStateChange,
       'onMount': props.onMount,
       'function_to_delete_self': props.function_to_delete_self,
@@ -52,7 +53,7 @@ class Block extends React.Component {
     if (state == undefined) state = this.state;
     return {
       'id': state.id,
-      'name': state.name,
+      'type': state.type,
       'x': state.x,
       'y': state.y,
       'input_connectors_coordinates': this.input_connectors_refs.map(r => getElementCenter(r.current)),
@@ -156,7 +157,8 @@ class Block extends React.Component {
     const x = this.state.x;
     const y = this.state.y;
     const scale = this.state.scale;
-    const name = this.state.name;
+    const name = this.state.type;
+    const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
     return /*#__PURE__*/React.createElement("div", {
       ref: this._ref,
       className: "block",
