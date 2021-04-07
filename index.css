@@ -1,5 +1,6 @@
 body {
 	background-color: black;
+	overflow: hidden;
 }
 
 .unselectable {
@@ -14,8 +15,6 @@ body {
 
 
 
-
-
 .sidePanel {
 	position: absolute;
 	width: 250px;
@@ -24,6 +23,8 @@ body {
 
 	padding: 30px;
 	overflow-y: auto;
+
+	z-index: 100;
 }
 
 .sidePanel>* {
@@ -72,6 +73,10 @@ body {
 	outline: none;
 }
 
+.sidePanel .controls .loadButton {
+	margin-top: 25px;
+}
+
 .sidePanel .animated:not(:hover) {
 	transition-duration: 0.3s;
 }
@@ -97,11 +102,11 @@ body {
 	background-color: rgb(150, 150, 220);
 }
 
-.sidePanel .animated-brown:not(:hover) {
+.sidePanel .animated-lightblue:not(:hover) {
 	background-color: LightSteelBlue;
 }
 
-.sidePanel .animated-brown:hover {
+.sidePanel .animated-lightblue:hover {
 	background-color: lightgrey;
 }
 

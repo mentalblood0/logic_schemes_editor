@@ -185,7 +185,9 @@ class Block extends React.Component {
 		const x = this.state.x;
 		const y = this.state.y;
 		const scale = this.state.scale;
-		const name = this.state.type;
+		const type = this.state.type;
+		const name = this.state.id;
+		const visible_name = ((type == 'INPUT') || (type == 'OUTPUT')) ? name : type;
 		const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
 		return (
 			<div ref={this._ref} className="block"
@@ -210,7 +212,7 @@ class Block extends React.Component {
 						)
 					}
 					</div>
-					<div className="name unselectable">{name}</div>
+					<div className="name unselectable">{visible_name}</div>
 					<div className="outputs">
 					{
 						this.state.outputs.map(

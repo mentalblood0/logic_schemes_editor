@@ -402,9 +402,9 @@ class BlocksArea extends React.Component {
 						value={this.state.name} onChange={this.handleSchemeNameInputChange}></input>
 					<button className="saveButton animated animated-green unselectable"
 						onClick={this.save}>save</button>
-					<button className="saveButton animated animated-blue unselectable"
+					<button className="loadButton animated animated-blue unselectable"
 						onClick={this.load}>load</button>
-					<button className="exportButton animated animated-brown unselectable"
+					<button className="exportButton animated animated-lightblue unselectable"
 						onClick={this.export}>export</button>
 					<button className="clearButton animated animated-red unselectable"
 						onClick={this.clear}>clear</button>

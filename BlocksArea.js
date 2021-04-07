@@ -385,10 +385,10 @@ class BlocksArea extends React.Component {
       className: "saveButton animated animated-green unselectable",
       onClick: this.save
     }, "save"), /*#__PURE__*/React.createElement("button", {
-      className: "saveButton animated animated-blue unselectable",
+      className: "loadButton animated animated-blue unselectable",
       onClick: this.load
     }, "load"), /*#__PURE__*/React.createElement("button", {
-      className: "exportButton animated animated-brown unselectable",
+      className: "exportButton animated animated-lightblue unselectable",
       onClick: this.export
     }, "export"), /*#__PURE__*/React.createElement("button", {
       className: "clearButton animated animated-red unselectable",

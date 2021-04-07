@@ -164,7 +164,9 @@ class Block extends React.Component {
     const x = this.state.x;
     const y = this.state.y;
     const scale = this.state.scale;
-    const name = this.state.type;
+    const type = this.state.type;
+    const name = this.state.id;
+    const visible_name = type == 'INPUT' || type == 'OUTPUT' ? name : type;
     const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
     return /*#__PURE__*/React.createElement("div", {
       ref: this._ref,
@@ -190,7 +192,7 @@ class Block extends React.Component {
       })
     }))), /*#__PURE__*/React.createElement("div", {
       className: "name unselectable"
-    }, name), /*#__PURE__*/React.createElement("div", {
+    }, visible_name), /*#__PURE__*/React.createElement("div", {
       className: "outputs"
     }, this.state.outputs.map((output, i) => /*#__PURE__*/React.createElement("div", {
       ref: this.output_connectors_refs[i],
