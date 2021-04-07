@@ -1,0 +1,8 @@
+{
+	"name": "test",
+	"new_element_type": "new",
+	"new_element_inputs_number": 1,
+	"new_element_outputs_number": 1,
+	"blocks": {},
+	"wires": {}
+}

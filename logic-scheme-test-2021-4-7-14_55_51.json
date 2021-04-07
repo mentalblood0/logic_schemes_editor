@@ -1,0 +1,53 @@
+{
+	"name": "test",
+	"new_element_type": "new",
+	"new_element_inputs_number": 1,
+	"new_element_outputs_number": 1,
+	"blocks": {
+		"INPUT_1": {
+			"type": "INPUT",
+			"x": 455.5859375,
+			"y": 282,
+			"dragging": false,
+			"id": "INPUT_1",
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 633.40625,
+					"y": 327
+				}
+			]
+		},
+		"OUTPUT_1": {
+			"type": "OUTPUT",
+			"x": 506.625,
+			"y": 432,
+			"dragging": false,
+			"id": "OUTPUT_1",
+			"input_connectors_coordinates": [
+				{
+					"x": 551.625,
+					"y": 477
+				}
+			],
+			"output_connectors_coordinates": []
+		}
+	},
+	"wires": {
+		"0": {
+			"id": 0,
+			"from_block_id": "INPUT_1",
+			"to_block_id": "OUTPUT_1",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 633.40625,
+				"y": 327
+			},
+			"to_point": {
+				"x": 551.625,
+				"y": 477
+			}
+		}
+	}
+}

@@ -57,6 +57,8 @@ class BlocksArea extends React.Component {
     this.onBlockMounted = this.onBlockMounted.bind(this);
     this.onBlockStopInitialDragging = this.onBlockStopInitialDragging.bind(this);
     this.save = this.save.bind(this);
+    this.load = this.load.bind(this);
+    this.export = this.export.bind(this);
     this.clear = this.clear.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -163,6 +165,42 @@ class BlocksArea extends React.Component {
   }
 
   getSaveData() {
+    return {
+      'name': this.state.name,
+      'new_element_type': this.state.new_element_type,
+      'new_element_inputs_number': this.state.new_element_inputs_number,
+      'new_element_outputs_number': this.state.new_element_outputs_number,
+      'blocks': this.state.blocks,
+      'wires': this.state.wires
+    };
+  }
+
+  getSaveName() {
+    const today = new Date();
+    const current_date = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString() + '-' + today.getDate().toString();
+    const current_time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    return 'logic-scheme' + '-' + this.state.name + '-' + current_date + '-' + current_time + '.json';
+  }
+
+  save() {
+    const data = this.getSaveData();
+    const data_text = JSON.stringify(data, null, '\t');
+    const name = this.getSaveName();
+    downloadFile(name, data_text);
+  }
+
+  setLoadData(data) {
+    this.setState(data);
+  }
+
+  load() {
+    uploadFile('json', jsonText => {
+      const data = JSON.parse(jsonText);
+      this.setLoadData(data);
+    });
+  }
+
+  getExportData() {
     const blocks = this.state.blocks;
     return {
       [this.state.name]: {
@@ -174,7 +212,7 @@ class BlocksArea extends React.Component {
     };
   }
 
-  getSaveName() {
+  getExportName() {
     // const today = new Date();
     // const current_date = today.getFullYear().toString()
     // 	+ '-' + (today.getMonth() + 1).toString()
@@ -190,11 +228,11 @@ class BlocksArea extends React.Component {
     return this.state.name + '.json';
   }
 
-  save() {
-    const save_data = this.getSaveData();
-    const save_data_text = JSON.stringify(save_data, null, '\t');
-    const save_name = this.getSaveName();
-    downloadFile(save_name, save_data_text);
+  export() {
+    const data = this.getExportData();
+    const data_text = JSON.stringify(data, null, '\t');
+    const name = this.getExportName();
+    downloadFile(name, data_text);
   }
 
   handleMouseDown(e, element_type, inputs_number, outputs_number) {
@@ -347,6 +385,12 @@ class BlocksArea extends React.Component {
       className: "saveButton animated animated-green unselectable",
       onClick: this.save
     }, "save"), /*#__PURE__*/React.createElement("button", {
+      className: "saveButton animated animated-blue unselectable",
+      onClick: this.load
+    }, "load"), /*#__PURE__*/React.createElement("button", {
+      className: "exportButton animated animated-brown unselectable",
+      onClick: this.export
+    }, "export"), /*#__PURE__*/React.createElement("button", {
       className: "clearButton animated animated-red unselectable",
       onClick: this.clear
     }, "clear")), /*#__PURE__*/React.createElement("div", {

@@ -20,7 +20,7 @@ body {
 	position: absolute;
 	width: 250px;
 	height: calc(100% - 60px);
-	background-color: rgba(70, 70, 70, 0.7);
+	background-color: rgba(70, 70, 80, 0.7);
 
 	padding: 30px;
 	overflow-y: auto;
@@ -31,7 +31,7 @@ body {
 	width: 100%;
 	padding: 20px;
 
-	border: solid rgba(120, 120, 120, 1) 5px;
+	border: solid rgba(120, 120, 140, 1) 5px;
 	border-radius: 20px;
 }
 
@@ -86,15 +86,31 @@ body {
 }
 
 .sidePanel .animated-green:hover {
-	background-color: rgb(150, 220, 150, 1);
+	background-color: rgb(150, 220, 150);
+}
+
+.sidePanel .animated-blue:not(:hover) {
+	background-color: deepskyblue;
+}
+
+.sidePanel .animated-blue:hover {
+	background-color: rgb(150, 150, 220);
+}
+
+.sidePanel .animated-brown:not(:hover) {
+	background-color: LightSteelBlue;
+}
+
+.sidePanel .animated-brown:hover {
+	background-color: lightgrey;
 }
 
 .sidePanel .animated-red:not(:hover) {
-	background-color: firebrick;
+	background-color: LightCoral;
 }
 
 .sidePanel .animated-red:hover {
-	background-color: rgb(220, 150, 150, 1);
+	background-color: rgb(220, 150, 150);
 }
 
 .sidePanel .block:not(:hover) {
@@ -139,7 +155,9 @@ body {
 	width: 100%;
 	background-color: transparent;
 
+	font-family: element_font;
 	font-size: 20px;
+	font-weight: bold;
 	text-align: center;
 	
 	border: none;
