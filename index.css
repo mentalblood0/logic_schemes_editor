@@ -102,9 +102,10 @@ body {
 }
 
 .blockToAdd .name {
-	border: none;
 	background-color: transparent;
 	width: 60%;
+	border: none;
+	padding: none;
 	outline: none;
 }
 

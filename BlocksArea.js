@@ -55,6 +55,7 @@ class BlocksArea extends React.Component {
     };
     this.onBlockStateChange = this.onBlockStateChange.bind(this);
     this.onBlockMounted = this.onBlockMounted.bind(this);
+    this.onBlockStopInitialDragging = this.onBlockStopInitialDragging.bind(this);
     this.save = this.save.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -91,17 +92,16 @@ class BlocksArea extends React.Component {
         const id = Object.keys(dict_with_blocks_with_such_name).length;
         const id_string = b.type + '_' + String(id);
         if (state.blocks[id_string] != undefined) return state;
-        state.blocks[id_string] = {
+        const block = {
           'type': b.type,
           'x': b.x,
           'y': b.y,
           'inputs': b.inputs,
           'outputs': b.outputs
         };
-
-        if (b.dragging) {
-          state.blocks[id_string].dragging = true;
-        }
+        if (b.dragging) block['dragging'] = true;
+        console.log('add block', block);
+        state.blocks[id_string] = block;
       }
 
       return state;
@@ -137,17 +137,26 @@ class BlocksArea extends React.Component {
 
   onBlockMounted(detail) {
     this.setState(state => {
-      state.blocks[detail.id] = detail;
+      for (const key in detail) state.blocks[detail.id][key] = detail[key];
+
       return state;
     });
   }
 
   onBlockStateChange(detail) {
     this.setState(state => {
-      state.blocks[detail.id] = detail;
+      for (const key in detail) state.blocks[detail.id][key] = detail[key];
+
       Object.values(state.wires).forEach(w => {
         if (detail.id == w.from_block_id || detail.id == w.to_block_id) this.updateWireCoordinates(state, w.id);
       });
+      return state;
+    });
+  }
+
+  onBlockStopInitialDragging(block_id) {
+    this.setState(state => {
+      state.blocks[block_id].dragging = false;
       return state;
     });
   }
@@ -174,14 +183,15 @@ class BlocksArea extends React.Component {
   }
 
   handleMouseDown(e, element_type, inputs_number, outputs_number) {
+    if (e.button != 0) return;
     this.add({
       'blocks': [{
         'type': element_type,
         'x': e.clientX,
         'y': e.clientY,
         'dragging': true,
-        'inputs': filledArray(inputs_number, ''),
-        'outputs': filledArray(outputs_number, '')
+        'inputs': inputs_number ? filledArray(inputs_number, '') : undefined,
+        'outputs': inputs_number ? filledArray(outputs_number, '') : undefined
       }]
     });
   }
@@ -382,7 +392,8 @@ class BlocksArea extends React.Component {
       handle_mouse_up_on_input_output_function: this.handleMouseUpOnInputOutput,
       remove_wires_function: this.remove_wires,
       onMount: this.onBlockMounted,
-      onStateChange: this.onBlockStateChange
+      onStateChange: this.onBlockStateChange,
+      onStopInitialDragging: this.onBlockStopInitialDragging
     })), Object.values(this.state.wires).filter(w => w.from_point).map(wire => /*#__PURE__*/React.createElement(Wire, {
       key: wire.id,
       from_point: wire.from_point,

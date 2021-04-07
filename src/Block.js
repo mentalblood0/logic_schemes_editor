@@ -22,14 +22,13 @@ class Block extends React.Component {
 		console.log('Block', props)
 
 		const type_info = getTypeInfo(props.type);
-		console.log('type_info', type_info);
 		this.state = {
 			'id': props.id,
 			'type': props.type,
 			'x': props.x,
 			'y': props.y,
 			'scale': props.scale,
-			'dragging': false,
+			'dragging': props.dragging || false,
 			'initital_dragging': props.dragging || false,
 			'gripX': undefined,
 			'gripY': undefined,
@@ -37,12 +36,12 @@ class Block extends React.Component {
 			'outputs': props.outputs ? props.outputs : type_info['outputs'],
 			'onStateChange': props.onStateChange,
 			'onMount': props.onMount,
+			'onStopInitialDragging': props.onStopInitialDragging,
 			'function_to_delete_self': props.function_to_delete_self,
 			'start_adding_wire_function': props.start_adding_wire_function,
 			'handle_mouse_up_on_input_output_function': props.handle_mouse_up_on_input_output_function,
 			'remove_wires_function': props.remove_wires_function
 		}
-		console.log('state', this.state);
 
 		this.handleMouseDown = this.handleMouseDown.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -60,7 +59,6 @@ class Block extends React.Component {
 			state = this.state;
 		return {
 			'id': state.id,
-			'type': state.type,
 			'x': state.x,
 			'y': state.y,
 			'input_connectors_coordinates':
@@ -71,8 +69,6 @@ class Block extends React.Component {
 	}
 
 	componentDidMount() {
-		this.state.onMount(this.getInfo());
-
 		const content_element = this._ref.current.children[0];
 		const name_element = this._ref.current.children[0].children[1];
 		const ifDraggableByThis = (e, f) => (
@@ -88,17 +84,22 @@ class Block extends React.Component {
 		for (const e_l of this.state.event_listeners)
 			e_l[0].addEventListener(e_l[1], e_l[2]);
 
-		if (this.state.initital_dragging) {
-			this.render();
+		if (this.state.dragging) {
 			const center = getElementCenter(this._ref.current);
 			this.handleMouseDown({
 				'clientX': center.x,
 				'clientY': center.y
+			}, () => {
+				console.log('after', center);
+				const info = this.getInfo()
+				this.state.onMount(info);
+				this.state.onStateChange(info);
 			});
+		} else {
+			const info = this.getInfo()
+			this.state.onMount(info);
+			this.state.onStateChange(info);
 		}
-
-		this.render();
-		this.state.onStateChange(this.getInfo());
 	}
 
 	componentWillUnmount() {
@@ -106,7 +107,7 @@ class Block extends React.Component {
 			e_l[0].removeEventListener(e_l[1], e_l[2]);
 	}
 
-	handleMouseDown(e) {
+	handleMouseDown(e, function_after) {
 		if (e.button === 2) {
 			this.state.function_to_delete_self();
 			return;
@@ -115,12 +116,17 @@ class Block extends React.Component {
 			'dragging': true,
 			'gripX': e.clientX - this.state.x,
 			'gripY': e.clientY - this.state.y
-		});
+		}, function_after);
 	}
 
 	handleMouseUp(e) {
+		if (this.state.initital_dragging)
+			this.state.onStopInitialDragging(this.state.id);
 		if (this.state.dragging)
-			this.setState({'dragging': false});
+			this.setState({
+				'dragging': false,
+				'initital_dragging': false
+			});
 	}
 
 	handleMouseMove(e) {
