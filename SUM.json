@@ -1,0 +1,768 @@
+{
+	"name": "MAIN",
+	"new_element_type": "AND_3",
+	"new_element_inputs_number": "3",
+	"new_element_outputs_number": 1,
+	"blocks": {
+		"1": {
+			"type": "INPUT",
+			"id": "INPUT_1",
+			"const_id": "1",
+			"x": 330.203125,
+			"y": 71,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 534.796875,
+					"y": 116
+				}
+			]
+		},
+		"2": {
+			"type": "INPUT",
+			"id": "INPUT_2",
+			"const_id": "2",
+			"x": 321.578125,
+			"y": 422,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 531.421875,
+					"y": 467
+				}
+			]
+		},
+		"3": {
+			"type": "INPUT",
+			"id": "INPUT_3",
+			"const_id": "3",
+			"x": 325.75,
+			"y": 863,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 535.25,
+					"y": 908
+				}
+			]
+		},
+		"4": {
+			"type": "AND",
+			"id": "AND_1",
+			"const_id": "4",
+			"x": 708.5390625,
+			"y": 7,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x && y"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 753.53125,
+					"y": 52
+				},
+				{
+					"x": 753.53125,
+					"y": 124
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 918.453125,
+					"y": 52
+				}
+			]
+		},
+		"5": {
+			"type": "AND",
+			"id": "AND_2",
+			"const_id": "5",
+			"x": 704.5390625,
+			"y": 182,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x && y"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 749.53125,
+					"y": 227
+				},
+				{
+					"x": 749.53125,
+					"y": 299
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 914.453125,
+					"y": 227
+				}
+			]
+		},
+		"6": {
+			"type": "AND",
+			"id": "AND_3",
+			"const_id": "6",
+			"x": 705.5390625,
+			"y": 349,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x && y"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 750.53125,
+					"y": 394
+				},
+				{
+					"x": 750.53125,
+					"y": 466
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 915.453125,
+					"y": 394
+				}
+			]
+		},
+		"7": {
+			"type": "OR_3",
+			"id": "OR_3_1",
+			"const_id": "7",
+			"x": 719.3359375,
+			"y": 519,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				""
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 764.328125,
+					"y": 564
+				},
+				{
+					"x": 764.328125,
+					"y": 636
+				},
+				{
+					"x": 764.328125,
+					"y": 708
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 937.65625,
+					"y": 564
+				}
+			]
+		},
+		"8": {
+			"type": "AND_3",
+			"id": "AND_3_1",
+			"const_id": "8",
+			"x": 711.6953125,
+			"y": 758,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				""
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 756.6875,
+					"y": 803
+				},
+				{
+					"x": 756.6875,
+					"y": 875
+				},
+				{
+					"x": 756.6875,
+					"y": 947
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 953.296875,
+					"y": 803
+				}
+			]
+		},
+		"9": {
+			"type": "OR_3",
+			"id": "OR_3_2",
+			"const_id": "9",
+			"x": 1000.3359375,
+			"y": 114,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				""
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1045.328125,
+					"y": 159
+				},
+				{
+					"x": 1045.328125,
+					"y": 231
+				},
+				{
+					"x": 1045.328125,
+					"y": 303
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1218.65625,
+					"y": 159
+				}
+			]
+		},
+		"10": {
+			"type": "OUTPUT",
+			"id": "OUTPUT_1",
+			"const_id": "10",
+			"x": 1287.25,
+			"y": 114,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"input_connectors_coordinates": [
+				{
+					"x": 1332.25,
+					"y": 159
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"11": {
+			"type": "NOT",
+			"id": "NOT_1",
+			"const_id": "11",
+			"x": 1039.5546875,
+			"y": 366,
+			"inputs": [
+				"x"
+			],
+			"outputs": [
+				"!x"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1084.546875,
+					"y": 411
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1243.4375,
+					"y": 411
+				}
+			]
+		},
+		"12": {
+			"type": "AND",
+			"id": "AND_4",
+			"const_id": "12",
+			"x": 1036.5390625,
+			"y": 470,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x && y"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1081.53125,
+					"y": 515
+				},
+				{
+					"x": 1081.53125,
+					"y": 587
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1246.453125,
+					"y": 515
+				}
+			]
+		},
+		"13": {
+			"type": "OR",
+			"id": "OR_1",
+			"const_id": "13",
+			"x": 1048.1796875,
+			"y": 643,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x || y"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1093.171875,
+					"y": 688
+				},
+				{
+					"x": 1093.171875,
+					"y": 760
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1234.8125,
+					"y": 688
+				}
+			]
+		},
+		"14": {
+			"type": "OUTPUT",
+			"id": "OUTPUT_2",
+			"const_id": "14",
+			"x": 1301.625,
+			"y": 636,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"input_connectors_coordinates": [
+				{
+					"x": 1346.625,
+					"y": 681
+				}
+			],
+			"output_connectors_coordinates": []
+		}
+	},
+	"wires": {
+		"0": {
+			"id": 0,
+			"from_block_const_id": "1",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 534.796875,
+				"y": 116
+			},
+			"to_point": {
+				"x": 753.53125,
+				"y": 52
+			}
+		},
+		"1": {
+			"id": 1,
+			"from_block_const_id": "1",
+			"to_block_const_id": "5",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 534.796875,
+				"y": 116
+			},
+			"to_point": {
+				"x": 749.53125,
+				"y": 227
+			}
+		},
+		"2": {
+			"id": 2,
+			"from_block_const_id": "1",
+			"to_block_const_id": "7",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 534.796875,
+				"y": 116
+			},
+			"to_point": {
+				"x": 764.328125,
+				"y": 564
+			}
+		},
+		"3": {
+			"id": 3,
+			"from_block_const_id": "1",
+			"to_block_const_id": "8",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 534.796875,
+				"y": 116
+			},
+			"to_point": {
+				"x": 756.6875,
+				"y": 803
+			}
+		},
+		"4": {
+			"id": 4,
+			"from_block_const_id": "2",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 531.421875,
+				"y": 467
+			},
+			"to_point": {
+				"x": 753.53125,
+				"y": 124
+			}
+		},
+		"5": {
+			"id": 5,
+			"from_block_const_id": "2",
+			"to_block_const_id": "6",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 531.421875,
+				"y": 467
+			},
+			"to_point": {
+				"x": 750.53125,
+				"y": 394
+			}
+		},
+		"6": {
+			"id": 6,
+			"from_block_const_id": "2",
+			"to_block_const_id": "7",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 531.421875,
+				"y": 467
+			},
+			"to_point": {
+				"x": 764.328125,
+				"y": 636
+			}
+		},
+		"7": {
+			"id": 7,
+			"from_block_const_id": "2",
+			"to_block_const_id": "8",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 531.421875,
+				"y": 467
+			},
+			"to_point": {
+				"x": 756.6875,
+				"y": 875
+			}
+		},
+		"8": {
+			"id": 8,
+			"from_block_const_id": "3",
+			"to_block_const_id": "5",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 535.25,
+				"y": 908
+			},
+			"to_point": {
+				"x": 749.53125,
+				"y": 299
+			}
+		},
+		"9": {
+			"id": 9,
+			"from_block_const_id": "3",
+			"to_block_const_id": "6",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 535.25,
+				"y": 908
+			},
+			"to_point": {
+				"x": 750.53125,
+				"y": 466
+			}
+		},
+		"10": {
+			"id": 10,
+			"from_block_const_id": "3",
+			"to_block_const_id": "7",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 535.25,
+				"y": 908
+			},
+			"to_point": {
+				"x": 764.328125,
+				"y": 708
+			}
+		},
+		"11": {
+			"id": 11,
+			"from_block_const_id": "3",
+			"to_block_const_id": "8",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 535.25,
+				"y": 908
+			},
+			"to_point": {
+				"x": 756.6875,
+				"y": 947
+			}
+		},
+		"12": {
+			"id": 12,
+			"from_block_const_id": "4",
+			"to_block_const_id": "9",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 918.453125,
+				"y": 52
+			},
+			"to_point": {
+				"x": 1045.328125,
+				"y": 159
+			}
+		},
+		"13": {
+			"id": 13,
+			"from_block_const_id": "5",
+			"to_block_const_id": "9",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 914.453125,
+				"y": 227
+			},
+			"to_point": {
+				"x": 1045.328125,
+				"y": 231
+			}
+		},
+		"14": {
+			"id": 14,
+			"from_block_const_id": "6",
+			"to_block_const_id": "9",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 915.453125,
+				"y": 394
+			},
+			"to_point": {
+				"x": 1045.328125,
+				"y": 303
+			}
+		},
+		"15": {
+			"id": 15,
+			"from_block_const_id": "9",
+			"to_block_const_id": "10",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1218.65625,
+				"y": 159
+			},
+			"to_point": {
+				"x": 1332.25,
+				"y": 159
+			}
+		},
+		"16": {
+			"id": 16,
+			"from_block_const_id": "9",
+			"to_block_const_id": "11",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1218.65625,
+				"y": 159
+			},
+			"to_point": {
+				"x": 1084.546875,
+				"y": 411
+			}
+		},
+		"17": {
+			"id": 17,
+			"from_block_const_id": "11",
+			"to_block_const_id": "12",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1243.4375,
+				"y": 411
+			},
+			"to_point": {
+				"x": 1081.53125,
+				"y": 515
+			}
+		},
+		"18": {
+			"id": 18,
+			"from_block_const_id": "7",
+			"to_block_const_id": "12",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 937.65625,
+				"y": 564
+			},
+			"to_point": {
+				"x": 1081.53125,
+				"y": 587
+			}
+		},
+		"19": {
+			"id": 19,
+			"from_block_const_id": "8",
+			"to_block_const_id": "13",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 953.296875,
+				"y": 803
+			},
+			"to_point": {
+				"x": 1093.171875,
+				"y": 760
+			}
+		},
+		"20": {
+			"id": 20,
+			"from_block_const_id": "12",
+			"to_block_const_id": "13",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1246.453125,
+				"y": 515
+			},
+			"to_point": {
+				"x": 1093.171875,
+				"y": 688
+			}
+		},
+		"21": {
+			"id": 21,
+			"from_block_const_id": "13",
+			"to_block_const_id": "14",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1234.8125,
+				"y": 688
+			},
+			"to_point": {
+				"x": 1346.625,
+				"y": 681
+			}
+		}
+	},
+	"tests": [
+		[
+			0,
+			0,
+			0,
+			0,
+			0
+		],
+		[
+			0,
+			0,
+			1,
+			0,
+			1
+		],
+		[
+			0,
+			1,
+			0,
+			0,
+			1
+		],
+		[
+			0,
+			1,
+			1,
+			1,
+			0
+		],
+		[
+			1,
+			0,
+			0,
+			0,
+			1
+		],
+		[
+			1,
+			0,
+			1,
+			1,
+			0
+		],
+		[
+			1,
+			1,
+			0,
+			1,
+			0
+		],
+		[
+			1,
+			1,
+			1,
+			1,
+			1
+		]
+	]
+}

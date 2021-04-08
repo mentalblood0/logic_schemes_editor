@@ -58,9 +58,13 @@ class Block extends React.Component {
 		if (state == undefined)
 			state = this.state;
 		return {
+			'type': state.type,
+			'id': state.id,
 			'const_id': state.const_id,
 			'x': state.x,
 			'y': state.y,
+			'inputs': state.inputs,
+			'outputs': state.outputs,
 			'input_connectors_coordinates':
 				this.input_connectors_refs.map(r => getElementCenter(r.current)),
 			'output_connectors_coordinates':

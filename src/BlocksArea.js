@@ -159,16 +159,14 @@ class BlocksArea extends React.Component {
 
 	onBlockMounted(detail) {
 		this.setState(state => {
-			for (const key in detail)
-				state.blocks[detail.const_id][key] = detail[key];
+			state.blocks[detail.const_id] = Object.assign(detail);
 			return state;
 		});
 	}
 
 	onBlockStateChange(detail) {
 		this.setState(state => {
-			for (const key in detail)
-				state.blocks[detail.const_id][key] = detail[key];
+			state.blocks[detail.const_id] = Object.assign(detail);
 			Object.values(state.wires).forEach(w => {
 				if ((detail.const_id == w.from_block_const_id) || (detail.const_id == w.to_block_const_id))
 					this.updateWireCoordinates(state, w.id);
@@ -219,6 +217,7 @@ class BlocksArea extends React.Component {
 	}
 
 	setLoadData(data) {
+		console.log(data);
 		this.setState(data);
 	}
 
@@ -243,9 +242,9 @@ class BlocksArea extends React.Component {
 			}
 		}
 		if (tests.length > 0)
-			data['tests'] = tests.map(t => ({
+			data[this.state.name]['tests'] = tests.map(t => ({
 				'inputs': t.slice(0, inputs_number),
-				'outputs': t.slice(-inputs_number)
+				'outputs': t.slice(-outputs_number)
 			}));
 		return data;
 	}

@@ -1,0 +1,105 @@
+{
+	"name": "test",
+	"new_element_type": "new",
+	"new_element_inputs_number": 1,
+	"new_element_outputs_number": 1,
+	"blocks": {
+		"1": {
+			"type": "INPUT",
+			"id": "INPUT_1",
+			"const_id": "1",
+			"x": 363.203125,
+			"y": 330,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 567.796875,
+					"y": 375
+				}
+			],
+			"dragging": false
+		},
+		"2": {
+			"type": "OUTPUT",
+			"id": "OUTPUT_1",
+			"const_id": "2",
+			"x": 523.25,
+			"y": 185,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"input_connectors_coordinates": [
+				{
+					"x": 568.25,
+					"y": 230
+				}
+			],
+			"output_connectors_coordinates": [],
+			"dragging": false
+		},
+		"3": {
+			"type": "NOT",
+			"id": "NOT_1",
+			"const_id": "3",
+			"x": 640.5546875,
+			"y": 413,
+			"inputs": [
+				"x"
+			],
+			"outputs": [
+				"!x"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 685.546875,
+					"y": 458
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 844.4375,
+					"y": 458
+				}
+			],
+			"dragging": false
+		}
+	},
+	"wires": {
+		"0": {
+			"id": 0,
+			"from_block_const_id": "1",
+			"to_block_const_id": "3",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 567.796875,
+				"y": 375
+			},
+			"to_point": {
+				"x": 685.546875,
+				"y": 458
+			}
+		},
+		"1": {
+			"id": 1,
+			"from_block_const_id": "3",
+			"to_block_const_id": "2",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 844.4375,
+				"y": 458
+			},
+			"to_point": {
+				"x": 568.25,
+				"y": 230
+			}
+		}
+	},
+	"tests": []
+}
