@@ -11,6 +11,9 @@
 }
 
 .modalWindow {
+	max-width: 90vw;
+	max-height: 90vh;
+
 	z-index: 101;
 
 	background-color: lightgrey;
@@ -27,4 +30,6 @@
 	text-align: center;
 
 	padding: 30px 40px;
+
+	overflow: auto;
 }

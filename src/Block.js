@@ -25,6 +25,8 @@ class Block extends React.Component {
 			'const_id': props.const_id,
 			'id': props.id,
 			'type': props.type,
+			'offset_x': props.offset_x,
+			'offset_y': props.offset_y,
 			'x': props.x,
 			'y': props.y,
 			'scale': props.scale,

@@ -48,6 +48,8 @@ class BlocksArea extends React.Component {
       'adding_wire': false,
       'adding_wire_info': undefined,
       'scale': 1,
+      'offset_x': 0,
+      'offset_y': 0,
       'tests_editor_opened': false,
       'tests': []
     };
