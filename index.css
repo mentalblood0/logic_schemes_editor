@@ -200,9 +200,9 @@ body {
 }
 
 .testsTable td {
-	height: 30px;
+	height: 40px;
 	font-size: 25px;
-	padding: 15px;
+	padding: 10px;
 }
 
 .testsTable tr:not(:last-child) td {
@@ -217,7 +217,7 @@ body {
 	background-color: LightCoral;
 	color: lightgrey;
 	font-weight: bold;
-	font-size: 15px;
+	font-size: 20px;
 	border: none;
 	border-radius: 5px;
 	padding: 7px;
@@ -225,11 +225,14 @@ body {
 }
 
 .addRowButton {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
 	margin-top: 12px;
 	background-color: LimeGreen;
 	color: lightgrey;
 	font-weight: bold;
-	font-size: 15px;
+	font-size: 20px;
 	border: none;
 	border-radius: 5px;
 	padding: 7px;

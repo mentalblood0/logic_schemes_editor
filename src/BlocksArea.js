@@ -236,7 +236,7 @@ class BlocksArea extends React.Component {
 				'wires': Object.values(this.state.wires).map(w => ({
 					'from': w.from_block_id + '[' + (w.from_output_id + 1) + ']',
 					'to': w.to_block_id + '[' + (w.to_input_id + 1) + ']'
-				})),
+				}))
 			}
 		}
 	}
@@ -405,6 +405,12 @@ class BlocksArea extends React.Component {
 
 	render() {
 		const scale = this.state.scale;
+		let inputs = undefined;
+		let outputs = undefined;
+		if (this.state.tests_editor_opened) {
+			inputs = Object.values(this.state.blocks).filter(b => b.type == 'INPUT').map(b => b.id);
+			outputs = Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').map(b => b.id);
+		}
 
 		return <div className="blocksArea" ref={this._ref}>
 			<div className="sidePanel">
@@ -481,9 +487,11 @@ class BlocksArea extends React.Component {
 			<ModalWindow
 				close_function={() => this.setState({'tests_editor_opened': false})}>
 				<TestsEditor
-					inputs={Object.values(this.state.blocks).filter(b => b.type == 'INPUT').map(b => b.id)}
-					outputs={Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').map(b => b.id)}
-					tests={this.state.tests}
+					inputs={inputs}
+					outputs={outputs}
+					tests={this.state.tests.map(
+						t => t.slice(0, inputs.length).concat(t.slice(-outputs.length))
+					)}
 					onUnmount={tests => this.setState({'tests': tests})}></TestsEditor>
 			</ModalWindow>
 			: null

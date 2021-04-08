@@ -377,6 +377,14 @@ class BlocksArea extends React.Component {
 
   render() {
     const scale = this.state.scale;
+    let inputs = undefined;
+    let outputs = undefined;
+
+    if (this.state.tests_editor_opened) {
+      inputs = Object.values(this.state.blocks).filter(b => b.type == 'INPUT').map(b => b.id);
+      outputs = Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').map(b => b.id);
+    }
+
     return /*#__PURE__*/React.createElement("div", {
       className: "blocksArea",
       ref: this._ref
@@ -463,9 +471,9 @@ class BlocksArea extends React.Component {
         'tests_editor_opened': false
       })
     }, /*#__PURE__*/React.createElement(TestsEditor, {
-      inputs: Object.values(this.state.blocks).filter(b => b.type == 'INPUT').map(b => b.id),
-      outputs: Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').map(b => b.id),
-      tests: this.state.tests,
+      inputs: inputs,
+      outputs: outputs,
+      tests: this.state.tests.map(t => t.slice(0, inputs.length).concat(t.slice(-outputs.length))),
       onUnmount: tests => this.setState({
         'tests': tests
       })

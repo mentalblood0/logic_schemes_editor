@@ -48,7 +48,7 @@ class TestsEditor extends React.Component {
 												return state;
 											delete state.tests[test_i];
 										}, () => this.forceUpdate());
-									}}>remove row</div>
+									}}>remove</div>
 							</td>
 							{
 								t.slice(0, inputs.length).map(
@@ -114,7 +114,7 @@ class TestsEditor extends React.Component {
 						const test_length = state.inputs.length + state.outputs.length;
 						state.tests.push(filledArray(test_length, 0));
 					}, () => this.forceUpdate())
-				}}>add row</div>
+				}}>add</div>
 		</div>;
 	}
 }

@@ -44,7 +44,7 @@ class TestsEditor extends React.Component {
           delete state.tests[test_i];
         }, () => this.forceUpdate());
       }
-    }, "remove row")), t.slice(0, inputs.length).map((v, input_i) => /*#__PURE__*/React.createElement("td", {
+    }, "remove")), t.slice(0, inputs.length).map((v, input_i) => /*#__PURE__*/React.createElement("td", {
       key: input_i
     }, /*#__PURE__*/React.createElement("input", {
       type: "checkbox",
@@ -86,7 +86,7 @@ class TestsEditor extends React.Component {
           state.tests.push(filledArray(test_length, 0));
         }, () => this.forceUpdate());
       }
-    }, "add row"));
+    }, "add"));
   }
 
 }
