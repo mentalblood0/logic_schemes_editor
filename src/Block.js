@@ -117,8 +117,8 @@ class Block extends React.Component {
 		}
 		this.setState({
 			'dragging': true,
-			'gripX': e.clientX - this.state.x,
-			'gripY': e.clientY - this.state.y
+			'gripX': e.clientX / this.state.scale - this.state.x,
+			'gripY': e.clientY / this.state.scale - this.state.y
 		}, function_after);
 	}
 
@@ -135,8 +135,8 @@ class Block extends React.Component {
 	handleMouseMove(e) {
 		if (this.state.dragging === true) {
 			const newState = Object.assign(this.state, {
-				'x': e.clientX - this.state.gripX,
-				'y': e.clientY - this.state.gripY
+				'x': e.clientX / this.state.scale - this.state.gripX,
+				'y': e.clientY / this.state.scale - this.state.gripY
 			});
 			this.setState(state => newState);
 			this.state.onStateChange(this.getInfo(newState));

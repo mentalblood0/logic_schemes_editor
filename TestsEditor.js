@@ -18,7 +18,6 @@ class TestsEditor extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmount', this.state.tests.length);
     this.state.onUnmount(this.state.tests);
   }
 
