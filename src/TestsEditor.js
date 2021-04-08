@@ -31,82 +31,84 @@ class TestsEditor extends React.Component {
 			</div>
 		
 		return <div className="testsEditor">
-			<div className="testsTableWrapper inputs">
-				<table className="testsTable inputs">
-					<tbody>
-						<tr>
-						<td></td>
+			<div className="tables">
+				<div className="testsTableWrapper inputs">
+					<table className="testsTable inputs">
+						<tbody>
+							<tr>
+							<td></td>
+							{
+								inputs.map((name, i) =>
+									<td key={i}>{name}</td>
+								)
+							}
+							</tr>
 						{
-							inputs.map((name, i) =>
-								<td key={i}>{name}</td>
-							)
-						}
-						</tr>
-					{
-						tests.map((t, test_i) => 
-							<tr key={test_i}>
-							<td>
-								<div className="removeRowButton animated unselectable"
-									onClick={e => {
-										const tests_length = this.state.tests.length;
-										this.setState(state => {
-											if (state.tests.length != tests_length)
+							tests.map((t, test_i) => 
+								<tr key={test_i}>
+								<td>
+									<div className="removeRowButton animated unselectable"
+										onClick={e => {
+											const tests_length = this.state.tests.length;
+											this.setState(state => {
+												if (state.tests.length != tests_length)
+													return state;
+												state.tests.splice(test_i, 1);
 												return state;
-											state.tests.splice(test_i, 1);
-											return state;
-										});
-									}}>-</div>
-							</td>
-							{
-								t.slice(0, inputs.length).map(
-									(v, input_i) => 
-									<td key={input_i}
-										className={'checkbox ' + (tests[test_i][input_i] ? 'checked' : 'unchecked')} onClick={e => {
-												this.setState(state => {
-													state.tests[test_i][input_i] = state.tests[test_i][input_i] ? 0 : 1;
-													return state;
-												});
-											}}>
-									</td>
-								)
-							}
-							</tr>
-						)
-					}
-					</tbody>
-				</table>
-			</div>
-			<div className="testsTableWrapper outputs">
-				<table className="testsTable outputs">
-					<tbody>
-						<tr>
-						{
-							outputs.map((name, i) =>
-								<td key={i}>{name}</td>
+											});
+										}}>-</div>
+								</td>
+								{
+									t.slice(0, inputs.length).map(
+										(v, input_i) => 
+										<td key={input_i}
+											className={'checkbox ' + (tests[test_i][input_i] ? 'checked' : 'unchecked')} onClick={e => {
+													this.setState(state => {
+														state.tests[test_i][input_i] = state.tests[test_i][input_i] ? 0 : 1;
+														return state;
+													});
+												}}>
+										</td>
+									)
+								}
+								</tr>
 							)
 						}
-						</tr>
-					{
-						tests.map((t, test_i) => 
-							<tr key={test_i}>
+						</tbody>
+					</table>
+				</div>
+				<div className="testsTableWrapper outputs">
+					<table className="testsTable outputs">
+						<tbody>
+							<tr>
 							{
-								t.slice(inputs.length, t.length).map(
-									(v, output_i) => 
-									<td key={output_i}
-										className={'checkbox ' + (tests[test_i][inputs.length + output_i] ? 'checked' : 'unchecked')} onClick={e => {
-												this.setState(state => {
-													state.tests[test_i][inputs.length + output_i] = state.tests[test_i][inputs.length + output_i] ? 0 : 1;
-													return state;
-												});
-											}}>
-									</td>
+								outputs.map((name, i) =>
+									<td key={i}>{name}</td>
 								)
 							}
 							</tr>
-						)
-					}
-					</tbody>
-				</table>
+						{
+							tests.map((t, test_i) => 
+								<tr key={test_i}>
+								{
+									t.slice(inputs.length, t.length).map(
+										(v, output_i) => 
+										<td key={output_i}
+											className={'checkbox ' + (tests[test_i][inputs.length + output_i] ? 'checked' : 'unchecked')} onClick={e => {
+													this.setState(state => {
+														state.tests[test_i][inputs.length + output_i] = state.tests[test_i][inputs.length + output_i] ? 0 : 1;
+														return state;
+													});
+												}}>
+										</td>
+									)
+								}
+								</tr>
+							)
+						}
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div className="addRowButton animated unselectable"
 				onClick={e => {

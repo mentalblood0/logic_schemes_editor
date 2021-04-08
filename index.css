@@ -202,13 +202,16 @@ body {
 	font-size: 25px;
 }
 
+.testsEditor .tables {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
 .testsTableWrapper {
-	display: inline-block;
 }
 
 .testsTable {
 	border-collapse: collapse;
-	width: 100%;
 	height: 100%;
 }
 

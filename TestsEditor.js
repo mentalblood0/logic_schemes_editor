@@ -33,6 +33,8 @@ class TestsEditor extends React.Component {
     return /*#__PURE__*/React.createElement("div", {
       className: "testsEditor"
     }, /*#__PURE__*/React.createElement("div", {
+      className: "tables"
+    }, /*#__PURE__*/React.createElement("div", {
       className: "testsTableWrapper inputs"
     }, /*#__PURE__*/React.createElement("table", {
       className: "testsTable inputs"
@@ -76,7 +78,7 @@ class TestsEditor extends React.Component {
           return state;
         });
       }
-    }))))))), /*#__PURE__*/React.createElement("div", {
+    })))))))), /*#__PURE__*/React.createElement("div", {
       className: "addRowButton animated unselectable",
       onClick: e => {
         const tests_length = this.state.tests.length;
