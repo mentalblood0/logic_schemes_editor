@@ -206,11 +206,35 @@ body {
 }
 
 .testsTable tr:not(:last-child) td {
-	border-bottom: 1px solid rgb(70, 70, 100);
+	border-bottom: 1px solid grey;
 }
 
 .testsTable tr td:not(:last-child) {
-	border-right: 1px solid rgb(70, 70, 100);
+	border-right: 1px solid grey;
+}
+
+.testsTable .checkbox.checked {
+	transition-duration: 0.2s;
+}
+
+.testsTable .checkbox.unchecked {
+	transition-duration: 0.2s;
+}
+
+.testsTable.inputs .checkbox.checked {
+	background-color: limegreen;
+}
+
+.testsTable.inputs .checkbox.unchecked {
+	background-color: rgb(170, 220, 170);
+}
+
+.testsTable.outputs .checkbox.checked {
+	background-color: skyblue;
+}
+
+.testsTable.outputs .checkbox.unchecked {
+	background-color: rgb(190, 220, 240);
 }
 
 .removeRowButton {

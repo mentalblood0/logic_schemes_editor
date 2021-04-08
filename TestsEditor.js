@@ -44,19 +44,16 @@ class TestsEditor extends React.Component {
           delete state.tests[test_i];
         }, () => this.forceUpdate());
       }
-    }, "remove")), t.slice(0, inputs.length).map((v, input_i) => /*#__PURE__*/React.createElement("td", {
-      key: input_i
-    }, /*#__PURE__*/React.createElement("input", {
-      type: "checkbox",
-      checked: v,
-      onChange: e => {
-        const value = e.target.checked ? 1 : 0;
+    }, "-")), t.slice(0, inputs.length).map((v, input_i) => /*#__PURE__*/React.createElement("td", {
+      key: input_i,
+      className: 'checkbox ' + (tests[test_i][input_i] ? 'checked' : 'unchecked'),
+      onClick: e => {
         this.setState(state => {
-          state.tests[test_i][input_i] = value;
+          state.tests[test_i][input_i] = state.tests[test_i][input_i] ? 0 : 1;
           return state;
         });
       }
-    })))))))), /*#__PURE__*/React.createElement("div", {
+    }))))))), /*#__PURE__*/React.createElement("div", {
       className: "testsTableWrapper outputs"
     }, /*#__PURE__*/React.createElement("table", {
       className: "testsTable outputs"
@@ -65,18 +62,15 @@ class TestsEditor extends React.Component {
     }, name))), tests.map((t, test_i) => /*#__PURE__*/React.createElement("tr", {
       key: test_i
     }, t.slice(inputs.length, t.length).map((v, output_i) => /*#__PURE__*/React.createElement("td", {
-      key: output_i
-    }, /*#__PURE__*/React.createElement("input", {
-      type: "checkbox",
-      checked: v,
-      onChange: e => {
-        const value = e.target.checked ? 1 : 0;
+      key: output_i,
+      className: 'checkbox ' + (tests[test_i][inputs.length + output_i] ? 'checked' : 'unchecked'),
+      onClick: e => {
         this.setState(state => {
-          state.tests[test_i][inputs.length + output_i] = value;
+          state.tests[test_i][inputs.length + output_i] = state.tests[test_i][inputs.length + output_i] ? 0 : 1;
           return state;
         });
       }
-    })))))))), /*#__PURE__*/React.createElement("div", {
+    }))))))), /*#__PURE__*/React.createElement("div", {
       className: "addRowButton animated unselectable",
       onClick: e => {
         const tests_length = this.state.tests.length;
@@ -86,7 +80,7 @@ class TestsEditor extends React.Component {
           state.tests.push(filledArray(test_length, 0));
         }, () => this.forceUpdate());
       }
-    }, "add"));
+    }, "+"));
   }
 
 }

@@ -48,20 +48,18 @@ class TestsEditor extends React.Component {
 												return state;
 											delete state.tests[test_i];
 										}, () => this.forceUpdate());
-									}}>remove</div>
+									}}>-</div>
 							</td>
 							{
 								t.slice(0, inputs.length).map(
 									(v, input_i) => 
-									<td key={input_i}>
-										<input type="checkbox" checked={v}
-											onChange={e => {
-												const value = e.target.checked ? 1 : 0;
+									<td key={input_i}
+										className={'checkbox ' + (tests[test_i][input_i] ? 'checked' : 'unchecked')} onClick={e => {
 												this.setState(state => {
-													state.tests[test_i][input_i] = value;
+													state.tests[test_i][input_i] = state.tests[test_i][input_i] ? 0 : 1;
 													return state;
 												});
-											}}></input>
+											}}>
 									</td>
 								)
 							}
@@ -87,15 +85,13 @@ class TestsEditor extends React.Component {
 							{
 								t.slice(inputs.length, t.length).map(
 									(v, output_i) => 
-									<td key={output_i}>
-										<input type="checkbox" checked={v}
-											onChange={e => {
-												const value = e.target.checked ? 1 : 0;
+									<td key={output_i}
+										className={'checkbox ' + (tests[test_i][inputs.length + output_i] ? 'checked' : 'unchecked')} onClick={e => {
 												this.setState(state => {
-													state.tests[test_i][inputs.length + output_i] = value;
+													state.tests[test_i][inputs.length + output_i] = state.tests[test_i][inputs.length + output_i] ? 0 : 1;
 													return state;
 												});
-											}}></input>
+											}}>
 									</td>
 								)
 							}
@@ -114,7 +110,7 @@ class TestsEditor extends React.Component {
 						const test_length = state.inputs.length + state.outputs.length;
 						state.tests.push(filledArray(test_length, 0));
 					}, () => this.forceUpdate())
-				}}>add</div>
+				}}>+</div>
 		</div>;
 	}
 }
