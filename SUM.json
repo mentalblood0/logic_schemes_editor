@@ -3,6 +3,8 @@
 	"new_element_type": "AND_3",
 	"new_element_inputs_number": "3",
 	"new_element_outputs_number": 1,
+	"inputs_number": 3,
+	"outputs_number": 2,
 	"blocks": {
 		"1": {
 			"type": "INPUT",

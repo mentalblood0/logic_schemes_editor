@@ -18,6 +18,7 @@ class TestsEditor extends React.Component {
   }
 
   componentWillUnmount() {
+    console.log('unmount', this.state.tests.length);
     this.state.onUnmount(this.state.tests);
   }
 
@@ -46,8 +47,9 @@ class TestsEditor extends React.Component {
         const tests_length = this.state.tests.length;
         this.setState(state => {
           if (state.tests.length != tests_length) return state;
-          delete state.tests[test_i];
-        }, () => this.forceUpdate());
+          state.tests.splice(test_i, 1);
+          return state;
+        });
       }
     }, "-")), t.slice(0, inputs.length).map((v, input_i) => /*#__PURE__*/React.createElement("td", {
       key: input_i,
@@ -83,7 +85,8 @@ class TestsEditor extends React.Component {
           if (state.tests.length != tests_length) return state;
           const test_length = state.inputs.length + state.outputs.length;
           state.tests.push(filledArray(test_length, 0));
-        }, () => this.forceUpdate());
+          return state;
+        });
       }
     }, "+"));
   }

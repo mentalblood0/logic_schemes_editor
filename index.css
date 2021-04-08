@@ -38,13 +38,14 @@ body {
 
 .sidePanel>*>* {
 	width: 100%;
+	text-align: center;
 }
 
 .sidePanel>*:not(:first-child) {
 	margin-top: 40px;
 }
 
-.sidePanel .controls>*:not(:first-child) {
+.sidePanel>*>*:not(:first-child) {
 	margin-top: 10px;
 }
 
@@ -77,6 +78,12 @@ body {
 	margin-top: 25px;
 }
 
+.sidePanel .coverageInfo {
+	font-family: base_font;
+	font-size: 23px;
+	color: LightSteelBlue;
+}
+
 .animated:not(:hover) {
 	transition-duration: 0.3s;
 }
@@ -99,7 +106,7 @@ body {
 }
 
 .animated-blue:hover {
-	background-color: rgb(150, 150, 220);
+	background-color: rgb(140, 200, 240);
 }
 
 .animated-lightblue:not(:hover) {
@@ -107,7 +114,7 @@ body {
 }
 
 .animated-lightblue:hover {
-	background-color: lightgrey;
+	background-color: rgb(210, 230, 250);
 }
 
 .animated-red:not(:hover) {

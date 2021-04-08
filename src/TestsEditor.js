@@ -17,6 +17,7 @@ class TestsEditor extends React.Component {
 	}
 
 	componentWillUnmount() {
+		console.log('unmount', this.state.tests.length)
 		this.state.onUnmount(this.state.tests);
 	}
 
@@ -52,8 +53,9 @@ class TestsEditor extends React.Component {
 										this.setState(state => {
 											if (state.tests.length != tests_length)
 												return state;
-											delete state.tests[test_i];
-										}, () => this.forceUpdate());
+											state.tests.splice(test_i, 1);
+											return state;
+										});
 									}}>-</div>
 							</td>
 							{
@@ -115,7 +117,8 @@ class TestsEditor extends React.Component {
 							return state;
 						const test_length = state.inputs.length + state.outputs.length;
 						state.tests.push(filledArray(test_length, 0));
-					}, () => this.forceUpdate())
+						return state;
+					})
 				}}>+</div>
 		</div>;
 	}

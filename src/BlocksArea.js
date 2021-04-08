@@ -43,6 +43,8 @@ class BlocksArea extends React.Component {
 			'new_element_type': 'new',
 			'new_element_inputs_number': 1,
 			'new_element_outputs_number': 1,
+			'inputs_number': 0,
+			'outputs_number': 0,
 			'blocks': {},
 			'wires': {},
 			'adding_block': false,
@@ -123,6 +125,10 @@ class BlocksArea extends React.Component {
 				if (b.dragging)
 					block['dragging'] = true;
 				state.blocks[const_id] = block;
+				if (b.type == 'INPUT')
+					state.inputs_number += 1;
+				else if (b.type == 'OUTPUT')
+					state.outputs_number += 1;
 			}
 			return state;
 		}, () => {
@@ -188,6 +194,8 @@ class BlocksArea extends React.Component {
 			'new_element_type': this.state.new_element_type,
 			'new_element_inputs_number': this.state.new_element_inputs_number,
 			'new_element_outputs_number': this.state.new_element_outputs_number,
+			'inputs_number': this.state.inputs_number,
+			'outputs_number': this.state.outputs_number,
 			'blocks': this.state.blocks,
 			'wires': this.state.wires,
 			'tests': this.state.tests
@@ -217,7 +225,6 @@ class BlocksArea extends React.Component {
 	}
 
 	setLoadData(data) {
-		console.log(data);
 		this.setState(data);
 	}
 
@@ -318,6 +325,10 @@ class BlocksArea extends React.Component {
 			if (!state.blocks[const_id])
 				return state;
 			const type = state.blocks[const_id].type;
+			if (type == 'INPUT')
+				state.inputs_number -= 1;
+			else if (type == 'OUTPUT')
+				state.outputs_number -= 1;
 			const id = state.blocks[const_id].id;
 			const number = Number.parseInt(id.split('_').pop(), 10);
 			delete state.blocks[const_id];
@@ -402,6 +413,10 @@ class BlocksArea extends React.Component {
 
 	render() {
 		const scale = this.state.scale;
+		const inputs_number = this.state.inputs_number;
+		const outputs_number = this.state.outputs_number;
+		const tests_number = this.state.tests.length;
+		const max_tests_number = 2 ** inputs_number;
 		let inputs = undefined;
 		let outputs = undefined;
 		if (this.state.tests_editor_opened) {
@@ -424,7 +439,14 @@ class BlocksArea extends React.Component {
 						onClick={this.clear}>clear</button>
 				</div>
 				<div className="tests">
-					<button className="editTestsButton animated animated-lightblue"
+				{
+					((inputs_number > 0) && (outputs_number > 0)) ?
+					<div className="coverageInfo unselectable" id={tests_number + '_' + max_tests_number}>
+						Coverage:<br></br>{tests_number}/{max_tests_number} ({Math.floor(tests_number / max_tests_number * 100)}%)
+					</div>
+					: null
+				}
+					<button className="editTestsButton animated animated-lightblue unselectable"
 						onClick={() => this.setState({'tests_editor_opened': true})}>edit tests</button>
 				</div>
 				<div className="blocks">
@@ -454,7 +476,7 @@ class BlocksArea extends React.Component {
 								onChange={this.handleNewElementOutputsNumberInputChange}></input>
 						</div>
 					</div>
-					<button className="addBlockButton animated animated-green" onClick={this.handleAddBlockButtonClick}>+</button>
+					<button className="addBlockButton animated animated-green unselectable" onClick={this.handleAddBlockButtonClick}>+</button>
 				{
 					Object.entries(custom_elements).map(
 						(element_type_and_element, i) =>
