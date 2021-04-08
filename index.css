@@ -206,6 +206,7 @@ body {
 }
 
 .testsTable td {
+	color: grey;
 	height: 40px;
 	font-size: 25px;
 	padding: 10px;
@@ -217,6 +218,10 @@ body {
 
 .testsTable tr td:not(:last-child) {
 	border-right: 1px solid grey;
+}
+
+.testsTable.inputs tr td:first-child {
+	border: none;
 }
 
 .testsTable .checkbox.checked {
@@ -244,6 +249,8 @@ body {
 }
 
 .removeRowButton {
+	width: 25px;
+	height: 25px;
 	background-color: LightCoral;
 	color: lightgrey;
 	font-weight: bold;
