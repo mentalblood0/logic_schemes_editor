@@ -200,29 +200,24 @@ class BlocksArea extends React.Component {
 
   getExportData() {
     const blocks = this.state.blocks;
+    const tests = this.state.tests;
+    const inputs_number = Object.values(this.state.blocks).filter(b => b.type == 'INPUT').length;
+    const outputs_number = Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').length;
     return {
       [this.state.name]: {
         'wires': Object.values(this.state.wires).map(w => ({
           'from': w.from_block_id + '[' + (w.from_output_id + 1) + ']',
           'to': w.to_block_id + '[' + (w.to_input_id + 1) + ']'
+        })),
+        'tests': tests.map(t => ({
+          'inputs': t.slice(0, inputs_number),
+          'outputs': t.slice(-inputs_number)
         }))
       }
     };
   }
 
   getExportName() {
-    // const today = new Date();
-    // const current_date = today.getFullYear().toString()
-    // 	+ '-' + (today.getMonth() + 1).toString()
-    // 	+ '-' + today.getDate().toString();
-    // const current_time = today.getHours()
-    // 	+ ":" + today.getMinutes()
-    // 	+ ":" + today.getSeconds();
-    // return 'logic-scheme'
-    // 	+ '-' + this.state.name
-    // 	+ '-' + current_date
-    // 	+ '-' + current_time
-    // 	+ '.json';
     return this.state.name + '.json';
   }
 
@@ -371,7 +366,8 @@ class BlocksArea extends React.Component {
   clear() {
     this.setState({
       'blocks': {},
-      'wires': {}
+      'wires': {},
+      'tests': []
     });
   }
 

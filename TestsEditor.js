@@ -50,7 +50,7 @@ class TestsEditor extends React.Component {
       type: "checkbox",
       checked: v,
       onChange: e => {
-        const value = e.target.checked;
+        const value = e.target.checked ? 1 : 0;
         this.setState(state => {
           state.tests[test_i][input_i] = value;
           return state;
@@ -70,7 +70,7 @@ class TestsEditor extends React.Component {
       type: "checkbox",
       checked: v,
       onChange: e => {
-        const value = e.target.checked;
+        const value = e.target.checked ? 1 : 0;
         this.setState(state => {
           state.tests[test_i][inputs.length + output_i] = value;
           return state;
