@@ -77,44 +77,44 @@ body {
 	margin-top: 25px;
 }
 
-.sidePanel .animated:not(:hover) {
+.animated:not(:hover) {
 	transition-duration: 0.3s;
 }
 
-.sidePanel .animated:hover {
+.animated:hover {
 	transition-duration: 0.5s;
-	transform: scale(1.15);
+	transform: scale(1.1);
 }
 
-.sidePanel .animated-green:not(:hover) {
+.animated-green:not(:hover) {
 	background-color: limegreen;
 }
 
-.sidePanel .animated-green:hover {
+.animated-green:hover {
 	background-color: rgb(150, 220, 150);
 }
 
-.sidePanel .animated-blue:not(:hover) {
+.animated-blue:not(:hover) {
 	background-color: deepskyblue;
 }
 
-.sidePanel .animated-blue:hover {
+.animated-blue:hover {
 	background-color: rgb(150, 150, 220);
 }
 
-.sidePanel .animated-lightblue:not(:hover) {
+.animated-lightblue:not(:hover) {
 	background-color: LightSteelBlue;
 }
 
-.sidePanel .animated-lightblue:hover {
+.animated-lightblue:hover {
 	background-color: lightgrey;
 }
 
-.sidePanel .animated-red:not(:hover) {
+.animated-red:not(:hover) {
 	background-color: LightCoral;
 }
 
-.sidePanel .animated-red:hover {
+.animated-red:hover {
 	background-color: rgb(220, 150, 150);
 }
 
@@ -189,14 +189,51 @@ body {
 	height: 100%;
 }
 
+.testsTableWrapper {
+	display: inline-block;
+}
+
 .testsTable {
+	border-collapse: collapse;
 	width: 100%;
 	height: 100%;
 }
 
 .testsTable td {
+	height: 30px;
 	font-size: 25px;
 	padding: 15px;
+}
+
+.testsTable tr:not(:last-child) td {
+	border-bottom: 1px solid rgb(70, 70, 100);
+}
+
+.testsTable tr td:not(:last-child) {
+	border-right: 1px solid rgb(70, 70, 100);
+}
+
+.removeRowButton {
+	background-color: LightCoral;
+	color: lightgrey;
+	font-weight: bold;
+	font-size: 15px;
+	border: none;
+	border-radius: 5px;
+	padding: 7px;
+	outline: none;
+}
+
+.addRowButton {
+	margin-top: 12px;
+	background-color: LimeGreen;
+	color: lightgrey;
+	font-weight: bold;
+	font-size: 15px;
+	border: none;
+	border-radius: 5px;
+	padding: 7px;
+	outline: none;
 }
 
 

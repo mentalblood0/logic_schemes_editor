@@ -26,9 +26,5 @@
 	font-family: monospace;
 	text-align: center;
 
-	display: flex;
-	flex-direction: column;
-	align-content: space-between;
-
 	padding: 30px 40px;
 }

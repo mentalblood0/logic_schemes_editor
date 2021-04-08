@@ -32,12 +32,6 @@ function getUniqueId(some_dict) {
   return Object.keys(some_dict).length == 0 ? 0 : Math.max(...Object.keys(some_dict)) + 1;
 }
 
-function filledArray(l, n) {
-  return Array.from({
-    length: l
-  }, (_, i) => n);
-}
-
 class BlocksArea extends React.Component {
   constructor(props) {
     super(props);
@@ -52,7 +46,8 @@ class BlocksArea extends React.Component {
       'adding_wire': false,
       'adding_wire_info': undefined,
       'scale': 1,
-      'tests_editor_opened': false
+      'tests_editor_opened': false,
+      'tests': []
     };
     this.onBlockStateChange = this.onBlockStateChange.bind(this);
     this.onBlockMounted = this.onBlockMounted.bind(this);
@@ -173,7 +168,8 @@ class BlocksArea extends React.Component {
       'new_element_inputs_number': this.state.new_element_inputs_number,
       'new_element_outputs_number': this.state.new_element_outputs_number,
       'blocks': this.state.blocks,
-      'wires': this.state.wires
+      'wires': this.state.wires,
+      'tests': tests
     };
   }
 
@@ -467,9 +463,12 @@ class BlocksArea extends React.Component {
         'tests_editor_opened': false
       })
     }, /*#__PURE__*/React.createElement(TestsEditor, {
-      inputs: ['i1', 'i2', 'i3'],
-      outputs: ['o1', 'o2'],
-      tests: [[0, 0, 0, 0, 0], [1, 1, 1, 1, 1]]
+      inputs: Object.values(this.state.blocks).filter(b => b.type == 'INPUT').map(b => b.id),
+      outputs: Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').map(b => b.id),
+      tests: this.state.tests,
+      onUnmount: tests => this.setState({
+        'tests': tests
+      })
     })) : null, /*#__PURE__*/React.createElement("div", {
       className: "schemeArea",
       onWheel: this.handleMouseWheel
