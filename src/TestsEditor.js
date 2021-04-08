@@ -24,6 +24,12 @@ class TestsEditor extends React.Component {
 		const inputs = this.state.inputs;
 		const outputs = this.state.outputs;
 		const tests = this.state.tests;
+
+		if ((inputs.length == 0) || (outputs.length == 0))
+			return <div className="testsEditor">
+				<div className="noInputsOutputsMessage">There should be inputs and outputs to add tests</div>
+			</div>
+		
 		return <div className="testsEditor">
 			<div className="testsTableWrapper inputs">
 				<table className="testsTable inputs">

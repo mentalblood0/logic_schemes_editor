@@ -25,6 +25,11 @@ class TestsEditor extends React.Component {
     const inputs = this.state.inputs;
     const outputs = this.state.outputs;
     const tests = this.state.tests;
+    if (inputs.length == 0 || outputs.length == 0) return /*#__PURE__*/React.createElement("div", {
+      className: "testsEditor"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "noInputsOutputsMessage"
+    }, "There should be inputs and outputs to add tests"));
     return /*#__PURE__*/React.createElement("div", {
       className: "testsEditor"
     }, /*#__PURE__*/React.createElement("div", {
