@@ -132,7 +132,7 @@ class Block extends React.Component {
   handleMouseDownOnInputOutput(type, i, e) {
     if (type == 'input') {
       if (e.button == 0) this.state.start_adding_wire_function({
-        'to_block_id': this.state.const_id,
+        'to_block_const_id': this.state.const_id,
         'to_input_id': i,
         'from_point': {
           'x': e.clientX,
@@ -140,12 +140,12 @@ class Block extends React.Component {
         },
         'to_point': getElementCenter(this.input_connectors_refs[i].current)
       });else if (e.button == 2) this.state.remove_wires_function({
-        'to_block_id': this.state.const_id,
+        'to_block_const_id': this.state.const_id,
         'to_input_id': i
       });
     } else if (type == 'output') {
       if (e.button == 0) this.state.start_adding_wire_function({
-        'from_block_id': this.state.const_id,
+        'from_block_const_id': this.state.const_id,
         'from_output_id': i,
         'from_point': getElementCenter(this.output_connectors_refs[i].current),
         'to_point': {
@@ -153,7 +153,7 @@ class Block extends React.Component {
           'y': e.clientY
         }
       });else if (e.button == 2) this.state.remove_wires_function({
-        'from_block_id': this.state.const_id,
+        'from_block_const_id': this.state.const_id,
         'from_output_id': i
       });
     }
@@ -186,7 +186,7 @@ class Block extends React.Component {
       className: "input",
       onMouseDown: e => this.handleMouseDownOnInputOutput('input', i, e),
       onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
-        'to_block_id': this.state.const_id,
+        'to_block_const_id': this.state.const_id,
         'to_input_id': i
       })
     }))), /*#__PURE__*/React.createElement("div", {
@@ -199,7 +199,7 @@ class Block extends React.Component {
       className: "output",
       onMouseDown: e => this.handleMouseDownOnInputOutput('output', i, e),
       onMouseUp: e => this.state.handle_mouse_up_on_input_output_function({
-        'from_block_id': this.state.const_id,
+        'from_block_const_id': this.state.const_id,
         'from_output_id': i
       })
     })))));

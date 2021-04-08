@@ -113,8 +113,8 @@ class BlocksArea extends React.Component {
           const new_id = getUniqueId(state.wires);
           state.wires[new_id] = {
             'id': new_id,
-            'from_block_id': String(w.from_block_id),
-            'to_block_id': String(w.to_block_id),
+            'from_block_const_id': String(w.from_block_const_id),
+            'to_block_const_id': String(w.to_block_const_id),
             'from_output_id': w.from_output_id,
             'to_input_id': w.to_input_id
           };
@@ -128,8 +128,8 @@ class BlocksArea extends React.Component {
 
   updateWireCoordinates(state, wire_id) {
     const wire = state.wires[wire_id];
-    const from_block = state.blocks[wire.from_block_id];
-    const to_block = state.blocks[wire.to_block_id];
+    const from_block = state.blocks[wire.from_block_const_id];
+    const to_block = state.blocks[wire.to_block_const_id];
     wire.from_point = from_block.output_connectors_coordinates[wire.from_output_id];
     wire.to_point = to_block.input_connectors_coordinates[wire.to_input_id];
     state.wires[wire_id] = wire;
@@ -148,7 +148,7 @@ class BlocksArea extends React.Component {
       for (const key in detail) state.blocks[detail.const_id][key] = detail[key];
 
       Object.values(state.wires).forEach(w => {
-        if (detail.const_id == w.from_block_id || detail.const_id == w.to_block_id) this.updateWireCoordinates(state, w.id);
+        if (detail.const_id == w.from_block_const_id || detail.const_id == w.to_block_const_id) this.updateWireCoordinates(state, w.id);
       });
       return state;
     });
@@ -169,7 +169,7 @@ class BlocksArea extends React.Component {
       'new_element_outputs_number': this.state.new_element_outputs_number,
       'blocks': this.state.blocks,
       'wires': this.state.wires,
-      'tests': tests
+      'tests': this.state.tests
     };
   }
 
@@ -203,18 +203,19 @@ class BlocksArea extends React.Component {
     const tests = this.state.tests;
     const inputs_number = Object.values(this.state.blocks).filter(b => b.type == 'INPUT').length;
     const outputs_number = Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').length;
-    return {
+    const data = {
       [this.state.name]: {
         'wires': Object.values(this.state.wires).map(w => ({
-          'from': w.from_block_id + '[' + (w.from_output_id + 1) + ']',
-          'to': w.to_block_id + '[' + (w.to_input_id + 1) + ']'
-        })),
-        'tests': tests.map(t => ({
-          'inputs': t.slice(0, inputs_number),
-          'outputs': t.slice(-inputs_number)
+          'from': blocks[w.from_block_const_id].id + '[' + (w.from_output_id + 1) + ']',
+          'to': blocks[w.to_block_const_id].id + '[' + (w.to_input_id + 1) + ']'
         }))
       }
     };
+    if (tests.length > 0) data['tests'] = tests.map(t => ({
+      'inputs': t.slice(0, inputs_number),
+      'outputs': t.slice(-inputs_number)
+    }));
+    return data;
   }
 
   getExportName() {
@@ -245,7 +246,7 @@ class BlocksArea extends React.Component {
   handleMouseMove(e) {
     if (this.state.adding_wire_info) {
       const info = this.state.adding_wire_info;
-      if (info.from_block_id == undefined) this.setState(state => {
+      if (info.from_block_const_id == undefined) this.setState(state => {
         state.adding_wire_info.from_point = {
           'x': e.clientX,
           'y': e.clientY
@@ -275,7 +276,7 @@ class BlocksArea extends React.Component {
 
     for (const key in input_output_info) new_wire_info[key] = input_output_info[key];
 
-    if (!('to_block_id' in new_wire_info) || !('from_block_id' in new_wire_info)) return;
+    if (!('to_block_const_id' in new_wire_info) || !('from_block_const_id' in new_wire_info)) return;
     delete new_wire_info['from_point'];
     delete new_wire_info['to_point'];
     this.add({
@@ -290,7 +291,7 @@ class BlocksArea extends React.Component {
       const id = state.blocks[const_id].id;
       const number = Number.parseInt(id.split('_').pop(), 10);
       delete state.blocks[const_id];
-      state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => v.from_block_id != const_id && v.to_block_id != const_id));
+      state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => v.from_block_const_id != const_id && v.to_block_const_id != const_id));
 
       for (const k in state.blocks) if (state.blocks[k].type == type) if (state.blocks[k].id > id) {
         const n = Number.parseInt(state.blocks[k].id.split('_').pop(), 10);
