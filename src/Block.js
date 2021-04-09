@@ -25,8 +25,7 @@ class Block extends React.Component {
 			'const_id': props.const_id,
 			'id': props.id,
 			'type': props.type,
-			'offset_x': props.offset_x,
-			'offset_y': props.offset_y,
+			'offset': props.offset,
 			'x': props.x,
 			'y': props.y,
 			'scale': props.scale,
@@ -189,6 +188,7 @@ class Block extends React.Component {
 	render() {
 		const x = this.state.x;
 		const y = this.state.y;
+		const offset = this.state.offset
 		const scale = this.state.scale;
 		const type = this.state.type;
 		const name = this.state.id;
@@ -199,8 +199,8 @@ class Block extends React.Component {
 				style={{
 					'position': 'absolute',
 					'transform': 'scale(' + scale + ')',
-				 	'left': x * scale,
-				 	'top': y * scale
+				 	'left': x * scale + offset.x,
+				 	'top': y * scale + offset.y
 				}}>
 				<div className="content">
 					<div className="inputs">

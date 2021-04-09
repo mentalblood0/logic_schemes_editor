@@ -51,8 +51,12 @@ class BlocksArea extends React.Component {
 			'adding_wire': false,
 			'adding_wire_info': undefined,
 			'scale': 1,
-			'offset_x': 0,
-			'offset_y': 0,
+			'offset': {
+				'x': 0,
+				'y': 0
+			},
+			'dragging_scheme_area': false,
+			'dragging_scheme_area_from_point': undefined,
 			'tests_editor_opened': false,
 			'tests': []
 		};
@@ -64,6 +68,7 @@ class BlocksArea extends React.Component {
 		this.export = this.export.bind(this);
 		this.clear = this.clear.bind(this);
 		this.handleMouseDown = this.handleMouseDown.bind(this);
+		this.handleMouseDownOnSchemeArea = this.handleMouseDownOnSchemeArea.bind(this);
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.startAddingWire = this.startAddingWire.bind(this);
@@ -285,7 +290,15 @@ class BlocksArea extends React.Component {
 	}
 
 	handleMouseMove(e) {
-		if (this.state.adding_wire_info) {
+		if (this.state.dragging_scheme_area) {
+			this.setState(state => ({
+				'offset': {
+					'x': e.clientX - state.dragging_scheme_area_from_point['x'],
+					'y': e.clientY - state.dragging_scheme_area_from_point['y']
+				}
+			}));
+		}
+		else if (this.state.adding_wire_info) {
 			const info = this.state.adding_wire_info;
 			if (info.from_block_const_id == undefined)
 				this.setState(state => {
@@ -307,7 +320,11 @@ class BlocksArea extends React.Component {
 	}
 
 	handleMouseUp() {
-		this.setState({'adding_wire': false});
+		this.setState({
+			'adding_wire': false,
+			'dragging_scheme_area': false,
+			'dragging_scheme_area_from_point': undefined
+		});
 	}
 
 	handleMouseUpOnInputOutput(input_output_info) {
@@ -413,8 +430,23 @@ class BlocksArea extends React.Component {
 		});
 	}
 
+	handleMouseDownOnSchemeArea(e) {
+		if (!e.target.classList.contains('schemeArea'))
+			return;
+		const mouse_x = e.clientX;
+		const mouse_y = e.clientY;
+		this.setState(state => ({
+			'dragging_scheme_area': true,
+			'dragging_scheme_area_from_point': {
+				'x': mouse_x - state.offset.x,
+				'y': mouse_y - state.offset.y,
+			}
+		}));
+	}
+
 	render() {
 		const scale = this.state.scale;
+		const offset = this.state.offset;
 		const inputs_number = this.state.inputs_number;
 		const outputs_number = this.state.outputs_number;
 		const tests_number = this.state.tests.length;
@@ -511,16 +543,19 @@ class BlocksArea extends React.Component {
 			</ModalWindow>
 			: null
 		}
-			<div className="schemeArea" onWheel={this.handleMouseWheel}>
+			<div className="schemeArea"
+				onWheel={this.handleMouseWheel}
+				onMouseDown={this.handleMouseDownOnSchemeArea}>
 			{
 				Object.entries(this.state.blocks).map(
 					(block_id_and_block, i) =>
-					<Block key={block_id_and_block[0] + '_' + block_id_and_block[1].id + '_' + scale}
+					<Block key={block_id_and_block[0] + '_' + block_id_and_block[1].id + '_' + scale + '_' + offset.x + '_' + offset.y}
 						const_id={block_id_and_block[0]}
 						id={block_id_and_block[1].id}
 						type={block_id_and_block[1].type}
 						x={block_id_and_block[1].x}
 						y={block_id_and_block[1].y}
+						offset={this.state.offset}
 						scale={scale}
 						dragging={block_id_and_block[1].dragging}
 						inputs={block_id_and_block[1].inputs}
