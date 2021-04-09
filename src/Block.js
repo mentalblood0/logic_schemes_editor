@@ -18,6 +18,7 @@ function getElementRelativeCenter(e) {
 
 class Block extends React.Component {
 	constructor(props) {
+		console.log('block constructor');
 		super(props);
 
 		const type_info = getTypeInfo(props.type);
@@ -81,9 +82,6 @@ class Block extends React.Component {
 			(e.target === name_element)
 		) ? f(e) : null;
 		this.state.event_listeners = [
-			[window, 'mousedown', e => ifDraggableByThis(e, this.handleMouseDown)],
-			[this._ref.current, 'mouseup', this.handleMouseUp],
-			[window, 'mousemove', this.handleMouseMove],
 			[this._ref.current, 'contextmenu', e => e.preventDefault()]
 		];
 		for (const e_l of this.state.event_listeners)
@@ -112,6 +110,7 @@ class Block extends React.Component {
 	}
 
 	handleMouseDown(e, function_after) {
+		console.log('block handleMouseDown');
 		if (e.button === 2) {
 			this.state.function_to_delete_self();
 			return;
@@ -124,6 +123,7 @@ class Block extends React.Component {
 	}
 
 	handleMouseUp(e) {
+		console.log('block handleMouseUp');
 		if (this.state.initital_dragging)
 			this.state.onStopInitialDragging(this.state.const_id);
 		if (this.state.dragging)
@@ -134,6 +134,7 @@ class Block extends React.Component {
 	}
 
 	handleMouseMove(e) {
+		// console.log('block handleMouseMove');
 		if (this.state.dragging === true) {
 			const newState = Object.assign(this.state, {
 				'x': e.clientX / this.state.scale - this.state.gripX,
@@ -195,42 +196,57 @@ class Block extends React.Component {
 		const visible_name = ((type == 'INPUT') || (type == 'OUTPUT')) ? name : type;
 		const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
 		return (
-			<div ref={this._ref} className="block"
+			<div className="blockWrapper" key={x + '_' + y + '_' + offset.x + '_' + offset.y}
 				style={{
-					'position': 'absolute',
 					'transform': 'scale(' + scale + ')',
-				 	'left': x * scale + offset.x,
-				 	'top': y * scale + offset.y
+					'left': x * scale + offset.x,
+					'top': y * scale + offset.y,
+					'zIndex': this.state.dragging ? 100 : 0
 				}}>
-				<div className="content">
-					<div className="inputs">
-					{
-						this.state.inputs.map(
-							(input, i) =>
-							<div ref={this.input_connectors_refs[i]} key={i} className="input"
-								onMouseDown={e => this.handleMouseDownOnInputOutput('input', i, e)}
-								onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
-									'to_block_const_id': this.state.const_id,
-									'to_input_id': i
-							})}>
-							</div>
-						)
-					}
-					</div>
-					<div className="name unselectable">{visible_name}</div>
-					<div className="outputs">
-					{
-						this.state.outputs.map(
-							(output, i) =>
-							<div ref={this.output_connectors_refs[i]} key={i} className="output"
-								onMouseDown={e => this.handleMouseDownOnInputOutput('output', i, e)}
-								onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
-									'from_block_const_id': this.state.const_id,
-									'from_output_id': i
+				<div ref={this._ref} className="block" key={name}
+					onMouseUp={this.handleMouseUp}
+					onMouseMove={this.handleMouseMove}
+					style={{
+					 	'left': 0,
+					 	'top': 0
+					}}>
+					<div className="content"
+						onMouseDown={e => {
+							if (
+								e.target.classList.contains('content') ||
+								e.target.classList.contains('name')
+							)
+								this.handleMouseDown(e)
+						}}>
+						<div className="inputs">
+						{
+							this.state.inputs.map(
+								(input, i) =>
+								<div ref={this.input_connectors_refs[i]} key={i} className="input"
+									onMouseDown={e => this.handleMouseDownOnInputOutput('input', i, e)}
+									onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
+										'to_block_const_id': this.state.const_id,
+										'to_input_id': i
 								})}>
-							</div>
-						)
-					}
+								</div>
+							)
+						}
+						</div>
+						<div className="name unselectable">{visible_name}</div>
+						<div className="outputs">
+						{
+							this.state.outputs.map(
+								(output, i) =>
+								<div ref={this.output_connectors_refs[i]} key={i} className="output"
+									onMouseDown={e => this.handleMouseDownOnInputOutput('output', i, e)}
+									onMouseUp={e => this.state.handle_mouse_up_on_input_output_function({
+										'from_block_const_id': this.state.const_id,
+										'from_output_id': i
+									})}>
+								</div>
+							)
+						}
+						</div>
 					</div>
 				</div>
 			</div>

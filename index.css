@@ -138,12 +138,6 @@ body {
 	margin-top: 20px;
 }
 
-.schemeArea {
-	width: 100%;
-	height: 100%;
-	z-index: -100;
-}
-
 .blockToAdd .name {
 	background-color: transparent;
 	width: 60%;
@@ -295,6 +289,17 @@ body {
 	background-color: black;
 }
 
+.schemeArea {
+	width: 100%;
+	height: 100%;
+	z-index: -100;
+}
+
+.blockWrapper {
+	position: absolute;
+	z-index: 100;
+}
+
 .block {
 }
 
@@ -305,8 +310,6 @@ body {
 
 	background-color: lightgrey;
 
-	width: 100%;
-	height: 100%;
 	padding: 15px 0px;
 
 	border-radius: 45px;
@@ -362,4 +365,5 @@ body {
 .wire {
 	position: absolute;
 	transform-origin: 0 center 0;
+	z-index: 1;
 }

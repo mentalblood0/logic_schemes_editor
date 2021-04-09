@@ -18,6 +18,7 @@ function getElementRelativeCenter(e) {
 
 class Block extends React.Component {
   constructor(props) {
+    console.log('block constructor');
     super(props);
     const type_info = getTypeInfo(props.type);
     this.state = {
@@ -73,7 +74,7 @@ class Block extends React.Component {
 
     const ifDraggableByThis = (e, f) => e.target === content_element || e.target === name_element ? f(e) : null;
 
-    this.state.event_listeners = [[window, 'mousedown', e => ifDraggableByThis(e, this.handleMouseDown)], [this._ref.current, 'mouseup', this.handleMouseUp], [window, 'mousemove', this.handleMouseMove], [this._ref.current, 'contextmenu', e => e.preventDefault()]];
+    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()]];
 
     for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
 
@@ -99,6 +100,8 @@ class Block extends React.Component {
   }
 
   handleMouseDown(e, function_after) {
+    console.log('block handleMouseDown');
+
     if (e.button === 2) {
       this.state.function_to_delete_self();
       return;
@@ -112,6 +115,7 @@ class Block extends React.Component {
   }
 
   handleMouseUp(e) {
+    console.log('block handleMouseUp');
     if (this.state.initital_dragging) this.state.onStopInitialDragging(this.state.const_id);
     if (this.state.dragging) this.setState({
       'dragging': false,
@@ -120,6 +124,7 @@ class Block extends React.Component {
   }
 
   handleMouseMove(e) {
+    // console.log('block handleMouseMove');
     if (this.state.dragging === true) {
       const newState = Object.assign(this.state, {
         'x': e.clientX / this.state.scale - this.state.gripX,
@@ -174,16 +179,29 @@ class Block extends React.Component {
     const visible_name = type == 'INPUT' || type == 'OUTPUT' ? name : type;
     const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
     return /*#__PURE__*/React.createElement("div", {
-      ref: this._ref,
-      className: "block",
+      className: "blockWrapper",
+      key: x + '_' + y + '_' + offset.x + '_' + offset.y,
       style: {
-        'position': 'absolute',
         'transform': 'scale(' + scale + ')',
         'left': x * scale + offset.x,
-        'top': y * scale + offset.y
+        'top': y * scale + offset.y,
+        'zIndex': this.state.dragging ? 100 : 0
       }
     }, /*#__PURE__*/React.createElement("div", {
-      className: "content"
+      ref: this._ref,
+      className: "block",
+      key: name,
+      onMouseUp: this.handleMouseUp,
+      onMouseMove: this.handleMouseMove,
+      style: {
+        'left': 0,
+        'top': 0
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "content",
+      onMouseDown: e => {
+        if (e.target.classList.contains('content') || e.target.classList.contains('name')) this.handleMouseDown(e);
+      }
     }, /*#__PURE__*/React.createElement("div", {
       className: "inputs"
     }, this.state.inputs.map((input, i) => /*#__PURE__*/React.createElement("div", {
@@ -208,7 +226,7 @@ class Block extends React.Component {
         'from_block_const_id': this.state.const_id,
         'from_output_id': i
       })
-    })))));
+    }))))));
   }
 
 }

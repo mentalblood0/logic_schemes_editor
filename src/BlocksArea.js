@@ -124,8 +124,8 @@ class BlocksArea extends React.Component {
 				const block = {
 					'id': id,
 					'type': b.type,
-					'x': b.x,
-					'y': b.y,
+					'x': b.x / state.scale,
+					'y': b.y / state.scale,
 					'inputs': b.inputs,
 					'outputs': b.outputs
 				};
@@ -439,7 +439,7 @@ class BlocksArea extends React.Component {
 			'dragging_scheme_area': true,
 			'dragging_scheme_area_from_point': {
 				'x': mouse_x - state.offset.x,
-				'y': mouse_y - state.offset.y,
+				'y': mouse_y - state.offset.y
 			}
 		}));
 	}

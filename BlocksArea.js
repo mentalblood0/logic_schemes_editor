@@ -104,8 +104,8 @@ class BlocksArea extends React.Component {
         const block = {
           'id': id,
           'type': b.type,
-          'x': b.x,
-          'y': b.y,
+          'x': b.x / state.scale,
+          'y': b.y / state.scale,
           'inputs': b.inputs,
           'outputs': b.outputs
         };
