@@ -61,8 +61,8 @@ class BlocksArea extends React.Component {
 				'x': 0,
 				'y': 0
 			},
-			'dragging_scheme_area': false,
-			'dragging_scheme_area_from_point': undefined,
+			'dragging_scheme': false,
+			'dragging_scheme_from_point': undefined,
 			'tests_editor_opened': false,
 			'tests': []
 		};
@@ -289,11 +289,12 @@ class BlocksArea extends React.Component {
 	handleMouseDown(e, element_type, inputs_number, outputs_number) {
 		if (e.button != 0)
 			return;
+		const blocks_wrapper_rect = this.state.blocks_wrapper_ref.current.getBoundingClientRect();
 		this.add({
 			'blocks': [{
 				'type': element_type,
-				'x': e.clientX,
-				'y': e.clientY,
+				'x': e.clientX + blocks_wrapper_rect.x,
+				'y': e.clientY + blocks_wrapper_rect.y,
 				'dragging': true,
 				'inputs': inputs_number ? filledArray(inputs_number, '') : undefined,
 				'outputs': inputs_number ? filledArray(outputs_number, '') : undefined
@@ -307,8 +308,8 @@ class BlocksArea extends React.Component {
 		const mouse_x = e.clientX;
 		const mouse_y = e.clientY;
 		this.setState(state => ({
-			'dragging_scheme_area': true,
-			'dragging_scheme_area_from_point': {
+			'dragging_scheme': true,
+			'dragging_scheme_from_point': {
 				'x': mouse_x - state.offset.x,
 				'y': mouse_y - state.offset.y
 			}
@@ -316,11 +317,11 @@ class BlocksArea extends React.Component {
 	}
 
 	handleMouseMove(e) {
-		if (this.state.dragging_scheme_area) {
+		if (this.state.dragging_scheme) {
 			this.setState(state => ({
 				'offset': {
-					'x': e.clientX - state.dragging_scheme_area_from_point['x'],
-					'y': e.clientY - state.dragging_scheme_area_from_point['y']
+					'x': e.clientX - state.dragging_scheme_from_point['x'],
+					'y': e.clientY - state.dragging_scheme_from_point['y']
 				}
 			}));
 		}
@@ -350,8 +351,8 @@ class BlocksArea extends React.Component {
 	handleMouseUp() {
 		this.setState({
 			'adding_wire': false,
-			'dragging_scheme_area': false,
-			'dragging_scheme_area_from_point': undefined
+			'dragging_scheme': false,
+			'dragging_scheme_from_point': undefined
 		});
 	}
 
@@ -438,9 +439,6 @@ class BlocksArea extends React.Component {
 			state.scale += delta / 1000;
 			return state;
 		});
-		// for (const b of Object.values(this.state.blocks)) {
-		// 	this.onBlockStateChange(b.get_info_function());
-		// }
 	}
 
 	handleAddBlockButtonClick() {
@@ -581,11 +579,6 @@ class BlocksArea extends React.Component {
 							type={block_id_and_block[1].type}
 							x={block_id_and_block[1].x}
 							y={block_id_and_block[1].y}
-							offset={{
-								'x': 0,
-								'y': 0
-							}}
-							scale={scale}
 							dragging={block_id_and_block[1].dragging}
 							inputs={block_id_and_block[1].inputs}
 							outputs={block_id_and_block[1].outputs}
@@ -599,18 +592,19 @@ class BlocksArea extends React.Component {
 					)
 				}
 				{
-					Object.values(this.state.wires).filter(w => w.from_point).map(
+					Object.values(this.state.wires).map(
 						wire =>
-						<Wire key={wire.id} from_point={wire.from_point} to_point={wire.to_point}
+						<Wire key={wire.id + '_' + wire.from_point + '_' + wire.to_point} from_point={wire.from_point} to_point={wire.to_point}
 							scale={scale}></Wire>
 					)
 				}
 				{
 					this.state.adding_wire ?
-					<Wire key={-1}
+					<Wire
 						from_point={scalePoint(this.state.adding_wire_info.from_point, 1 / scale)}
 						to_point={scalePoint(this.state.adding_wire_info.to_point, 1 / scale)}
-						scale={1}></Wire>
+						scale={scale}>
+						</Wire>
 					: null
 				}
 				</div>

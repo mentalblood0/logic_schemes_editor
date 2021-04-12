@@ -27,10 +27,8 @@ class Block extends React.Component {
 			'const_id': props.const_id,
 			'id': props.id,
 			'type': props.type,
-			'offset': props.offset,
 			'x': props.x,
 			'y': props.y,
-			'scale': props.scale,
 			'dragging': props.dragging || false,
 			'initital_dragging': props.dragging || false,
 			'gripX': undefined,
@@ -93,20 +91,24 @@ class Block extends React.Component {
 			e_l[0].addEventListener(e_l[1], e_l[2]);
 
 		if (this.state.dragging) {
-			const center = getElementCenter(this._ref.current);
+			const self_rect = this._ref.current.getBoundingClientRect();
+			console.log(self_rect);
+			const center = {
+				'x': this.state.x - self_rect.width / 2,
+				'y': this.state.y - self_rect.height / 2
+			};
 			this.setState(state => {
-				state.x -= center.x - state.x;
-				state.y -= center.y - state.y;
+				state.x = center.x;
+				state.y = center.y;
 				return state;
-			});
-			this.handleMouseDown({
-				'clientX': center.x,
-				'clientY': center.y
+			}, () => this.handleMouseDown({
+				'clientX': center.x + self_rect.width / 2,
+				'clientY': center.y + self_rect.height / 2
 			}, () => {
 				const info = this.getInfo()
 				this.state.onMount(info);
 				this.state.onStateChange(info);
-			});
+			}));
 		} else {
 			const info = this.getInfo()
 			this.state.onMount(info);
@@ -126,8 +128,8 @@ class Block extends React.Component {
 		}
 		this.setState({
 			'dragging': true,
-			'gripX': e.clientX / this.state.scale - this.state.x,
-			'gripY': e.clientY / this.state.scale - this.state.y
+			'gripX': e.clientX - this.state.x,
+			'gripY': e.clientY - this.state.y
 		}, function_after);
 	}
 
@@ -146,8 +148,8 @@ class Block extends React.Component {
 		const mouse_y = e.clientY;
 		if (this.state.dragging === true) {
 			this.setState(state => {
-				state.x = mouse_x / this.state.scale - this.state.gripX;
-				state.y = mouse_y / this.state.scale - this.state.gripY;
+				state.x = mouse_x - this.state.gripX;
+				state.y = mouse_y - this.state.gripY;
 				return state;
 			}, () => this.state.onStateChange(this.getInfo(this.state)));
 		}
@@ -203,8 +205,6 @@ class Block extends React.Component {
 	render() {
 		const x = this.state.x;
 		const y = this.state.y;
-		const offset = this.state.offset
-		const scale = this.state.scale;
 		const type = this.state.type;
 		const name = this.state.id;
 		const visible_name = ((type == 'INPUT') || (type == 'OUTPUT')) ? name : type;
@@ -214,9 +214,10 @@ class Block extends React.Component {
 				onMouseUp={this.handleMouseUp}
 				onMouseMove={this.handleMouseMove}
 				style={{
+					'position': 'absolute',
 				 	'left': x,
 				 	'top': y,
-					'zIndex': this.state.dragging ? 100 : 0
+					'zIndex': this.state.dragging ? 101 : 0
 				}}>
 				<div className="content"
 					onMouseDown={e => {
