@@ -92,7 +92,6 @@ class Block extends React.Component {
 
 		if (this.state.dragging) {
 			const self_rect = this._ref.current.getBoundingClientRect();
-			console.log(self_rect);
 			const center = {
 				'x': this.state.x - self_rect.width / 2,
 				'y': this.state.y - self_rect.height / 2
