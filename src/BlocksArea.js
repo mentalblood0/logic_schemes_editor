@@ -131,8 +131,8 @@ class BlocksArea extends React.Component {
 				const block = {
 					'id': id,
 					'type': b.type,
-					'x': b.x / state.scale,
-					'y': b.y / state.scale,
+					'x': b.x,
+					'y': b.y,
 					'inputs': b.inputs,
 					'outputs': b.outputs
 				};
@@ -293,8 +293,8 @@ class BlocksArea extends React.Component {
 		this.add({
 			'blocks': [{
 				'type': element_type,
-				'x': e.clientX + blocks_wrapper_rect.x,
-				'y': e.clientY + blocks_wrapper_rect.y,
+				'x': e.clientX - blocks_wrapper_rect.x,
+				'y': e.clientY - blocks_wrapper_rect.y,
 				'dragging': true,
 				'inputs': inputs_number ? filledArray(inputs_number, '') : undefined,
 				'outputs': inputs_number ? filledArray(outputs_number, '') : undefined

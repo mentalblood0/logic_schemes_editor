@@ -134,8 +134,10 @@ class Block extends React.Component {
   }
 
   handleMouseMove(e) {
-    const mouse_x = e.clientX;
-    const mouse_y = e.clientY;
+    const blocks_wrapper_element = this._ref.current.parentElement;
+    const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
+    const mouse_x = e.clientX - blocks_wrapper_rect.x;
+    const mouse_y = e.clientY - blocks_wrapper_rect.y;
 
     if (this.state.dragging === true) {
       this.setState(state => {
