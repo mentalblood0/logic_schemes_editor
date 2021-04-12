@@ -403,9 +403,13 @@ class BlocksArea extends React.Component {
 	}
 
 	handleMouseWheel(e) {
-		const delta = e.deltaY;
+		const delta = -e.deltaY;
+		const mouse_x = e.clientX;
+		const mouse_y = e.clientY;
 		this.setState(state => {
 			state.scale += delta / 1000;
+			state.offset.x -= (mouse_x - window.innerWidth / 2) * delta / 1000;
+			state.offset.y -= (mouse_y - window.innerHeight / 2) * delta / 1000;
 			return state;
 		});
 	}

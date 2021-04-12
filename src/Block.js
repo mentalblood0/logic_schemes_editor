@@ -199,8 +199,8 @@ class Block extends React.Component {
 			<div className="blockWrapper" key={x + '_' + y + '_' + offset.x + '_' + offset.y}
 				style={{
 					'transform': 'scale(' + scale + ')',
-					'left': x * scale + offset.x,
-					'top': y * scale + offset.y,
+					'left': (x - window.innerWidth / 2) * scale + window.innerWidth / 2 + offset.x,
+					'top': (y - window.innerHeight / 2) * scale + window.innerHeight / 2 + offset.y,
 					'zIndex': this.state.dragging ? 100 : 0
 				}}>
 				<div ref={this._ref} className="block" key={name}
