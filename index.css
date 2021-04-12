@@ -295,12 +295,12 @@ body {
 	z-index: -100;
 }
 
-.blockWrapper {
+.blocksWrapper {
 	position: absolute;
-	z-index: 100;
 }
 
 .block {
+	position: absolute;
 }
 
 .block .content {

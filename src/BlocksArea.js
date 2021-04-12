@@ -30,6 +30,13 @@ function getTypeInfo(type_name) {
 		return custom_elements[type_name];
 }
 
+function scalePoint(point, scale) {
+	return {
+		'x': point.x * scale,
+		'y': point.y * scale
+	}
+}
+
 function getUniqueId(some_dict) {
 	return (Object.keys(some_dict).length == 0) ? 0 : (Math.max(...Object.keys(some_dict)) + 1);
 }
@@ -47,7 +54,6 @@ class BlocksArea extends React.Component {
 			'outputs_number': 0,
 			'blocks': {},
 			'wires': {},
-			'adding_block': false,
 			'adding_wire': false,
 			'adding_wire_info': undefined,
 			'scale': 1,
@@ -82,6 +88,7 @@ class BlocksArea extends React.Component {
 		this.remove_wires = this.remove_wires.bind(this);
 
 		this._ref = React.createRef();
+		this.state.blocks_wrapper_ref = React.createRef();
 	}
 
 	componentDidMount() {
@@ -107,7 +114,7 @@ class BlocksArea extends React.Component {
 			e_l[0].removeEventListener(e_l[1], e_l[2]);
 	}
 
-	add(data) {
+	add(data, wire_type_relative_to_block) {
 		this.setState(state => {
 			if (!('blocks' in data))
 				return state;
@@ -152,21 +159,23 @@ class BlocksArea extends React.Component {
 						'from_output_id': w.from_output_id,
 						'to_input_id': w.to_input_id
 					};
-					this.updateWireCoordinates(state, new_id);
+					this.updateWireCoordinates(state, new_id, wire_type_relative_to_block);
 				}
 				return state;
 			});
 		});
 	}
 
-	updateWireCoordinates(state, wire_id) {
+	updateWireCoordinates(state, wire_id, type_relative_to_block) {
 		const wire = state.wires[wire_id];
 		const from_block = state.blocks[wire.from_block_const_id];
 		const to_block = state.blocks[wire.to_block_const_id];
-		wire.from_point =
-			from_block.output_connectors_coordinates[wire.from_output_id];
-		wire.to_point =
-			to_block.input_connectors_coordinates[wire.to_input_id];
+		if (type_relative_to_block != 'to')
+			wire.from_point =
+				scalePoint(from_block.output_connectors_coordinates[wire.from_output_id], 1 / this.state.scale);
+		if (type_relative_to_block != 'from')
+			wire.to_point =
+				scalePoint(to_block.input_connectors_coordinates[wire.to_input_id], 1 / this.state.scale);
 		state.wires[wire_id] = wire;
 	}
 
@@ -181,8 +190,11 @@ class BlocksArea extends React.Component {
 		this.setState(state => {
 			state.blocks[detail.const_id] = Object.assign(detail);
 			Object.values(state.wires).forEach(w => {
-				if ((detail.const_id == w.from_block_const_id) || (detail.const_id == w.to_block_const_id))
-					this.updateWireCoordinates(state, w.id);
+				if (detail.const_id == w.from_block_const_id)
+					this.updateWireCoordinates(state, w.id, 'from');
+				else if (detail.const_id == w.to_block_const_id)
+					this.updateWireCoordinates(state, w.id, 'to');
+
 			});
 			return state;
 		});
@@ -289,6 +301,20 @@ class BlocksArea extends React.Component {
 		});
 	}
 
+	handleMouseDownOnSchemeArea(e) {
+		if (!e.target.classList.contains('schemeArea'))
+			return;
+		const mouse_x = e.clientX;
+		const mouse_y = e.clientY;
+		this.setState(state => ({
+			'dragging_scheme_area': true,
+			'dragging_scheme_area_from_point': {
+				'x': mouse_x - state.offset.x,
+				'y': mouse_y - state.offset.y
+			}
+		}));
+	}
+
 	handleMouseMove(e) {
 		if (this.state.dragging_scheme_area) {
 			this.setState(state => ({
@@ -299,20 +325,22 @@ class BlocksArea extends React.Component {
 			}));
 		}
 		else if (this.state.adding_wire_info) {
+			const blocks_wrapper_element = this.state.blocks_wrapper_ref.current;
+			const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
 			const info = this.state.adding_wire_info;
 			if (info.from_block_const_id == undefined)
 				this.setState(state => {
 					state.adding_wire_info.from_point = {
-						'x': e.clientX,
-						'y': e.clientY
+						'x': e.clientX - blocks_wrapper_rect.x,
+						'y': e.clientY - blocks_wrapper_rect.y
 					}
 					return state;
 				});
 			else
 				this.setState(state => {
 					state.adding_wire_info.to_point = {
-						'x': e.clientX,
-						'y': e.clientY
+						'x': e.clientX - blocks_wrapper_rect.x,
+						'y': e.clientY - blocks_wrapper_rect.y
 					}
 					return state;
 				});
@@ -408,10 +436,11 @@ class BlocksArea extends React.Component {
 		const mouse_y = e.clientY;
 		this.setState(state => {
 			state.scale += delta / 1000;
-			state.offset.x -= (mouse_x - window.innerWidth / 2) * delta / 1000;
-			state.offset.y -= (mouse_y - window.innerHeight / 2) * delta / 1000;
 			return state;
 		});
+		// for (const b of Object.values(this.state.blocks)) {
+		// 	this.onBlockStateChange(b.get_info_function());
+		// }
 	}
 
 	handleAddBlockButtonClick() {
@@ -432,20 +461,6 @@ class BlocksArea extends React.Component {
 			'wires': {},
 			'tests': []
 		});
-	}
-
-	handleMouseDownOnSchemeArea(e) {
-		if (!e.target.classList.contains('schemeArea'))
-			return;
-		const mouse_x = e.clientX;
-		const mouse_y = e.clientY;
-		this.setState(state => ({
-			'dragging_scheme_area': true,
-			'dragging_scheme_area_from_point': {
-				'x': mouse_x - state.offset.x,
-				'y': mouse_y - state.offset.y
-			}
-		}));
 	}
 
 	render() {
@@ -550,44 +565,55 @@ class BlocksArea extends React.Component {
 			<div className="schemeArea"
 				onWheel={this.handleMouseWheel}
 				onMouseDown={this.handleMouseDownOnSchemeArea}>
-			{
-				Object.entries(this.state.blocks).map(
-					(block_id_and_block, i) =>
-					<Block key={block_id_and_block[0] + '_' + block_id_and_block[1].id + '_' + scale + '_' + offset.x + '_' + offset.y}
-						const_id={block_id_and_block[0]}
-						id={block_id_and_block[1].id}
-						type={block_id_and_block[1].type}
-						x={block_id_and_block[1].x}
-						y={block_id_and_block[1].y}
-						offset={this.state.offset}
-						scale={scale}
-						dragging={block_id_and_block[1].dragging}
-						inputs={block_id_and_block[1].inputs}
-						outputs={block_id_and_block[1].outputs}
-						function_to_delete_self={() => this.removeBlock(block_id_and_block[0])}
-						start_adding_wire_function={this.startAddingWire}
-						handle_mouse_up_on_input_output_function={this.handleMouseUpOnInputOutput}
-						remove_wires_function={this.remove_wires}
-						onMount={this.onBlockMounted}
-						onStateChange={this.onBlockStateChange}
-						onStopInitialDragging={this.onBlockStopInitialDragging}></Block>
-				)
-			}
-			{
-				Object.values(this.state.wires).filter(w => w.from_point).map(
-					wire =>
-					<Wire key={wire.id} from_point={wire.from_point} to_point={wire.to_point}
-						scale={scale}></Wire>
-				)
-			}
-			{
-				this.state.adding_wire ?
-				<Wire key={-1}
-					from_point={this.state.adding_wire_info.from_point}
-					to_point={this.state.adding_wire_info.to_point}
-					scale={scale}></Wire>
-				: null
-			}
+				<div className="blocksWrapper"
+					ref={this.state.blocks_wrapper_ref}
+					style={{
+						'left': offset.x,
+						'top': offset.y,
+						'transform': 'scale(' + scale + ')'
+					}}>
+				{
+					Object.entries(this.state.blocks).map(
+						(block_id_and_block, i) =>
+						<Block key={block_id_and_block[0] + '_' + block_id_and_block[1].id}
+							const_id={block_id_and_block[0]}
+							id={block_id_and_block[1].id}
+							type={block_id_and_block[1].type}
+							x={block_id_and_block[1].x}
+							y={block_id_and_block[1].y}
+							offset={{
+								'x': 0,
+								'y': 0
+							}}
+							scale={scale}
+							dragging={block_id_and_block[1].dragging}
+							inputs={block_id_and_block[1].inputs}
+							outputs={block_id_and_block[1].outputs}
+							function_to_delete_self={() => this.removeBlock(block_id_and_block[0])}
+							start_adding_wire_function={this.startAddingWire}
+							handle_mouse_up_on_input_output_function={this.handleMouseUpOnInputOutput}
+							remove_wires_function={this.remove_wires}
+							onMount={this.onBlockMounted}
+							onStateChange={this.onBlockStateChange}
+							onStopInitialDragging={this.onBlockStopInitialDragging}></Block>
+					)
+				}
+				{
+					Object.values(this.state.wires).filter(w => w.from_point).map(
+						wire =>
+						<Wire key={wire.id} from_point={wire.from_point} to_point={wire.to_point}
+							scale={scale}></Wire>
+					)
+				}
+				{
+					this.state.adding_wire ?
+					<Wire key={-1}
+						from_point={scalePoint(this.state.adding_wire_info.from_point, 1 / scale)}
+						to_point={scalePoint(this.state.adding_wire_info.to_point, 1 / scale)}
+						scale={1}></Wire>
+					: null
+				}
+				</div>
 			</div>
 		</div>;
 	}

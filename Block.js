@@ -2,9 +2,10 @@
 
 function getElementCenter(e) {
   const rect = e.getBoundingClientRect();
+  const parent_rect = e.parentElement.parentElement.parentElement.parentElement.getBoundingClientRect();
   return {
-    'x': rect.x + rect.width / 2,
-    'y': rect.y + rect.height / 2
+    'x': rect.x - parent_rect.x + rect.width / 2,
+    'y': rect.y - parent_rect.y + rect.height / 2
   };
 }
 
@@ -55,6 +56,10 @@ class Block extends React.Component {
 
   getInfo(state) {
     if (state == undefined) state = this.state;
+
+    let get_info_function = state => this.getInfo(state);
+
+    get_info_function = get_info_function.bind(this);
     return {
       'type': state.type,
       'id': state.id,
@@ -64,7 +69,8 @@ class Block extends React.Component {
       'inputs': state.inputs,
       'outputs': state.outputs,
       'input_connectors_coordinates': this.input_connectors_refs.map(r => getElementCenter(r.current)),
-      'output_connectors_coordinates': this.output_connectors_refs.map(r => getElementCenter(r.current))
+      'output_connectors_coordinates': this.output_connectors_refs.map(r => getElementCenter(r.current)),
+      'get_info_function': get_info_function
     };
   }
 
@@ -74,12 +80,17 @@ class Block extends React.Component {
 
     const ifDraggableByThis = (e, f) => e.target === content_element || e.target === name_element ? f(e) : null;
 
-    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()]];
+    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [window, 'mousewheel', this.handleMouseWheel.bind(this)]];
 
     for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
 
     if (this.state.dragging) {
       const center = getElementCenter(this._ref.current);
+      this.setState(state => {
+        state.x -= center.x - state.x;
+        state.y -= center.y - state.y;
+        return state;
+      });
       this.handleMouseDown({
         'clientX': center.x,
         'clientY': center.y
@@ -100,8 +111,6 @@ class Block extends React.Component {
   }
 
   handleMouseDown(e, function_after) {
-    console.log('block handleMouseDown');
-
     if (e.button === 2) {
       this.state.function_to_delete_self();
       return;
@@ -115,7 +124,6 @@ class Block extends React.Component {
   }
 
   handleMouseUp(e) {
-    console.log('block handleMouseUp');
     if (this.state.initital_dragging) this.state.onStopInitialDragging(this.state.const_id);
     if (this.state.dragging) this.setState({
       'dragging': false,
@@ -124,14 +132,15 @@ class Block extends React.Component {
   }
 
   handleMouseMove(e) {
-    // console.log('block handleMouseMove');
+    const mouse_x = e.clientX;
+    const mouse_y = e.clientY;
+
     if (this.state.dragging === true) {
-      const newState = Object.assign(this.state, {
-        'x': e.clientX / this.state.scale - this.state.gripX,
-        'y': e.clientY / this.state.scale - this.state.gripY
-      });
-      this.setState(state => newState);
-      this.state.onStateChange(this.getInfo(newState));
+      this.setState(state => {
+        state.x = mouse_x / this.state.scale - this.state.gripX;
+        state.y = mouse_y / this.state.scale - this.state.gripY;
+        return state;
+      }, () => this.state.onStateChange(this.getInfo(this.state)));
     }
   }
 
@@ -140,13 +149,16 @@ class Block extends React.Component {
   }
 
   handleMouseDownOnInputOutput(type, i, e) {
+    const blocks_wrapper_element = this._ref.current.parentElement;
+    const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
+
     if (type == 'input') {
       if (e.button == 0) this.state.start_adding_wire_function({
         'to_block_const_id': this.state.const_id,
         'to_input_id': i,
         'from_point': {
-          'x': e.clientX,
-          'y': e.clientY
+          'x': e.clientX - blocks_wrapper_rect.x,
+          'y': e.clientY - blocks_wrapper_rect.y
         },
         'to_point': getElementCenter(this.input_connectors_refs[i].current)
       });else if (e.button == 2) this.state.remove_wires_function({
@@ -159,14 +171,18 @@ class Block extends React.Component {
         'from_output_id': i,
         'from_point': getElementCenter(this.output_connectors_refs[i].current),
         'to_point': {
-          'x': e.clientX,
-          'y': e.clientY
+          'x': e.clientX - blocks_wrapper_rect.x,
+          'y': e.clientY - blocks_wrapper_rect.y
         }
       });else if (e.button == 2) this.state.remove_wires_function({
         'from_block_const_id': this.state.const_id,
         'from_output_id': i
       });
     }
+  }
+
+  handleMouseWheel() {
+    this.state.onStateChange(this.getInfo(this.state));
   }
 
   render() {
@@ -179,23 +195,14 @@ class Block extends React.Component {
     const visible_name = type == 'INPUT' || type == 'OUTPUT' ? name : type;
     const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
     return /*#__PURE__*/React.createElement("div", {
-      className: "blockWrapper",
-      key: x + '_' + y + '_' + offset.x + '_' + offset.y,
-      style: {
-        'transform': 'scale(' + scale + ')',
-        'left': (x - window.innerWidth / 2) * scale + window.innerWidth / 2 + offset.x,
-        'top': (y - window.innerHeight / 2) * scale + window.innerHeight / 2 + offset.y,
-        'zIndex': this.state.dragging ? 100 : 0
-      }
-    }, /*#__PURE__*/React.createElement("div", {
       ref: this._ref,
       className: "block",
-      key: name,
       onMouseUp: this.handleMouseUp,
       onMouseMove: this.handleMouseMove,
       style: {
-        'left': 0,
-        'top': 0
+        'left': x,
+        'top': y,
+        'zIndex': this.state.dragging ? 100 : 0
       }
     }, /*#__PURE__*/React.createElement("div", {
       className: "content",
@@ -226,7 +233,7 @@ class Block extends React.Component {
         'from_block_const_id': this.state.const_id,
         'from_output_id': i
       })
-    }))))));
+    })))));
   }
 
 }
