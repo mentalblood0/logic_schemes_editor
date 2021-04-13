@@ -87,8 +87,8 @@ class Block extends React.Component {
 			(e.target === name_element)
 		) ? f(e) : null;
 		this.state.event_listeners = [
-			[this._ref.current, 'contextmenu', e => e.preventDefault()],
-			[window, 'mousewheel', this.handleMouseWheel.bind(this)]
+			[this._ref.current, 'contextmenu', ],
+			[this._ref.current.parentElement, 'mousewheel', this.handleMouseWheel.bind(this)]
 		];
 		for (const e_l of this.state.event_listeners)
 			e_l[0].addEventListener(e_l[1], e_l[2]);
@@ -206,6 +206,7 @@ class Block extends React.Component {
 			<div ref={this._ref} className="block"
 				onMouseUp={this.handleMouseUp}
 				onMouseMove={this.handleMouseMove}
+				onContextMenu={e => e.preventDefault()}
 				style={{
 					'position': 'absolute',
 				 	'left': x,

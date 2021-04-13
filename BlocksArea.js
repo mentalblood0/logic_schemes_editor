@@ -88,7 +88,7 @@ class BlocksArea extends React.Component {
   }
 
   componentDidMount() {
-    this.state.event_listeners = [[this._ref.current, 'contextmenu', e => e.preventDefault()], [this._ref.current, 'mousemove', this.handleMouseMove], [this._ref.current, 'mouseup', this.handleMouseUp], //fucking drag and drop
+    this.state.event_listeners = [//fucking drag and drop
     [this._ref.current, 'drag', e => e.preventDefault()], [this._ref.current, 'dragstart', e => e.preventDefault()], [this._ref.current, 'dragend', e => e.preventDefault()], [this._ref.current, 'dragover', e => e.preventDefault()], [this._ref.current, 'dragenter', e => e.preventDefault()], [this._ref.current, 'dragleave', e => e.preventDefault()], [this._ref.current, 'drop', e => e.preventDefault()]];
 
     for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
@@ -293,11 +293,14 @@ class BlocksArea extends React.Component {
   }
 
   handleMouseMove(e) {
+    const mouse_x = e.clientX;
+    const mouse_y = e.clientY;
+
     if (this.state.dragging_scheme) {
       this.setState(state => ({
         'offset': {
-          'x': e.clientX - state.dragging_scheme_from_point['x'],
-          'y': e.clientY - state.dragging_scheme_from_point['y']
+          'x': mouse_x - state.dragging_scheme_from_point['x'],
+          'y': mouse_y - state.dragging_scheme_from_point['y']
         }
       }));
     } else if (this.state.adding_wire_info) {
@@ -306,14 +309,14 @@ class BlocksArea extends React.Component {
       const info = this.state.adding_wire_info;
       if (info.from_block_const_id == undefined) this.setState(state => {
         state.adding_wire_info.from_point = {
-          'x': e.clientX - blocks_wrapper_rect.x,
-          'y': e.clientY - blocks_wrapper_rect.y
+          'x': mouse_x - blocks_wrapper_rect.x,
+          'y': mouse_y - blocks_wrapper_rect.y
         };
         return state;
       });else this.setState(state => {
         state.adding_wire_info.to_point = {
-          'x': e.clientX - blocks_wrapper_rect.x,
-          'y': e.clientY - blocks_wrapper_rect.y
+          'x': mouse_x - blocks_wrapper_rect.x,
+          'y': mouse_y - blocks_wrapper_rect.y
         };
         return state;
       });
@@ -558,7 +561,10 @@ class BlocksArea extends React.Component {
     })) : null, /*#__PURE__*/React.createElement("div", {
       className: "schemeArea",
       onWheel: this.handleMouseWheel,
-      onMouseDown: this.handleMouseDownOnSchemeArea
+      onMouseDown: this.handleMouseDownOnSchemeArea,
+      onMouseMove: this.handleMouseMove,
+      onMouseUp: this.handleMouseUp,
+      onContextMenu: e => e.preventDefault()
     }, /*#__PURE__*/React.createElement("div", {
       className: "blocksWrapper",
       ref: this.state.blocks_wrapper_ref,

@@ -93,9 +93,6 @@ class BlocksArea extends React.Component {
 
 	componentDidMount() {
 		this.state.event_listeners = [
-			[this._ref.current, 'contextmenu', e => e.preventDefault()],
-			[this._ref.current, 'mousemove', this.handleMouseMove],
-			[this._ref.current, 'mouseup', this.handleMouseUp],
 			//fucking drag and drop
 			[this._ref.current, 'drag', e => e.preventDefault()],
 			[this._ref.current, 'dragstart', e => e.preventDefault()],
@@ -334,11 +331,13 @@ class BlocksArea extends React.Component {
 	}
 
 	handleMouseMove(e) {
+		const mouse_x = e.clientX;
+		const mouse_y = e.clientY;
 		if (this.state.dragging_scheme) {
 			this.setState(state => ({
 				'offset': {
-					'x': e.clientX - state.dragging_scheme_from_point['x'],
-					'y': e.clientY - state.dragging_scheme_from_point['y']
+					'x': mouse_x - state.dragging_scheme_from_point['x'],
+					'y': mouse_y - state.dragging_scheme_from_point['y']
 				}
 			}));
 		}
@@ -349,16 +348,16 @@ class BlocksArea extends React.Component {
 			if (info.from_block_const_id == undefined)
 				this.setState(state => {
 					state.adding_wire_info.from_point = {
-						'x': e.clientX - blocks_wrapper_rect.x,
-						'y': e.clientY - blocks_wrapper_rect.y
+						'x': mouse_x - blocks_wrapper_rect.x,
+						'y': mouse_y - blocks_wrapper_rect.y
 					}
 					return state;
 				});
 			else
 				this.setState(state => {
 					state.adding_wire_info.to_point = {
-						'x': e.clientX - blocks_wrapper_rect.x,
-						'y': e.clientY - blocks_wrapper_rect.y
+						'x': mouse_x - blocks_wrapper_rect.x,
+						'y': mouse_y - blocks_wrapper_rect.y
 					}
 					return state;
 				});
@@ -592,7 +591,10 @@ class BlocksArea extends React.Component {
 		}
 			<div className="schemeArea"
 				onWheel={this.handleMouseWheel}
-				onMouseDown={this.handleMouseDownOnSchemeArea}>
+				onMouseDown={this.handleMouseDownOnSchemeArea}
+				onMouseMove={this.handleMouseMove}
+				onMouseUp={this.handleMouseUp}
+				onContextMenu={e => e.preventDefault()}>
 				<div className="blocksWrapper"
 					ref={this.state.blocks_wrapper_ref}
 					style={{
