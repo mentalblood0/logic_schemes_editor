@@ -290,16 +290,33 @@ class BlocksArea extends React.Component {
 		if (e.button != 0)
 			return;
 		const blocks_wrapper_rect = this.state.blocks_wrapper_ref.current.getBoundingClientRect();
+		const scale = this.state.scale;
 		this.add({
 			'blocks': [{
 				'type': element_type,
-				'x': e.clientX - blocks_wrapper_rect.x,
-				'y': e.clientY - blocks_wrapper_rect.y,
+				'x': e.clientX,
+				'y': e.clientY,
 				'dragging': true,
 				'inputs': inputs_number ? filledArray(inputs_number, '') : undefined,
 				'outputs': inputs_number ? filledArray(outputs_number, '') : undefined
 			}]
 		});
+	}
+
+	handleBlockMouseDown(b, mouse_x, mouse_y, button, function_after) {
+		if (button === 2) {
+			b.state.function_to_delete_self();
+			return;
+		}
+		const blocks_wrapper_element = b._ref.current.parentElement;
+		const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
+		const scale = this.state.scale;
+		b.setState(state => {
+			state.dragging = true;
+			state.gripX = (mouse_x - blocks_wrapper_rect.x) / scale - state.x;
+			state.gripY = (mouse_y - blocks_wrapper_rect.y) / scale - state.y;
+			return state;
+		}, function_after);
 	}
 
 	handleMouseDownOnSchemeArea(e) {
@@ -345,6 +362,19 @@ class BlocksArea extends React.Component {
 					}
 					return state;
 				});
+		}
+	}
+
+	handleBlockMouseMove(b, mouse_x, mouse_y) {
+		const blocks_wrapper_element = b._ref.current.parentElement;
+		const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
+		const scale = this.state.scale;
+		if (b.state.dragging === true) {
+			b.setState(state => {
+				state.x = (mouse_x - blocks_wrapper_rect.x) / scale - state.gripX;
+				state.y = (mouse_y - blocks_wrapper_rect.y) / scale - state.gripY;
+				return state;
+			}, () => b.state.onStateChange(b.getInfo(b.state)));
 		}
 	}
 
@@ -579,6 +609,9 @@ class BlocksArea extends React.Component {
 							type={block_id_and_block[1].type}
 							x={block_id_and_block[1].x}
 							y={block_id_and_block[1].y}
+							scale={this.state.scale}
+							handleMouseMove={this.handleBlockMouseMove.bind(this)}
+							handleMouseDown={this.handleBlockMouseDown.bind(this)}
 							dragging={block_id_and_block[1].dragging}
 							inputs={block_id_and_block[1].inputs}
 							outputs={block_id_and_block[1].outputs}

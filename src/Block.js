@@ -29,6 +29,9 @@ class Block extends React.Component {
 			'type': props.type,
 			'x': props.x,
 			'y': props.y,
+			'scale': props.scale,
+			'handleMouseDown': props.handleMouseDown,
+			'handleMouseMove': props.handleMouseMove,
 			'dragging': props.dragging || false,
 			'initital_dragging': props.dragging || false,
 			'gripX': undefined,
@@ -91,18 +94,24 @@ class Block extends React.Component {
 			e_l[0].addEventListener(e_l[1], e_l[2]);
 
 		if (this.state.dragging) {
+			const mouse_x = this.state.x;
+			const mouse_y = this.state.y;
+			const scale = this.state.scale;
 			const self_rect = this._ref.current.getBoundingClientRect();
+			const blocks_wrapper_element = this._ref.current.parentElement;
+			const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
 			const center = {
-				'x': this.state.x - self_rect.width / 2,
-				'y': this.state.y - self_rect.height / 2
+				'x': (this.state.x - self_rect.width / 2 - blocks_wrapper_rect.x) / scale,
+				'y': (this.state.y - self_rect.height / 2 - blocks_wrapper_rect.y) / scale
 			};
 			this.setState(state => {
 				state.x = center.x;
 				state.y = center.y;
 				return state;
 			}, () => this.handleMouseDown({
-				'clientX': center.x + self_rect.width / 2,
-				'clientY': center.y + self_rect.height / 2
+				'clientX': mouse_x,
+				'clientY': mouse_y,
+				'button': 0
 			}, () => {
 				const info = this.getInfo()
 				this.state.onMount(info);
@@ -121,15 +130,7 @@ class Block extends React.Component {
 	}
 
 	handleMouseDown(e, function_after) {
-		if (e.button === 2) {
-			this.state.function_to_delete_self();
-			return;
-		}
-		this.setState({
-			'dragging': true,
-			'gripX': e.clientX - this.state.x,
-			'gripY': e.clientY - this.state.y
-		}, function_after);
+		this.state.handleMouseDown(this, e.clientX, e.clientY, e.button, function_after);
 	}
 
 	handleMouseUp(e) {
@@ -143,17 +144,8 @@ class Block extends React.Component {
 	}
 
 	handleMouseMove(e) {
-		const blocks_wrapper_element = this._ref.current.parentElement;
-		const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
-		const mouse_x = e.clientX - blocks_wrapper_rect.x;
-		const mouse_y = e.clientY - blocks_wrapper_rect.y;
-		if (this.state.dragging === true) {
-			this.setState(state => {
-				state.x = mouse_x - this.state.gripX;
-				state.y = mouse_y - this.state.gripY;
-				return state;
-			}, () => this.state.onStateChange(this.getInfo(this.state)));
-		}
+		this.state.handleMouseMove(this, e.clientX, e.clientY);
+		
 	}
 
 	handleMouseLeave(e) {
