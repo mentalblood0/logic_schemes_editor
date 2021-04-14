@@ -20,7 +20,6 @@ function getElementRelativeCenter(e) {
 class Block extends React.Component {
   constructor(props) {
     super(props);
-    const type_info = getTypeInfo(props.type);
     this.state = {
       'const_id': props.const_id,
       'id': props.id,
@@ -34,8 +33,8 @@ class Block extends React.Component {
       'initital_dragging': props.dragging || false,
       'gripX': undefined,
       'gripY': undefined,
-      'inputs': props.inputs ? props.inputs : type_info['inputs'],
-      'outputs': props.outputs ? props.outputs : type_info['outputs'],
+      'inputs': props.inputs ? props.inputs : props.type_info['inputs'],
+      'outputs': props.outputs ? props.outputs : props.type_info['outputs'],
       'onStateChange': props.onStateChange,
       'onMount': props.onMount,
       'onStopInitialDragging': props.onStopInitialDragging,
@@ -57,7 +56,7 @@ class Block extends React.Component {
   getInfo(state) {
     if (state == undefined) state = this.state;
     return {
-      'this': this,
+      'get_info_function': this.getInfo.bind(this),
       'type': state.type,
       'id': state.id,
       'const_id': state.const_id,

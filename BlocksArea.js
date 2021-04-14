@@ -22,11 +22,6 @@ const default_elements = {
     'outputs': ['x || y']
   }
 };
-const custom_elements = {};
-
-function getTypeInfo(type_name) {
-  if (type_name in default_elements) return default_elements[type_name];else if (type_name in custom_elements) return custom_elements[type_name];
-}
 
 function scalePoint(point, scale) {
   return {
@@ -44,6 +39,7 @@ class BlocksArea extends React.Component {
     super(props);
     this.state = {
       'name': 'test',
+      'custom_elements': {},
       'new_element_type': 'new',
       'new_element_inputs_number': 1,
       'new_element_outputs_number': 1,
@@ -83,7 +79,8 @@ class BlocksArea extends React.Component {
     this.handleNewElementOutputsNumberInputChange = this.handleNewElementOutputsNumberInputChange.bind(this);
     this.handleAddBlockButtonClick = this.handleAddBlockButtonClick.bind(this);
     this.handleMouseWheel = this.handleMouseWheel.bind(this);
-    this.remove_wires = this.remove_wires.bind(this);
+    this.removeWires = this.removeWires.bind(this);
+    this.getTypeInfo = this.getTypeInfo.bind(this);
     this._ref = React.createRef();
     this.inputs_number_ref = React.createRef();
     this.outputs_number_ref = React.createRef();
@@ -156,8 +153,8 @@ class BlocksArea extends React.Component {
           };
           const b_to = state.blocks[w.to_block_const_id];
           const b_from = state.blocks[w.from_block_const_id];
-          state.blocks[w.to_block_const_id] = b_to.this.getInfo.bind(b_to.this)();
-          state.blocks[w.from_block_const_id] = b_from.this.getInfo.bind(b_from.this)();
+          state.blocks[w.to_block_const_id] = b_to.get_info_function();
+          state.blocks[w.from_block_const_id] = b_from.get_info_function();
           this.updateWireCoordinates(state, new_id, wire_type_relative_to_block, true);
         }
 
@@ -203,6 +200,10 @@ class BlocksArea extends React.Component {
     });
   }
 
+  getTypeInfo(type_name) {
+    if (type_name in default_elements) return default_elements[type_name];else if (type_name in this.state.custom_elements) return this.state.custom_elements[type_name];
+  }
+
   onBlockStopInitialDragging(block_id) {
     this.setState(state => {
       state.blocks[block_id].dragging = false;
@@ -213,6 +214,7 @@ class BlocksArea extends React.Component {
   getSaveData() {
     return {
       'name': this.state.name,
+      'custom_elements': this.state.custom_elements,
       'new_element_type': this.state.new_element_type,
       'new_element_inputs_number': this.state.new_element_inputs_number,
       'new_element_outputs_number': this.state.new_element_outputs_number,
@@ -425,7 +427,7 @@ class BlocksArea extends React.Component {
     });
   }
 
-  remove_wires(mask) {
+  removeWires(mask) {
     this.setState(state => {
       state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => {
         for (const mask_key in mask) if (mask[mask_key] != v[mask_key]) return true;
@@ -480,8 +482,10 @@ class BlocksArea extends React.Component {
       'inputs': filledArray(inputs_number, ''),
       'outputs': filledArray(outputs_number, '')
     };
-    custom_elements[name] = new_element_info;
-    this.forceUpdate();
+    this.setState(state => {
+      this.state.custom_elements[name] = new_element_info;
+      return state;
+    }, () => this.forceUpdate());
   }
 
   clear() {
@@ -573,7 +577,7 @@ class BlocksArea extends React.Component {
     }))), /*#__PURE__*/React.createElement("button", {
       className: "addBlockButton animated animated-green unselectable",
       onClick: this.handleAddBlockButtonClick
-    }, "+"), Object.entries(custom_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
+    }, "+"), Object.entries(this.state.custom_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
       key: element_type_and_element[0],
       className: "block",
       onMouseDown: e => this.handleMouseDown(e, element_type_and_element[0])
@@ -635,10 +639,11 @@ class BlocksArea extends React.Component {
       function_to_delete_self: () => this.removeBlock(block_id_and_block[0]),
       start_adding_wire_function: this.startAddingWire,
       handle_mouse_up_on_input_output_function: this.handleMouseUpOnInputOutput,
-      remove_wires_function: this.remove_wires,
+      remove_wires_function: this.removeWires,
       onMount: this.onBlockMounted,
       onStateChange: this.onBlockStateChange,
-      onStopInitialDragging: this.onBlockStopInitialDragging
+      onStopInitialDragging: this.onBlockStopInitialDragging,
+      type_info: this.getTypeInfo(block_id_and_block[1].type)
     })), Object.values(this.state.wires).map(wire => /*#__PURE__*/React.createElement(Wire, {
       key: wire.from_point.x + '_' + wire.from_point.y + '_' + wire.to_point.x + '_' + wire.to_point.y,
       from_point: wire.from_point,
