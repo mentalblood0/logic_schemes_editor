@@ -195,18 +195,13 @@ class BlocksArea extends React.Component {
 	}
 
 	onBlockStateChange(detail) {
-		console.log('onBlockStateChange');
 		this.setState(state => {
 			state.blocks[detail.const_id] = detail;
 			Object.values(state.wires).forEach(w => {
 				if (detail.const_id == w.from_block_const_id) {
-					// const b = state.blocks[w.to_block_const_id]
-					// state.blocks[w.to_block_const_id] = b.this.getInfo.bind(b.this)();
 					this.updateWireCoordinates(state, w.id, 'from', true);
 				}
 				else if (detail.const_id == w.to_block_const_id) {
-					// const b = state.blocks[w.from_block_const_id]
-					// state.blocks[w.from_block_const_id] = b.this.getInfo.bind(b.this)();
 					this.updateWireCoordinates(state, w.id, 'to', true);
 				}
 			});

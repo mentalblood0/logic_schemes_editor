@@ -19,7 +19,6 @@ function getElementRelativeCenter(e) {
 
 class Block extends React.Component {
   constructor(props) {
-    console.log('block constructor');
     super(props);
     const type_info = getTypeInfo(props.type);
     this.state = {
