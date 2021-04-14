@@ -601,11 +601,11 @@ class BlocksArea extends React.Component {
       onStateChange: this.onBlockStateChange,
       onStopInitialDragging: this.onBlockStopInitialDragging
     })), Object.values(this.state.wires).map(wire => /*#__PURE__*/React.createElement(Wire, {
-      key: wire.id + '_' + wire.from_point + '_' + wire.to_point,
+      key: wire.from_point.x + '_' + wire.from_point.y + '_' + wire.to_point.x + '_' + wire.to_point.y,
       from_point: wire.from_point,
       to_point: wire.to_point,
       scale: scale
-    })), this.state.adding_wire ? /*#__PURE__*/React.createElement(Wire, {
+    })), this.state.adding_wire ? /*#__PURE__*/React.createElement(Wire_f, {
       from_point: scalePoint(this.state.adding_wire_info.from_point, 1 / scale),
       to_point: scalePoint(this.state.adding_wire_info.to_point, 1 / scale),
       scale: scale
