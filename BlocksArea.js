@@ -53,6 +53,7 @@ class BlocksArea extends React.Component {
       'wires': {},
       'adding_wire': false,
       'adding_wire_info': undefined,
+      'dragging_block': false,
       'scale': 1,
       'offset': {
         'x': 0,
@@ -301,6 +302,9 @@ class BlocksArea extends React.Component {
       return;
     }
 
+    this.setState({
+      'dragging_block': true
+    });
     const blocks_wrapper_element = b._ref.current.parentElement;
     const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
     const scale = this.state.scale;
@@ -373,6 +377,7 @@ class BlocksArea extends React.Component {
   handleMouseUp() {
     this.setState({
       'adding_wire': false,
+      'dragging_block': false,
       'dragging_scheme': false,
       'dragging_scheme_from_point': undefined
     });
@@ -498,7 +503,11 @@ class BlocksArea extends React.Component {
       className: "blocksArea",
       ref: this._ref
     }, /*#__PURE__*/React.createElement("div", {
-      className: "sidePanel"
+      className: "sidePanel",
+      style: {
+        'zIndex': 10,
+        'display': this.state.dragging_block ? 'none' : 'block'
+      }
     }, /*#__PURE__*/React.createElement("div", {
       className: "controls"
     }, /*#__PURE__*/React.createElement("input", {
