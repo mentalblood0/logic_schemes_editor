@@ -39,6 +39,20 @@ input[type=number] {
 	z-index: 0;
 }
 
+::-webkit-scrollbar {
+ width: 10px;
+ height: 12px;
+}
+::-webkit-scrollbar-thumb {
+ background: rgba(120, 120, 140, 1);
+ border-radius: 4px;
+ /*box-shadow: inset 6px 7px 11px #b6b6c0;*/
+}
+::-webkit-scrollbar-track{
+ background: transparent;
+ border-radius: 9px;
+}
+
 .sidePanel>* {
 	box-sizing: border-box;
 	width: 100%;
