@@ -95,7 +95,7 @@ class BlocksArea extends React.Component {
 				e.preventDefault();
 				const delta = -e.deltaY / 100;
 				this.setState(state => {
-					const new_value = state.new_element_inputs_number + delta;
+					const new_value = Number.parseInt(state.new_element_inputs_number, 10) + delta;
 					if (new_value >= 1)
 						state.new_element_inputs_number = new_value;
 					return state;
@@ -246,10 +246,10 @@ class BlocksArea extends React.Component {
 			'name': this.state.name,
 			'custom_elements': this.state.custom_elements,
 			'new_element_type': this.state.new_element_type,
-			'new_element_inputs_number': this.state.new_element_inputs_number,
-			'new_element_outputs_number': this.state.new_element_outputs_number,
-			'inputs_number': this.state.inputs_number,
-			'outputs_number': this.state.outputs_number,
+			'new_element_inputs_number': Number.parseInt(this.state.new_element_inputs_number, 10),
+			'new_element_outputs_number': Number.parseInt(this.state.new_element_outputs_number, 10),
+			'inputs_number': Number.parseInt(this.state.inputs_number, 10),
+			'outputs_number': Number.parseInt(this.state.outputs_number, 10),
 			'blocks': this.state.blocks,
 			'wires': this.state.wires,
 			'tests': this.state.tests
@@ -493,11 +493,11 @@ class BlocksArea extends React.Component {
 	}
 
 	handleNewElementInputsNumberInputChange(e) {
-		this.setState({'new_element_inputs_number': e.target.value});
+		this.setState({'new_element_inputs_number': Number.parseInt(e.target.value, 10)});
 	}
 
 	handleNewElementOutputsNumberInputChange(e) {
-		this.setState({'new_element_outputs_number': e.target.value});
+		this.setState({'new_element_outputs_number': Number.parseInt(e.target.value, 10)});
 	}
 
 	handleMouseWheel(e) {

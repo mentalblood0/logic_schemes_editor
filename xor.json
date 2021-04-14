@@ -1,0 +1,364 @@
+{
+	"name": "xor",
+	"custom_elements": {},
+	"new_element_type": "new",
+	"new_element_inputs_number": 1,
+	"new_element_outputs_number": 1,
+	"inputs_number": 2,
+	"outputs_number": 1,
+	"blocks": {
+		"1": {
+			"type": "INPUT",
+			"id": "INPUT_1",
+			"const_id": "1",
+			"x": 425.203125,
+			"y": 272,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 838.2596435546875,
+					"y": 421.92699432373047
+				}
+			]
+		},
+		"2": {
+			"type": "INPUT",
+			"id": "INPUT_2",
+			"const_id": "2",
+			"x": 419.578125,
+			"y": 369,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 837.760498046875,
+					"y": 551.0339965820312
+				}
+			]
+		},
+		"3": {
+			"type": "OR",
+			"id": "OR_1",
+			"const_id": "3",
+			"x": 729.1796875,
+			"y": 612,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x || y"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1030.4227600097656,
+					"y": 874.4669799804688
+				},
+				{
+					"x": 1030.4227600097656,
+					"y": 970.2990112304688
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1218.9464416503906,
+					"y": 874.4669799804688
+				}
+			]
+		},
+		"4": {
+			"type": "OR",
+			"id": "OR_2",
+			"const_id": "4",
+			"x": 1008.1796875,
+			"y": 281,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x || y"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1401.7717895507812,
+					"y": 433.90599822998047
+				},
+				{
+					"x": 1401.7717895507812,
+					"y": 529.7379989624023
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1590.2954711914062,
+					"y": 433.90599822998047
+				}
+			]
+		},
+		"5": {
+			"type": "NOT",
+			"id": "NOT_1",
+			"const_id": "5",
+			"x": 714.5546875,
+			"y": 281,
+			"inputs": [
+				"x"
+			],
+			"outputs": [
+				"!x"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1010.9569091796875,
+					"y": 433.90599822998047
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1222.4403076171875,
+					"y": 433.90599822998047
+				}
+			]
+		},
+		"6": {
+			"type": "NOT",
+			"id": "NOT_2",
+			"const_id": "6",
+			"x": 710.5546875,
+			"y": 385,
+			"inputs": [
+				"x"
+			],
+			"outputs": [
+				"!x"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1005.6328735351562,
+					"y": 572.3300018310547
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1217.1163330078125,
+					"y": 572.3300018310547
+				}
+			]
+		},
+		"7": {
+			"type": "AND",
+			"id": "AND_1",
+			"const_id": "7",
+			"x": 998.032109169562,
+			"y": 536.3459769807122,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x && y"
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 728.6775817871094,
+					"y": 406.1356201171875
+				},
+				{
+					"x": 728.6775817871094,
+					"y": 456.4359436035156
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 843.8945007324219,
+					"y": 406.1356201171875
+				}
+			]
+		},
+		"8": {
+			"type": "OUTPUT",
+			"id": "OUTPUT_1",
+			"const_id": "8",
+			"x": 1273.2442983175786,
+			"y": 646.5124741710541,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"input_connectors_coordinates": [
+				{
+					"x": 920.9386596679688,
+					"y": 483.09246826171875
+				}
+			],
+			"output_connectors_coordinates": []
+		}
+	},
+	"wires": {
+		"0": {
+			"id": 0,
+			"from_block_const_id": "2",
+			"to_block_const_id": "6",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 629.421875,
+				"y": 414
+			},
+			"to_point": {
+				"x": 755.546875,
+				"y": 430
+			}
+		},
+		"1": {
+			"id": 1,
+			"from_block_const_id": "1",
+			"to_block_const_id": "5",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 629.796875,
+				"y": 317
+			},
+			"to_point": {
+				"x": 759.546875,
+				"y": 326
+			}
+		},
+		"2": {
+			"id": 2,
+			"from_block_const_id": "1",
+			"to_block_const_id": "3",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 629.7968772011174,
+				"y": 316.9999957353346
+			},
+			"to_point": {
+				"x": 774.171870781191,
+				"y": 656.9999849590297
+			}
+		},
+		"3": {
+			"id": 3,
+			"from_block_const_id": "2",
+			"to_block_const_id": "3",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 629.4218617932943,
+				"y": 413.9999974320294
+			},
+			"to_point": {
+				"x": 774.171870781191,
+				"y": 729.0000084376172
+			}
+		},
+		"4": {
+			"id": 4,
+			"from_block_const_id": "5",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 918.4374963314705,
+				"y": 325.99999867015805
+			},
+			"to_point": {
+				"x": 1053.1718929757933,
+				"y": 325.99999867015805
+			}
+		},
+		"5": {
+			"id": 5,
+			"from_block_const_id": "6",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 914.4375154078228,
+				"y": 430.00000137569833
+			},
+			"to_point": {
+				"x": 1053.1718929757933,
+				"y": 397.9999992204374
+			}
+		},
+		"6": {
+			"id": 6,
+			"from_block_const_id": "4",
+			"to_block_const_id": "7",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1194.812525312852,
+				"y": 325.99999867015805
+			},
+			"to_point": {
+				"x": 1043.0312525679701,
+				"y": 581.3437561447864
+			}
+		},
+		"7": {
+			"id": 7,
+			"from_block_const_id": "3",
+			"to_block_const_id": "7",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 915.8125031182497,
+				"y": 656.9999849590297
+			},
+			"to_point": {
+				"x": 1043.0312525679701,
+				"y": 653.3437452309117
+			}
+		},
+		"8": {
+			"id": 8,
+			"from_block_const_id": "7",
+			"to_block_const_id": "8",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1207.9531108057379,
+				"y": 581.3437406023918
+			},
+			"to_point": {
+				"x": 1318.234350196246,
+				"y": 691.5000030656623
+			}
+		}
+	},
+	"tests": [
+		[
+			0,
+			0,
+			0
+		],
+		[
+			1,
+			1,
+			0
+		],
+		[
+			1,
+			0,
+			1
+		],
+		[
+			0,
+			1,
+			1
+		]
+	]
+}
