@@ -156,7 +156,11 @@ class BlocksArea extends React.Component {
 						'from_output_id': w.from_output_id,
 						'to_input_id': w.to_input_id
 					};
-					this.updateWireCoordinates(state, new_id, wire_type_relative_to_block, false);
+					const b_to = state.blocks[w.to_block_const_id]
+					const b_from = state.blocks[w.from_block_const_id]
+					state.blocks[w.to_block_const_id] = b_to.this.getInfo.bind(b_to.this)();
+					state.blocks[w.from_block_const_id] = b_from.this.getInfo.bind(b_from.this)();
+					this.updateWireCoordinates(state, new_id, wire_type_relative_to_block, true);
 				}
 				return state;
 			});
@@ -171,8 +175,8 @@ class BlocksArea extends React.Component {
 		const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
 		const scale = this.state.scale;
 		const convertCoordinates = convert ? (p => ({
-			'x': (p.x - blocks_wrapper_rect.x) / scale,
-			'y': (p.y - blocks_wrapper_rect.y) / scale
+			'x': (p.x ) / scale,
+			'y': (p.y ) / scale
 		})) : p => p;
 		if (type_relative_to_block != 'to')
 			wire.from_point =
@@ -191,14 +195,20 @@ class BlocksArea extends React.Component {
 	}
 
 	onBlockStateChange(detail) {
+		console.log('onBlockStateChange');
 		this.setState(state => {
 			state.blocks[detail.const_id] = detail;
 			Object.values(state.wires).forEach(w => {
-				if (detail.const_id == w.from_block_const_id)
+				if (detail.const_id == w.from_block_const_id) {
+					// const b = state.blocks[w.to_block_const_id]
+					// state.blocks[w.to_block_const_id] = b.this.getInfo.bind(b.this)();
 					this.updateWireCoordinates(state, w.id, 'from', true);
-				else if (detail.const_id == w.to_block_const_id)
+				}
+				else if (detail.const_id == w.to_block_const_id) {
+					// const b = state.blocks[w.from_block_const_id]
+					// state.blocks[w.from_block_const_id] = b.this.getInfo.bind(b.this)();
 					this.updateWireCoordinates(state, w.id, 'to', true);
-
+				}
 			});
 			return state;
 		});
