@@ -84,11 +84,29 @@ class BlocksArea extends React.Component {
     this.handleMouseWheel = this.handleMouseWheel.bind(this);
     this.remove_wires = this.remove_wires.bind(this);
     this._ref = React.createRef();
+    this.inputs_number_ref = React.createRef();
+    this.outputs_number_ref = React.createRef();
     this.state.blocks_wrapper_ref = React.createRef();
   }
 
   componentDidMount() {
-    this.state.event_listeners = [//fucking drag and drop
+    this.state.event_listeners = [[this.inputs_number_ref.current, 'wheel', e => {
+      e.preventDefault();
+      const delta = -e.deltaY / 100;
+      this.setState(state => {
+        const new_value = state.new_element_inputs_number + delta;
+        if (new_value >= 1) state.new_element_inputs_number = new_value;
+        return state;
+      });
+    }], [this.outputs_number_ref.current, 'wheel', e => {
+      e.preventDefault();
+      const delta = -e.deltaY / 100;
+      this.setState(state => {
+        const new_value = state.new_element_outputs_number + delta;
+        if (new_value >= 1) state.new_element_outputs_number = new_value;
+        return state;
+      });
+    }], //fucking drag and drop
     [this._ref.current, 'drag', e => e.preventDefault()], [this._ref.current, 'dragstart', e => e.preventDefault()], [this._ref.current, 'dragend', e => e.preventDefault()], [this._ref.current, 'dragover', e => e.preventDefault()], [this._ref.current, 'dragenter', e => e.preventDefault()], [this._ref.current, 'dragleave', e => e.preventDefault()], [this._ref.current, 'drop', e => e.preventDefault()]];
 
     for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
@@ -532,6 +550,7 @@ class BlocksArea extends React.Component {
     }, /*#__PURE__*/React.createElement("input", {
       type: "number",
       min: "1",
+      ref: this.inputs_number_ref,
       value: this.state.new_element_inputs_number,
       onChange: this.handleNewElementInputsNumberInputChange
     })), /*#__PURE__*/React.createElement("div", {
@@ -539,6 +558,7 @@ class BlocksArea extends React.Component {
     }, /*#__PURE__*/React.createElement("input", {
       type: "number",
       min: "1",
+      ref: this.outputs_number_ref,
       value: this.state.new_element_outputs_number,
       onChange: this.handleNewElementOutputsNumberInputChange
     }))), /*#__PURE__*/React.createElement("button", {

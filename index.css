@@ -13,6 +13,18 @@ body {
 								  not supported by any browser */
 }
 
+/* remove input number arrows in Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* remove input number arrows in Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 
 
 .sidePanel {
