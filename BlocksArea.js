@@ -1,5 +1,7 @@
 'use strict';
 
+const sum = m => m.reduce((a, b) => a + b, 0);
+
 const default_elements = {
   'INPUT': {
     'inputs': [],
@@ -256,12 +258,30 @@ class BlocksArea extends React.Component {
     const tests = this.state.tests;
     const inputs_number = Object.values(this.state.blocks).filter(b => b.type == 'INPUT').length;
     const outputs_number = Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').length;
+    const unpacked_wires = [];
+    Object.values(this.state.wires).forEach(w => {
+      const group_size = blocks[w.from_block_const_id].outputs_groups[w.from_output_id];
+      const outputs_before_output = blocks[w.from_block_const_id].outputs_groups.slice(0, w.from_output_id);
+      const first_output_index = sum(outputs_before_output);
+      const inputs_before_input = blocks[w.to_block_const_id].inputs_groups.slice(0, w.to_input_id);
+      const first_input_index = sum(inputs_before_input);
+
+      for (let i = 0; i < group_size; i++) {
+        const from_output_id = first_output_index + i;
+        const to_input_id = first_input_index + i;
+        unpacked_wires.push({
+          'from': blocks[w.from_block_const_id].id + '[' + (from_output_id + 1) + ']',
+          'to': blocks[w.to_block_const_id].id + '[' + (to_input_id + 1) + ']'
+        });
+      }
+    });
     const data = {
       [this.state.name]: {
-        'wires': Object.values(this.state.wires).map(w => ({
-          'from': blocks[w.from_block_const_id].id + '[' + (w.from_output_id + 1) + ']',
-          'to': blocks[w.to_block_const_id].id + '[' + (w.to_input_id + 1) + ']'
-        }))
+        // 'wires': Object.values(this.state.wires).map(w => ({
+        // 	'from': blocks[w.from_block_const_id].id + '[' + (w.from_output_id + 1) + ']',
+        // 	'to': blocks[w.to_block_const_id].id + '[' + (w.to_input_id + 1) + ']'
+        // })),
+        'wires': unpacked_wires
       }
     };
     if (tests.length > 0) data[this.state.name]['tests'] = tests.map(t => ({
@@ -386,6 +406,7 @@ class BlocksArea extends React.Component {
   }
 
   handleMouseUpOnInputOutput(input_output_info) {
+    if (this.state.adding_wire_info.group_size != input_output_info.group_size) return;
     const new_wire_info = Object.assign({}, this.state.adding_wire_info);
     this.setState({
       'adding_wire_info': undefined
@@ -393,7 +414,7 @@ class BlocksArea extends React.Component {
 
     for (const key in input_output_info) new_wire_info[key] = input_output_info[key];
 
-    if (!('to_block_const_id' in new_wire_info) || !('from_block_const_id' in new_wire_info)) return;
+    if (!('to_block_const_id' in new_wire_info) || !('from_block_const_id' in new_wire_info) || new_wire_info.to_block_const_id == new_wire_info.from_block_const_id) return;
     delete new_wire_info['from_point'];
     delete new_wire_info['to_point'];
     this.add({
@@ -624,7 +645,7 @@ class BlocksArea extends React.Component {
         'transform': 'scale(' + scale + ')'
       }
     }, Object.entries(this.state.blocks).map((block_id_and_block, i) => /*#__PURE__*/React.createElement(Block, {
-      key: block_id_and_block[0] + '_' + block_id_and_block[1].id,
+      key: block_id_and_block[1].type == 'INPUT' || block_id_and_block[1] == 'OUTPUT' ? block_id_and_block[0] + '_' + block_id_and_block[1].id : block_id_and_block[0],
       const_id: block_id_and_block[0],
       id: block_id_and_block[1].id,
       type: block_id_and_block[1].type,
