@@ -532,8 +532,8 @@ class BlocksArea extends React.Component {
 		const mouse_y = e.clientY;
 		this.setState(state => {
 			state.scale *= delta;
-			state.offset.x -= (delta - 1) * (window.innerWidth / 2 - state.offset.x);
-			state.offset.y -= (delta - 1) * (window.innerHeight / 2 - state.offset.y);
+			state.offset.x -= (delta - 1) * (mouse_x - state.offset.x);
+			state.offset.y -= (delta - 1) * (mouse_y - state.offset.y);
 			return state;
 		});
 	}
