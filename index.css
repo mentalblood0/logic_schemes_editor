@@ -362,7 +362,7 @@ body {
 }
 
 .wire {
-	position: absolute;
+	position: fixed;
 	transform-origin: 0 center 0;
 	z-index: 1;
 }

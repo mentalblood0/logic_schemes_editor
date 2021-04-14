@@ -61,9 +61,8 @@ class Block extends React.Component {
 	getInfo(state) {
 		if (state == undefined)
 			state = this.state;
-		let get_info_function = state => this.getInfo(state)
-		get_info_function = get_info_function.bind(this);
 		return {
+			'this': this,
 			'type': state.type,
 			'id': state.id,
 			'const_id': state.const_id,
@@ -74,8 +73,7 @@ class Block extends React.Component {
 			'input_connectors_coordinates':
 				this.input_connectors_refs.map(r => getElementCenter(r.current)),
 			'output_connectors_coordinates':
-				this.output_connectors_refs.map(r => getElementCenter(r.current)),
-			'get_info_function': get_info_function
+				this.output_connectors_refs.map(r => getElementCenter(r.current))
 		};
 	}
 
@@ -87,8 +85,6 @@ class Block extends React.Component {
 			(e.target === name_element)
 		) ? f(e) : null;
 		this.state.event_listeners = [
-			[this._ref.current, 'contextmenu', ],
-			[this._ref.current.parentElement, 'mousewheel', this.handleMouseWheel.bind(this)]
 		];
 		for (const e_l of this.state.event_listeners)
 			e_l[0].addEventListener(e_l[1], e_l[2]);

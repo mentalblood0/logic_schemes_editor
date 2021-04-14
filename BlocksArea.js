@@ -135,7 +135,7 @@ class BlocksArea extends React.Component {
             'from_output_id': w.from_output_id,
             'to_input_id': w.to_input_id
           };
-          this.updateWireCoordinates(state, new_id, wire_type_relative_to_block);
+          this.updateWireCoordinates(state, new_id, wire_type_relative_to_block, false);
         }
 
         return state;
@@ -143,12 +143,19 @@ class BlocksArea extends React.Component {
     });
   }
 
-  updateWireCoordinates(state, wire_id, type_relative_to_block) {
+  updateWireCoordinates(state, wire_id, type_relative_to_block, convert = true) {
     const wire = state.wires[wire_id];
     const from_block = state.blocks[wire.from_block_const_id];
     const to_block = state.blocks[wire.to_block_const_id];
-    if (type_relative_to_block != 'to') wire.from_point = scalePoint(from_block.output_connectors_coordinates[wire.from_output_id], 1 / this.state.scale);
-    if (type_relative_to_block != 'from') wire.to_point = scalePoint(to_block.input_connectors_coordinates[wire.to_input_id], 1 / this.state.scale);
+    const blocks_wrapper_element = this._ref.current.parentElement;
+    const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
+    const scale = this.state.scale;
+    const convertCoordinates = convert ? p => ({
+      'x': (p.x - blocks_wrapper_rect.x) / scale,
+      'y': (p.y - blocks_wrapper_rect.y) / scale
+    }) : p => p;
+    if (type_relative_to_block != 'to') wire.from_point = convertCoordinates(from_block.output_connectors_coordinates[wire.from_output_id]);
+    if (type_relative_to_block != 'from') wire.to_point = convertCoordinates(to_block.input_connectors_coordinates[wire.to_input_id]);
     state.wires[wire_id] = wire;
   }
 
@@ -161,9 +168,9 @@ class BlocksArea extends React.Component {
 
   onBlockStateChange(detail) {
     this.setState(state => {
-      state.blocks[detail.const_id] = Object.assign(detail);
+      state.blocks[detail.const_id] = detail;
       Object.values(state.wires).forEach(w => {
-        if (detail.const_id == w.from_block_const_id) this.updateWireCoordinates(state, w.id, 'from');else if (detail.const_id == w.to_block_const_id) this.updateWireCoordinates(state, w.id, 'to');
+        if (detail.const_id == w.from_block_const_id) this.updateWireCoordinates(state, w.id, 'from', true);else if (detail.const_id == w.to_block_const_id) this.updateWireCoordinates(state, w.id, 'to', true);
       });
       return state;
     });
