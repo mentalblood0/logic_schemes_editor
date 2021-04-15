@@ -36,6 +36,8 @@ class Block extends React.Component {
       'gripY': undefined,
       'inputs': props.inputs ? props.inputs : props.type_info['inputs'],
       'outputs': props.outputs ? props.outputs : props.type_info['outputs'],
+      'inputs_groups': props.inputs_groups,
+      'outputs_groups': props.outputs_groups,
       'onStateChange': props.onStateChange,
       'onMount': props.onMount,
       'onStopInitialDragging': props.onStopInitialDragging,
@@ -44,8 +46,7 @@ class Block extends React.Component {
       'handle_mouse_up_on_input_output_function': props.handle_mouse_up_on_input_output_function,
       'remove_wires_function': props.remove_wires_function
     };
-    this.state.inputs_groups = filledArray(this.state.inputs.length, 1);
-    this.state.outputs_groups = filledArray(this.state.outputs.length, 1);
+    console.log(this.state.inputs_groups, this.state.outputs_groups);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -158,13 +159,7 @@ class Block extends React.Component {
       });else if (e.button == 2) this.state.remove_wires_function({
         'to_block_const_id': this.state.const_id,
         'to_input_id': i
-      });else if (e.button == 1) {
-        if (this.state.inputs_groups.length > i + 1) this.setState(state => {
-          state.inputs_groups[i] += state.inputs_groups[i + 1];
-          state.inputs_groups.splice(i + 1, 1);
-          return state;
-        });
-      }
+      });
     } else if (type == 'output') {
       if (e.button == 0) this.state.start_adding_wire_function({
         'group_size': this.state.outputs_groups[i],
@@ -178,13 +173,7 @@ class Block extends React.Component {
       });else if (e.button == 2) this.state.remove_wires_function({
         'from_block_const_id': this.state.const_id,
         'from_output_id': i
-      });else if (e.button == 1) {
-        if (this.state.outputs_groups.length > i + 1) this.setState(state => {
-          state.outputs_groups[i] += state.outputs_groups[i + 1];
-          state.outputs_groups.splice(i + 1, 1);
-          return state;
-        });
-      }
+      });
     }
   }
 

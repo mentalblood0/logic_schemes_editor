@@ -36,6 +36,45 @@ function getUniqueId(some_dict) {
   return Object.keys(some_dict).length == 0 ? 0 : Math.max(...Object.keys(some_dict)) + 1;
 }
 
+function joinWithNext(array, i) {
+  if (array.length > i + 1) {
+    array[i] += array[i + 1];
+    array.splice(i + 1, 1);
+  }
+
+  return array;
+}
+
+function unjoinToNext(array, i) {
+  if (array[i] > 1) {
+    array[i] -= 1;
+    array.splice(i + 1, 0, 1);
+  }
+
+  return array;
+}
+
+function cutToSum(array, sum) {
+  const result = [];
+  let left = sum;
+
+  for (let n of array) {
+    if (left == 0) break;
+    if (n > left) n = left;
+    left -= n;
+    result.push(n);
+  }
+
+  for (let i = 0; i < left; i++) result.push(1);
+
+  return result;
+}
+
+function numberOrZero(x) {
+  x = Number.parseInt(x, 10);
+  return isNaN(x) ? 0 : x;
+}
+
 class BlocksArea extends React.Component {
   constructor(props) {
     super(props);
@@ -94,8 +133,9 @@ class BlocksArea extends React.Component {
       e.preventDefault();
       const delta = -e.deltaY / 100;
       this.setState(state => {
-        const new_value = Number.parseInt(state.new_element.inputs_number, 10) + delta;
+        const new_value = numberOrZero(state.new_element.inputs_number) + delta;
         if (new_value >= 1) state.new_element.inputs_number = new_value;
+        state.new_element.inputs_groups = cutToSum(state.new_element.inputs_groups, state.new_element.inputs_number);
         return state;
       });
     }], [this.outputs_number_ref.current, 'wheel', e => {
@@ -104,6 +144,7 @@ class BlocksArea extends React.Component {
       this.setState(state => {
         const new_value = state.new_element.outputs_number + delta;
         if (new_value >= 1) state.new_element.outputs_number = new_value;
+        state.new_element.outputs_groups = cutToSum(state.new_element.outputs_groups, state.new_element.outputs_number);
         return state;
       });
     }], //fucking drag and drop
@@ -209,8 +250,8 @@ class BlocksArea extends React.Component {
       'name': this.state.name,
       'custom_elements': this.state.custom_elements,
       'new_element': this.state.new_element,
-      'inputs_number': Number.parseInt(this.state.inputs_number, 10),
-      'outputs_number': Number.parseInt(this.state.outputs_number, 10),
+      'inputs_number': numberOrZero(this.state.inputs_number),
+      'outputs_number': numberOrZero(this.state.outputs_number),
       'blocks': this.state.blocks,
       'wires': this.state.wires,
       'tests': this.state.tests
@@ -532,7 +573,7 @@ class BlocksArea extends React.Component {
         'tests_editor_opened': true
       })
     }, "edit tests")), /*#__PURE__*/React.createElement("div", {
-      className: "blocks"
+      className: "newBlockConfiguration"
     }, /*#__PURE__*/React.createElement("div", {
       className: "block blockToAdd",
       onMouseDown: this.handleMouseDown
@@ -557,7 +598,9 @@ class BlocksArea extends React.Component {
       ref: this.inputs_number_ref,
       value: this.state.new_element.inputs_number,
       onChange: e => this.setState(state => {
-        state.new_element.inputs_number = Number.parseInt(e.target.value, 10);
+        state.new_element.inputs_number = '' + numberOrZero(e.target.value);
+        console.log('inputs_number', state.new_element.inputs_number);
+        state.new_element.inputs_groups = cutToSum(state.new_element.inputs_groups, state.new_element.inputs_number);
         return state;
       })
     })), /*#__PURE__*/React.createElement("div", {
@@ -568,13 +611,46 @@ class BlocksArea extends React.Component {
       ref: this.outputs_number_ref,
       value: this.state.new_element.outputs_number,
       onChange: e => this.setState(state => {
-        state.new_element.outputs_number = Number.parseInt(e.target.value, 10);
+        state.new_element.outputs_number = numberOrZero(e.target.value);
+        state.new_element.outputs_groups = cutToSum(state.new_element.outputs_groups, state.new_element.outputs_number);
         return state;
       })
-    }))), /*#__PURE__*/React.createElement("button", {
+    }))), /*#__PURE__*/React.createElement("div", {
+      className: "inputsOutputsGroups"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "inputsGroups"
+    }, this.state.new_element.inputs_groups.map((g, i) => /*#__PURE__*/React.createElement("div", {
+      key: i,
+      className: "inputGroup unselectable",
+      onMouseDown: e => {
+        let f = undefined;
+        if (e.button == 0) f = joinWithNext;else if (e.button == 2) f = unjoinToNext;else return state;
+        this.setState(state => {
+          state.new_element.inputs_groups = f(state.new_element.inputs_groups, i);
+          return state;
+        });
+      },
+      onContextMenu: e => e.preventDefault()
+    }, g))), /*#__PURE__*/React.createElement("div", {
+      className: "outputsGroups"
+    }, this.state.new_element.outputs_groups.map((g, i) => /*#__PURE__*/React.createElement("div", {
+      key: i,
+      className: "outputGroup unselectable",
+      onMouseDown: e => {
+        let f = undefined;
+        if (e.button == 0) f = joinWithNext;else if (e.button == 2) f = unjoinToNext;else return state;
+        this.setState(state => {
+          state.new_element.outputs_groups = f(state.new_element.outputs_groups, i);
+          return state;
+        });
+      },
+      onContextMenu: e => e.preventDefault()
+    }, g)))), /*#__PURE__*/React.createElement("button", {
       className: "addBlockButton animated animated-green unselectable",
       onClick: this.handleAddBlockButtonClick
-    }, "+"), Object.entries(this.state.custom_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
+    }, "+")), /*#__PURE__*/React.createElement("div", {
+      className: "blocks"
+    }, Object.entries(this.state.custom_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
       key: element_type_and_element[0],
       className: "block",
       onMouseDown: e => this.handleMouseDown(e, element_type_and_element[0])
@@ -633,6 +709,8 @@ class BlocksArea extends React.Component {
       dragging: block_id_and_block[1].dragging,
       inputs: block_id_and_block[1].inputs,
       outputs: block_id_and_block[1].outputs,
+      inputs_groups: block_id_and_block[1].inputs_groups,
+      outputs_groups: block_id_and_block[1].outputs_groups,
       function_to_delete_self: () => this.removeBlock(block_id_and_block[0]),
       start_adding_wire_function: this.startAddingWire,
       handle_mouse_up_on_input_output_function: this.handleMouseUpOnInputOutput,
