@@ -178,7 +178,7 @@ class BlocksArea extends React.Component {
         const current_const_ids = Object.values(state.blocks).map(v => v.const_id);
         const const_id = current_const_ids.length == 0 ? 1 : Math.max(...current_const_ids) + 1;
         if (state.blocks[const_id] != undefined) return state;
-        if (b.type == 'INPUT') b.id = b.type + '_' + (state.inputs_number + 1);else if (b.type == 'OUTPUT') b.id = b.type + '_' + (state.outputs_number + 1);else b.id = b.type + '_' + (state.inputs_number + 1);
+        if (b.type == 'INPUT') b.id = b.type + ' ' + (state.inputs_number + 1);else if (b.type == 'OUTPUT') b.id = b.type + ' ' + (state.outputs_number + 1);else b.id = b.type + ' ' + (state.inputs_number + 1);
         state.blocks[const_id] = b;
         if (b.type == 'INPUT') state.inputs_number += 1;else if (b.type == 'OUTPUT') state.outputs_number += 1;
       }
@@ -199,8 +199,8 @@ class BlocksArea extends React.Component {
           };
           const b_to = state.blocks[w.to_block_const_id];
           const b_from = state.blocks[w.from_block_const_id];
-          state.blocks[w.to_block_const_id] = b_to.get_info_function();
-          state.blocks[w.from_block_const_id] = b_from.get_info_function();
+          state.blocks[w.to_block_const_id] = b_to.getInfo();
+          state.blocks[w.from_block_const_id] = b_from.getInfo();
           this.updateWireCoordinates(state, new_id, wire_type_relative_to_block, true);
         }
 
@@ -302,7 +302,11 @@ class BlocksArea extends React.Component {
     const outputs_number = Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').length;
     const unpacked_wires = [];
     Object.values(this.state.wires).forEach(w => {
-      const group_size = blocks[w.from_block_const_id].outputs_groups[w.from_output_id];
+      const from_block = blocks[w.from_block_const_id];
+      const to_block = blocks[w.to_block_const_id];
+      const group_size = from_block.outputs_groups[w.from_output_id];
+      const from_block_type = blocks[w.from_block_const_id].type;
+      const to_block_type = blocks[w.to_block_const_id].type;
       const outputs_before_output = blocks[w.from_block_const_id].outputs_groups.slice(0, w.from_output_id);
       const first_output_index = sum(outputs_before_output);
       const inputs_before_input = blocks[w.to_block_const_id].inputs_groups.slice(0, w.to_input_id);
@@ -311,10 +315,24 @@ class BlocksArea extends React.Component {
       for (let i = 0; i < group_size; i++) {
         const from_output_id = first_output_index + i;
         const to_input_id = first_input_index + i;
-        unpacked_wires.push({
-          'from': blocks[w.from_block_const_id].id + '[' + (from_output_id + 1) + ']',
-          'to': blocks[w.to_block_const_id].id + '[' + (to_input_id + 1) + ']'
-        });
+        const new_unpucked_wire = {};
+        console.log(from_block.id);
+
+        if (from_block_type == 'INPUT' && from_block.id.includes('-')) {
+          const n = from_block.id.split(' ')[1];
+          const n_splited = n.split('-');
+          const n_from = Number.parseInt(n_splited[0], 10);
+          new_unpucked_wire.from = 'INPUT ' + (n_from + i);
+        } else new_unpucked_wire.from = blocks[w.from_block_const_id].id + '[' + (from_output_id + 1) + ']';
+
+        if (to_block_type == 'OUTPUT' && to_block.id.includes('-')) {
+          const n = to_block.id.split(' ')[1];
+          const n_splited = n.split('-');
+          const n_from = Number.parseInt(n_splited[0], 10);
+          new_unpucked_wire.to = 'OUTPUT ' + (n_from + i);
+        } else new_unpucked_wire.to = blocks[w.to_block_const_id].id + '[' + (to_input_id + 1) + ']';
+
+        unpacked_wires.push(new_unpucked_wire);
       }
     });
     const data = {
@@ -466,15 +484,15 @@ class BlocksArea extends React.Component {
       if (!state.blocks[const_id]) return state;
       const type = state.blocks[const_id].type;
       const id = state.blocks[const_id].id;
-      const number = Number.parseInt(id.split('_').pop(), 10);
+      const number = Number.parseInt(id.split(' ').pop(), 10);
       state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => v.from_block_const_id != const_id && v.to_block_const_id != const_id));
       let delta = undefined;
 
       if (type == 'INPUT') {
-        delta = -sum(state.blocks[const_id].this.state.outputs_groups);
+        delta = -sum(state.blocks[const_id].getOutputsGroups());
         state.inputs_number += delta;
       } else if (type == 'OUTPUT') {
-        delta = -sum(state.blocks[const_id].this.state.inputs_groups);
+        delta = -sum(state.blocks[const_id].getInputsGroups());
         state.outputs_number += delta;
       } else delta = -1;
 
@@ -486,7 +504,7 @@ class BlocksArea extends React.Component {
 
   updateInputsOutputsNames(type, const_id, delta) {
     this.setState(state => {
-      const current_n = state.blocks[const_id].id.split('_')[1];
+      const current_n = state.blocks[const_id].id.split(' ')[1];
       let new_current_n = undefined;
 
       if (current_n.includes('-')) {
@@ -500,7 +518,7 @@ class BlocksArea extends React.Component {
         new_current_n = current_n_int + '-' + (current_n_int + delta);
       }
 
-      state.blocks[const_id].id = type + '_' + new_current_n;
+      state.blocks[const_id].id = type + ' ' + new_current_n;
       this.shiftBlocksIds(state, type, const_id, delta);
       if (type == 'INPUT') state.inputs_number += delta;else if (type = 'OUTPUT') state.outputs_number += delta;
       return state;
@@ -509,7 +527,7 @@ class BlocksArea extends React.Component {
 
   shiftBlocksIds(state, type, from_const_id, delta) {
     for (const k in state.blocks) if (state.blocks[k].type == type) if (state.blocks[k].const_id > from_const_id) {
-      const n = state.blocks[k].id.split('_')[1];
+      const n = state.blocks[k].id.split(' ')[1];
       let new_n = undefined;
 
       if (n.includes('-')) {
@@ -522,7 +540,7 @@ class BlocksArea extends React.Component {
         new_n = '' + (n_int + delta);
       }
 
-      state.blocks[k].id = type + '_' + new_n;
+      state.blocks[k].id = type + ' ' + new_n;
     }
   }
 
@@ -619,7 +637,7 @@ class BlocksArea extends React.Component {
       className: "tests"
     }, inputs_number > 0 && outputs_number > 0 ? /*#__PURE__*/React.createElement("div", {
       className: "coverageInfo unselectable",
-      id: tests_number + '_' + max_tests_number
+      id: tests_number + ' ' + max_tests_number
     }, "Coverage:", /*#__PURE__*/React.createElement("br", null), tests_number, "/", max_tests_number, " (", Math.floor(tests_number / max_tests_number * 100), "%)") : null, /*#__PURE__*/React.createElement("button", {
       className: "editTestsButton animated animated-lightblue unselectable",
       onClick: () => this.setState({
@@ -751,7 +769,7 @@ class BlocksArea extends React.Component {
         'transform': 'scale(' + scale + ')'
       }
     }, Object.entries(this.state.blocks).map((block_id_and_block, i) => /*#__PURE__*/React.createElement(Block, {
-      key: block_id_and_block[1].type == 'INPUT' || block_id_and_block[1].type == 'OUTPUT' ? block_id_and_block[0] + '_' + block_id_and_block[1].id : block_id_and_block[0],
+      key: block_id_and_block[1].type == 'INPUT' || block_id_and_block[1].type == 'OUTPUT' ? block_id_and_block[0] + ' ' + block_id_and_block[1].id : block_id_and_block[0],
       const_id: block_id_and_block[0],
       id: block_id_and_block[1].id,
       type: block_id_and_block[1].type,
@@ -775,7 +793,7 @@ class BlocksArea extends React.Component {
       updateInputsOutputsNames: this.updateInputsOutputsNames.bind(this),
       type_info: this.getTypeInfo(block_id_and_block[1].type)
     })), Object.values(this.state.wires).map(wire => /*#__PURE__*/React.createElement(Wire, {
-      key: wire.from_point.x + '_' + wire.from_point.y + '_' + wire.to_point.x + '_' + wire.to_point.y,
+      key: wire.from_point.x + ' ' + wire.from_point.y + ' ' + wire.to_point.x + ' ' + wire.to_point.y,
       from_point: wire.from_point,
       to_point: wire.to_point,
       scale: scale

@@ -1,32 +1,185 @@
 {
-	"test": {
-		"wires": [
-			{
-				"from": "1[1]",
-				"to": "3[1]"
-			},
-			{
-				"from": "3[1]",
-				"to": "2[1]"
-			}
+	"name": "test",
+	"custom_elements": {},
+	"new_element": {
+		"type": "new",
+		"inputs": [
+			"",
+			"",
+			""
 		],
-		"tests": [
-			{
-				"inputs": [
-					1
-				],
-				"outputs": [
-					0
-				]
+		"outputs": [
+			"",
+			""
+		],
+		"inputs_groups": [
+			3
+		],
+		"outputs_groups": [
+			2
+		],
+		"x": 180,
+		"y": 236,
+		"dragging": true,
+		"id": "new 9"
+	},
+	"inputs_number": 8,
+	"outputs_number": 9,
+	"blocks": {
+		"2": {
+			"type": "INPUT",
+			"id": "INPUT 1-5",
+			"const_id": "2",
+			"x": 387.5859375,
+			"y": 174,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				5
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 565.40625,
+					"y": 219
+				}
+			]
+		},
+		"3": {
+			"type": "INPUT",
+			"id": "INPUT 6-8",
+			"const_id": "3",
+			"x": 398.0010047768254,
+			"y": 339.0490403660952,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				3
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 843.0699768066406,
+					"y": 562.2830200195312
+				}
+			]
+		},
+		"4": {
+			"type": "new",
+			"id": "new 9",
+			"const_id": "4",
+			"x": 707.0593298570794,
+			"y": 339.9019192678096,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				2
+			],
+			"inputs_groups": [
+				3
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 650.1719055175781,
+					"y": 332.751953125
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 787.5926513671875,
+					"y": 332.751953125
+				}
+			]
+		},
+		"5": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 1-7",
+			"const_id": "5",
+			"x": 1032.6575147527992,
+			"y": 139.16100255063827,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				7
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 931.6730651855469,
+					"y": 159.20978546142578
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"6": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 8-9",
+			"const_id": "6",
+			"x": 1033.814204036894,
+			"y": 342.73828125194717,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				2
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 932.6726684570312,
+					"y": 335.2104797363281
+				}
+			],
+			"output_connectors_coordinates": []
+		}
+	},
+	"wires": {
+		"0": {
+			"id": 0,
+			"from_block_const_id": "3",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 575.8281379732533,
+				"y": 384.0468683966471
 			},
-			{
-				"inputs": [
-					0
-				],
-				"outputs": [
-					1
-				]
+			"to_point": {
+				"x": 752.0468600924306,
+				"y": 384.89063013594085
 			}
-		]
-	}
+		},
+		"1": {
+			"id": 1,
+			"from_block_const_id": "4",
+			"to_block_const_id": "6",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 910.9999800681466,
+				"y": 384.8906184412643
+			},
+			"to_point": {
+				"x": 1078.8124811722425,
+				"y": 387.73436982724917
+			}
+		}
+	},
+	"tests": []
 }

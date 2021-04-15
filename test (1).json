@@ -1,0 +1,26 @@
+{
+	"test": {
+		"wires": [
+			{
+				"from": "INPUT 6",
+				"to": "new 9[1]"
+			},
+			{
+				"from": "INPUT 7",
+				"to": "new 9[2]"
+			},
+			{
+				"from": "INPUT 8",
+				"to": "new 9[3]"
+			},
+			{
+				"from": "new 9[1]",
+				"to": "OUTPUT 8"
+			},
+			{
+				"from": "new 9[2]",
+				"to": "OUTPUT 9"
+			}
+		]
+	}
+}

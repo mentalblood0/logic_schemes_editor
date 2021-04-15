@@ -64,8 +64,9 @@ class Block extends React.Component {
 		if (state == undefined)
 			state = this.state;
 		return {
-			'this': this,
-			'get_info_function': this.getInfo.bind(this),
+			'getInputsGroups': (() => this.state.inputs_groups).bind(this),
+			'getOutputsGroups': (() => this.state.outputs_groups).bind(this),
+			'getInfo': this.getInfo.bind(this),
 			'type': state.type,
 			'id': state.id,
 			'const_id': state.const_id,
