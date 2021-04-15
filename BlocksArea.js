@@ -178,7 +178,7 @@ class BlocksArea extends React.Component {
         const current_const_ids = Object.values(state.blocks).map(v => v.const_id);
         const const_id = current_const_ids.length == 0 ? 1 : Math.max(...current_const_ids) + 1;
         if (state.blocks[const_id] != undefined) return state;
-        b.id = b.type + '_' + (Object.keys(dict_with_blocks_with_such_name).length + 1);
+        if (b.type == 'INPUT') b.id = b.type + '_' + (state.inputs_number + 1);else if (b.type == 'OUTPUT') b.id = b.type + '_' + (state.outputs_number + 1);else b.id = b.type + '_' + (state.inputs_number + 1);
         state.blocks[const_id] = b;
         if (b.type == 'INPUT') state.inputs_number += 1;else if (b.type == 'OUTPUT') state.outputs_number += 1;
       }
@@ -247,7 +247,7 @@ class BlocksArea extends React.Component {
   }
 
   getTypeInfo(type_name) {
-    if (type_name in default_elements) return default_elements[type_name];else if (type_name in this.state.custom_elements) return this.state.custom_elements[type_name];
+    if (type_name in default_elements) return Object.assign({}, default_elements[type_name]);else if (type_name in this.state.custom_elements) return Object.assign({}, this.state.custom_elements[type_name]);
   }
 
   onBlockStopInitialDragging(block_id) {
@@ -346,7 +346,6 @@ class BlocksArea extends React.Component {
 
   handleMouseDown(e, element_type, element_info) {
     if (e.button != 0) return;
-    console.log(element_info);
     this.add({
       'blocks': [Object.assign(element_info, {
         'type': element_type,
@@ -359,7 +358,7 @@ class BlocksArea extends React.Component {
 
   handleBlockMouseDown(b, mouse_x, mouse_y, button, function_after) {
     if (button === 2) {
-      b.state.function_to_delete_self();
+      b.state.removeBlock();
       return;
     }
 
@@ -466,19 +465,65 @@ class BlocksArea extends React.Component {
     this.setState(state => {
       if (!state.blocks[const_id]) return state;
       const type = state.blocks[const_id].type;
-      if (type == 'INPUT') state.inputs_number -= 1;else if (type == 'OUTPUT') state.outputs_number -= 1;
       const id = state.blocks[const_id].id;
       const number = Number.parseInt(id.split('_').pop(), 10);
-      delete state.blocks[const_id];
       state.wires = Object.fromEntries(Object.entries(state.wires).filter(([k, v]) => v.from_block_const_id != const_id && v.to_block_const_id != const_id));
+      let delta = undefined;
 
-      for (const k in state.blocks) if (state.blocks[k].type == type) if (state.blocks[k].id > id) {
-        const n = Number.parseInt(state.blocks[k].id.split('_').pop(), 10);
-        state.blocks[k].id = state.blocks[k].type + '_' + (n - 1);
-      }
+      if (type == 'INPUT') {
+        delta = -sum(state.blocks[const_id].this.state.outputs_groups);
+        state.inputs_number += delta;
+      } else if (type == 'OUTPUT') {
+        delta = -sum(state.blocks[const_id].this.state.inputs_groups);
+        state.outputs_number += delta;
+      } else delta = -1;
 
+      delete state.blocks[const_id];
+      this.shiftBlocksIds(state, type, const_id, delta);
       return state;
     });
+  }
+
+  updateInputsOutputsNames(type, const_id, delta) {
+    this.setState(state => {
+      const current_n = state.blocks[const_id].id.split('_')[1];
+      let new_current_n = undefined;
+
+      if (current_n.includes('-')) {
+        const current_n_splited = current_n.split('-');
+        const current_n_from = Number.parseInt(current_n_splited[0], 10);
+        const current_n_to = Number.parseInt(current_n_splited[1], 10);
+        const new_n_to = current_n_to + delta;
+        if (new_n_to == current_n_from) new_current_n = '' + current_n_from;else new_current_n = current_n_from + '-' + (current_n_to + delta);
+      } else {
+        const current_n_int = Number.parseInt(current_n, 10);
+        new_current_n = current_n_int + '-' + (current_n_int + delta);
+      }
+
+      state.blocks[const_id].id = type + '_' + new_current_n;
+      this.shiftBlocksIds(state, type, const_id, delta);
+      if (type == 'INPUT') state.inputs_number += delta;else if (type = 'OUTPUT') state.outputs_number += delta;
+      return state;
+    });
+  }
+
+  shiftBlocksIds(state, type, from_const_id, delta) {
+    for (const k in state.blocks) if (state.blocks[k].type == type) if (state.blocks[k].const_id > from_const_id) {
+      const n = state.blocks[k].id.split('_')[1];
+      let new_n = undefined;
+
+      if (n.includes('-')) {
+        const n_splited = n.split('-');
+        const n_from = Number.parseInt(n_splited[0], 10);
+        const n_to = Number.parseInt(n_splited[1], 10);
+        new_n = n_from + delta + '-' + (n_to + delta);
+      } else {
+        const n_int = Number.parseInt(n, 10);
+        new_n = '' + (n_int + delta);
+      }
+
+      state.blocks[k].id = type + '_' + new_n;
+    }
   }
 
   startAddingWire(wire_info) {
@@ -706,7 +751,7 @@ class BlocksArea extends React.Component {
         'transform': 'scale(' + scale + ')'
       }
     }, Object.entries(this.state.blocks).map((block_id_and_block, i) => /*#__PURE__*/React.createElement(Block, {
-      key: block_id_and_block[1].type == 'INPUT' || block_id_and_block[1] == 'OUTPUT' ? block_id_and_block[0] + '_' + block_id_and_block[1].id : block_id_and_block[0],
+      key: block_id_and_block[1].type == 'INPUT' || block_id_and_block[1].type == 'OUTPUT' ? block_id_and_block[0] + '_' + block_id_and_block[1].id : block_id_and_block[0],
       const_id: block_id_and_block[0],
       id: block_id_and_block[1].id,
       type: block_id_and_block[1].type,
@@ -720,13 +765,14 @@ class BlocksArea extends React.Component {
       outputs: block_id_and_block[1].outputs,
       inputs_groups: block_id_and_block[1].inputs_groups,
       outputs_groups: block_id_and_block[1].outputs_groups,
-      function_to_delete_self: () => this.removeBlock(block_id_and_block[0]),
-      start_adding_wire_function: this.startAddingWire,
-      handle_mouse_up_on_input_output_function: this.handleMouseUpOnInputOutput,
-      remove_wires_function: this.removeWires,
+      removeBlock: () => this.removeBlock(block_id_and_block[0]),
+      startAddingWire: this.startAddingWire,
+      handleMouseUpOnInputOutput: this.handleMouseUpOnInputOutput,
+      removeWires: this.removeWires,
       onMount: this.onBlockMounted,
       onStateChange: this.onBlockStateChange,
       onStopInitialDragging: this.onBlockStopInitialDragging,
+      updateInputsOutputsNames: this.updateInputsOutputsNames.bind(this),
       type_info: this.getTypeInfo(block_id_and_block[1].type)
     })), Object.values(this.state.wires).map(wire => /*#__PURE__*/React.createElement(Wire, {
       key: wire.from_point.x + '_' + wire.from_point.y + '_' + wire.to_point.x + '_' + wire.to_point.y,

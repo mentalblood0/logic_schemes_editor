@@ -19,7 +19,7 @@ function getElementRelativeCenter(e) {
 
 class Block extends React.Component {
   constructor(props) {
-    console.log('block constructor', props);
+    console.log('block constructor');
     super(props);
     this.state = {
       'const_id': props.const_id,
@@ -34,17 +34,18 @@ class Block extends React.Component {
       'initital_dragging': props.dragging || false,
       'gripX': undefined,
       'gripY': undefined,
-      'inputs': props.inputs ? props.inputs : props.type_info.inputs,
-      'outputs': props.outputs ? props.outputs : props.type_info.outputs,
-      'inputs_groups': props.inputs_groups ? props.inputs_groups : props.type_info.inputs_groups,
-      'outputs_groups': props.outputs_groups ? props.outputs_groups : props.type_info.outputs_groups,
+      'inputs': props.inputs || props.type_info.inputs,
+      'outputs': props.outputs || props.type_info.outputs,
+      'inputs_groups': [...(props.inputs_groups || props.type_info.inputs_groups)],
+      'outputs_groups': [...(props.outputs_groups || props.type_info.outputs_groups)],
       'onStateChange': props.onStateChange,
       'onMount': props.onMount,
       'onStopInitialDragging': props.onStopInitialDragging,
-      'function_to_delete_self': props.function_to_delete_self,
-      'start_adding_wire_function': props.start_adding_wire_function,
-      'handle_mouse_up_on_input_output_function': props.handle_mouse_up_on_input_output_function,
-      'remove_wires_function': props.remove_wires_function
+      'removeBlock': props.removeBlock,
+      'startAddingWire': props.startAddingWire,
+      'handleMouseUpOnInputOutput': props.handleMouseUpOnInputOutput,
+      'removeWires': props.removeWires,
+      'updateInputsOutputsNames': props.updateInputsOutputsNames
     };
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -59,6 +60,7 @@ class Block extends React.Component {
   getInfo(state) {
     if (state == undefined) state = this.state;
     return {
+      'this': this,
       'get_info_function': this.getInfo.bind(this),
       'type': state.type,
       'id': state.id,
@@ -146,7 +148,7 @@ class Block extends React.Component {
     const blocks_wrapper_rect = blocks_wrapper_element.getBoundingClientRect();
 
     if (type == 'input') {
-      if (e.button == 0) this.state.start_adding_wire_function({
+      if (e.button == 0) this.state.startAddingWire({
         'group_size': this.state.inputs_groups[i],
         'to_block_const_id': this.state.const_id,
         'to_input_id': i,
@@ -155,12 +157,12 @@ class Block extends React.Component {
           'y': e.clientY - blocks_wrapper_rect.y
         },
         'to_point': getElementCenter(this.input_connectors_refs[i].current)
-      });else if (e.button == 2) this.state.remove_wires_function({
+      });else if (e.button == 2) this.state.removeWires({
         'to_block_const_id': this.state.const_id,
         'to_input_id': i
       });
     } else if (type == 'output') {
-      if (e.button == 0) this.state.start_adding_wire_function({
+      if (e.button == 0) this.state.startAddingWire({
         'group_size': this.state.outputs_groups[i],
         'from_block_const_id': this.state.const_id,
         'from_output_id': i,
@@ -169,15 +171,29 @@ class Block extends React.Component {
           'x': e.clientX - blocks_wrapper_rect.x,
           'y': e.clientY - blocks_wrapper_rect.y
         }
-      });else if (e.button == 2) this.state.remove_wires_function({
+      });else if (e.button == 2) this.state.removeWires({
         'from_block_const_id': this.state.const_id,
         'from_output_id': i
       });
     }
   }
 
-  handleMouseWheel() {
-    this.state.onStateChange(this.getInfo(this.state));
+  handleMouseWheelOnInputOutput(i, e) {
+    if (!(this.state.type == 'INPUT' || this.state.type == 'OUTPUT')) return;
+    e.stopPropagation();
+    const delta = -e.deltaY / 100;
+    const groups_variable_name = {
+      'INPUT': 'outputs_groups',
+      'OUTPUT': 'inputs_groups'
+    }[this.state.type];
+    if (groups_variable_name == undefined) return;
+    this.setState(state => {
+      const new_value = state[groups_variable_name][0] + delta;
+      if (new_value < 1) return state;
+      state[groups_variable_name][0] = new_value;
+      state.updateInputsOutputsNames(this.state.type, this.state.const_id, delta);
+      return state;
+    });
   }
 
   render() {
@@ -210,11 +226,12 @@ class Block extends React.Component {
       key: i,
       className: "input",
       onMouseDown: e => this.handleMouseDownOnInputOutput('input', i, e),
-      onMouseUp: e => e.button == 0 ? this.state.handle_mouse_up_on_input_output_function({
+      onMouseUp: e => e.button == 0 ? this.state.handleMouseUpOnInputOutput({
         'group_size': input_group,
         'to_block_const_id': this.state.const_id,
         'to_input_id': i
-      }) : null
+      }) : null,
+      onWheel: e => this.handleMouseWheelOnInputOutput(i, e)
     }, /*#__PURE__*/React.createElement("div", {
       className: "groupSize unselectable"
     }, input_group)))), /*#__PURE__*/React.createElement("div", {
@@ -226,11 +243,12 @@ class Block extends React.Component {
       key: i,
       className: "output",
       onMouseDown: e => this.handleMouseDownOnInputOutput('output', i, e),
-      onMouseUp: e => e.button == 0 ? this.state.handle_mouse_up_on_input_output_function({
+      onMouseUp: e => e.button == 0 ? this.state.handleMouseUpOnInputOutput({
         'group_size': output_group,
         'from_block_const_id': this.state.const_id,
         'from_output_id': i
-      }) : null
+      }) : null,
+      onWheel: e => this.handleMouseWheelOnInputOutput(i, e)
     }, /*#__PURE__*/React.createElement("div", {
       className: "groupSize unselectable"
     }, output_group))))));
