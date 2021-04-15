@@ -46,6 +46,7 @@ class Block extends React.Component {
 			'startAddingWire': props.startAddingWire,
 			'handleMouseUpOnInputOutput': props.handleMouseUpOnInputOutput,
 			'removeWires': props.removeWires,
+			'wireHere': props.wireHere,
 			'updateInputsOutputsNames': props.updateInputsOutputsNames
 		}
 
@@ -198,6 +199,9 @@ class Block extends React.Component {
 
 	handleMouseWheelOnInputOutput(i, e) {
 		if (!((this.state.type == 'INPUT') || (this.state.type == 'OUTPUT')))
+			return;
+		const type = (this.state.type == 'INPUT') ? 'output' : 'input';
+		if (this.state.wireHere(this.state.const_id, type, i))
 			return;
 		e.stopPropagation();
 		const delta = -e.deltaY / 100;

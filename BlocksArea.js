@@ -316,7 +316,6 @@ class BlocksArea extends React.Component {
         const from_output_id = first_output_index + i;
         const to_input_id = first_input_index + i;
         const new_unpucked_wire = {};
-        console.log(from_block.id);
 
         if (from_block_type == 'INPUT' && from_block.id.includes('-')) {
           const n = from_block.id.split(' ')[1];
@@ -596,6 +595,12 @@ class BlocksArea extends React.Component {
     });
   }
 
+  wireHere(block_const_id, type, index) {
+    const connectedTo = (const_id, t, i) => w => t == 'output' && const_id == w.from_block_const_id && i == w.from_output_id || t == 'input' && const_id == w.to_block_const_id && i == w.to_input_id;
+
+    return Object.values(this.state.wires).some(connectedTo(block_const_id, type, index));
+  }
+
   render() {
     const scale = this.state.scale;
     const offset = this.state.offset;
@@ -791,6 +796,7 @@ class BlocksArea extends React.Component {
       onStateChange: this.onBlockStateChange,
       onStopInitialDragging: this.onBlockStopInitialDragging,
       updateInputsOutputsNames: this.updateInputsOutputsNames.bind(this),
+      wireHere: this.wireHere.bind(this),
       type_info: this.getTypeInfo(block_id_and_block[1].type)
     })), Object.values(this.state.wires).map(wire => /*#__PURE__*/React.createElement(Wire, {
       key: wire.from_point.x + ' ' + wire.from_point.y + ' ' + wire.to_point.x + ' ' + wire.to_point.y,
