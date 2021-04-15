@@ -43,9 +43,13 @@ class BlocksArea extends React.Component {
 		this.state = {
 			'name': 'test',
 			'custom_elements': {},
-			'new_element_type': 'new',
-			'new_element_inputs_number': 1,
-			'new_element_outputs_number': 1,
+			'new_element': {
+				'type': 'new',
+				'inputs_number': 1,
+				'outputs_number': 1,
+				'inputs_groups': [1],
+				'outputs_groups': [1]
+			},
 			'inputs_number': 0,
 			'outputs_number': 0,
 			'blocks': {},
@@ -76,10 +80,6 @@ class BlocksArea extends React.Component {
 		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.startAddingWire = this.startAddingWire.bind(this);
 		this.handleMouseUpOnInputOutput = this.handleMouseUpOnInputOutput.bind(this);
-		this.handleSchemeNameInputChange = this.handleSchemeNameInputChange.bind(this);
-		this.handleNewElementNameInputChange = this.handleNewElementNameInputChange.bind(this);
-		this.handleNewElementInputsNumberInputChange = this.handleNewElementInputsNumberInputChange.bind(this);
-		this.handleNewElementOutputsNumberInputChange = this.handleNewElementOutputsNumberInputChange.bind(this);
 		this.handleAddBlockButtonClick = this.handleAddBlockButtonClick.bind(this);
 		this.handleMouseWheel = this.handleMouseWheel.bind(this);
 		this.removeWires = this.removeWires.bind(this);
@@ -97,9 +97,9 @@ class BlocksArea extends React.Component {
 				e.preventDefault();
 				const delta = -e.deltaY / 100;
 				this.setState(state => {
-					const new_value = Number.parseInt(state.new_element_inputs_number, 10) + delta;
+					const new_value = Number.parseInt(state.new_element.inputs_number, 10) + delta;
 					if (new_value >= 1)
-						state.new_element_inputs_number = new_value;
+						state.new_element.inputs_number = new_value;
 					return state;
 				});
 			}],
@@ -107,9 +107,9 @@ class BlocksArea extends React.Component {
 				e.preventDefault();
 				const delta = -e.deltaY / 100;
 				this.setState(state => {
-					const new_value = state.new_element_outputs_number + delta;
+					const new_value = state.new_element.outputs_number + delta;
 					if (new_value >= 1)
-						state.new_element_outputs_number = new_value;
+						state.new_element.outputs_number = new_value;
 					return state;
 				});
 			}],
@@ -142,20 +142,10 @@ class BlocksArea extends React.Component {
 				));
 				const current_const_ids = Object.values(state.blocks).map(v => v.const_id);
 				const const_id = (current_const_ids.length == 0) ? 1 : (Math.max(...current_const_ids) + 1);
-				const id = b.type + '_' + (Object.keys(dict_with_blocks_with_such_name).length + 1);
 				if (state.blocks[const_id] != undefined)
 					return state;
-				const block = {
-					'id': id,
-					'type': b.type,
-					'x': b.x,
-					'y': b.y,
-					'inputs': b.inputs,
-					'outputs': b.outputs
-				};
-				if (b.dragging)
-					block['dragging'] = true;
-				state.blocks[const_id] = block;
+				b.id = b.type + '_' + (Object.keys(dict_with_blocks_with_such_name).length + 1);
+				state.blocks[const_id] = b;
 				if (b.type == 'INPUT')
 					state.inputs_number += 1;
 				else if (b.type == 'OUTPUT')
@@ -247,9 +237,7 @@ class BlocksArea extends React.Component {
 		return {
 			'name': this.state.name,
 			'custom_elements': this.state.custom_elements,
-			'new_element_type': this.state.new_element_type,
-			'new_element_inputs_number': Number.parseInt(this.state.new_element_inputs_number, 10),
-			'new_element_outputs_number': Number.parseInt(this.state.new_element_outputs_number, 10),
+			'new_element': this.state.new_element,
 			'inputs_number': Number.parseInt(this.state.inputs_number, 10),
 			'outputs_number': Number.parseInt(this.state.outputs_number, 10),
 			'blocks': this.state.blocks,
@@ -343,20 +331,22 @@ class BlocksArea extends React.Component {
 		downloadFile(name, data_text);
 	}
 
-	handleMouseDown(e, element_type, inputs_number, outputs_number) {
+	handleMouseDown(e) {
 		if (e.button != 0)
 			return;
 		const blocks_wrapper_rect = this.state.blocks_wrapper_ref.current.getBoundingClientRect();
 		const scale = this.state.scale;
+		const new_element = this.state.new_element;
+		const inputs_number = new_element.inputs_number;
+		const outputs_number = new_element.outputs_number;
 		this.add({
-			'blocks': [{
-				'type': element_type,
+			'blocks': [Object.assign(this.state.new_element, {
 				'x': e.clientX,
 				'y': e.clientY,
 				'dragging': true,
 				'inputs': inputs_number ? filledArray(inputs_number, '') : undefined,
 				'outputs': inputs_number ? filledArray(outputs_number, '') : undefined
-			}]
+			})]
 		});
 	}
 
@@ -510,22 +500,6 @@ class BlocksArea extends React.Component {
 		});
 	}
 
-	handleSchemeNameInputChange(e) {
-		this.setState({'name': e.target.value});
-	}
-
-	handleNewElementNameInputChange(e) {
-		this.setState({'new_element_type': e.target.value});
-	}
-
-	handleNewElementInputsNumberInputChange(e) {
-		this.setState({'new_element_inputs_number': Number.parseInt(e.target.value, 10)});
-	}
-
-	handleNewElementOutputsNumberInputChange(e) {
-		this.setState({'new_element_outputs_number': Number.parseInt(e.target.value, 10)});
-	}
-
 	handleMouseWheel(e) {
 		const delta = 1 + -e.deltaY / 1000;
 		const mouse_x = e.clientX;
@@ -539,9 +513,9 @@ class BlocksArea extends React.Component {
 	}
 
 	handleAddBlockButtonClick() {
-		const name = this.state.new_element_type;
-		const inputs_number = this.state.new_element_inputs_number;
-		const outputs_number = this.state.new_element_outputs_number;
+		const name = this.state.new_element.type;
+		const inputs_number = this.state.new_element.inputs_number;
+		const outputs_number = this.state.new_element.outputs_number;
 		const new_element_info = {
 			'inputs': filledArray(inputs_number, ''),
 			'outputs': filledArray(outputs_number, '')
@@ -576,7 +550,8 @@ class BlocksArea extends React.Component {
 				}}>
 				<div className="controls">
 					<input type="text" className="schemeName unselectable"
-						value={this.state.name} onChange={this.handleSchemeNameInputChange}></input>
+						value={this.state.name}
+						onChange={e => this.setState({'name': e.target.value})}></input>
 					<button className="exportButton animated animated-lightblue unselectable"
 						onClick={this.export}>export</button>
 					<button className="saveButton animated animated-green unselectable"
@@ -599,29 +574,34 @@ class BlocksArea extends React.Component {
 				</div>
 				<div className="blocks">
 					<div className="block blockToAdd"
-						onMouseDown={e => this.handleMouseDown(
-							e,
-							this.state.new_element_type,
-							this.state.new_element_inputs_number,
-							this.state.new_element_outputs_number
-						)}>
+						onMouseDown={this.handleMouseDown}>
 						<div className="content">
 							<input type="text" className="name"
-								value={this.state.new_element_type}
-								onChange={this.handleNewElementNameInputChange}
-								onMouseDown={e => {e.stopPropagation()}}></input>
+								value={this.state.new_element.type}
+								onChange={e => this.setState(state => {
+									state.new_element.type = e.target.value;
+									return state;
+								})}
+								onMouseDown={e => e.stopPropagation()}></input>
 						</div>
 					</div>
 					<div className="inputsOutputsNumber">
 						<div className="inputsNumber">
 							<input type="number" min="1" ref={this.inputs_number_ref}
-								value={this.state.new_element_inputs_number}
-								onChange={this.handleNewElementInputsNumberInputChange}></input>
+								value={this.state.new_element.inputs_number}
+								onChange={e => this.setState(state => {
+									state.new_element.inputs_number = Number.parseInt(e.target.value, 10)
+									return state;
+								})
+								}></input>
 						</div>
 						<div className="outputsNumber">
 							<input type="number" min="1" ref={this.outputs_number_ref}
-								value={this.state.new_element_outputs_number}
-								onChange={this.handleNewElementOutputsNumberInputChange}></input>
+								value={this.state.new_element.outputs_number}
+								onChange={e => this.setState(state => {
+									state.new_element.outputs_number = Number.parseInt(e.target.value, 10);
+									return state;
+								})}></input>
 						</div>
 					</div>
 					<button className="addBlockButton animated animated-green unselectable" onClick={this.handleAddBlockButtonClick}>+</button>

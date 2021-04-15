@@ -48,8 +48,6 @@ class Block extends React.Component {
 		this.state.inputs_groups = filledArray(this.state.inputs.length, 1);
 		this.state.outputs_groups = filledArray(this.state.outputs.length, 1);
 
-		console.log(this.state.inputs_groups);
-
 		this.handleMouseDown = this.handleMouseDown.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -90,7 +88,8 @@ class Block extends React.Component {
 			(e.target === name_element)
 		) ? f(e) : null;
 		this.state.event_listeners = [
-			[this._ref.current.parentElement.parentElement, 'mousemove', this.handleMouseMove]
+			[this._ref.current.parentElement.parentElement, 'mousemove', this.handleMouseMove],
+			[this._ref.current, 'mousedown', e => e.preventDefault()]
 		];
 		for (const e_l of this.state.event_listeners)
 			e_l[0].addEventListener(e_l[1], e_l[2]);
