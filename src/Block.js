@@ -48,8 +48,6 @@ class Block extends React.Component {
 			'remove_wires_function': props.remove_wires_function
 		}
 
-		console.log(this.state.inputs_groups, this.state.outputs_groups);
-
 		this.handleMouseDown = this.handleMouseDown.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.handleMouseMove = this.handleMouseMove.bind(this);

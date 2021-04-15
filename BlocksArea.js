@@ -70,9 +70,9 @@ function cutToSum(array, sum) {
   return result;
 }
 
-function numberOrZero(x) {
+function numberOr(x, i) {
   x = Number.parseInt(x, 10);
-  return isNaN(x) ? 0 : x;
+  return isNaN(x) ? i : x;
 }
 
 class BlocksArea extends React.Component {
@@ -133,8 +133,9 @@ class BlocksArea extends React.Component {
       e.preventDefault();
       const delta = -e.deltaY / 100;
       this.setState(state => {
-        const new_value = numberOrZero(state.new_element.inputs_number) + delta;
-        if (new_value >= 1) state.new_element.inputs_number = new_value;
+        const new_value = numberOr(state.new_element.inputs_number, 1) + delta;
+        if (new_value < 1) return state;
+        state.new_element.inputs_number = new_value;
         state.new_element.inputs_groups = cutToSum(state.new_element.inputs_groups, state.new_element.inputs_number);
         return state;
       });
@@ -142,8 +143,9 @@ class BlocksArea extends React.Component {
       e.preventDefault();
       const delta = -e.deltaY / 100;
       this.setState(state => {
-        const new_value = state.new_element.outputs_number + delta;
-        if (new_value >= 1) state.new_element.outputs_number = new_value;
+        const new_value = numberOr(state.new_element.outputs_number, 1) + delta;
+        if (new_value < 1) return state;
+        state.new_element.outputs_number = new_value;
         state.new_element.outputs_groups = cutToSum(state.new_element.outputs_groups, state.new_element.outputs_number);
         return state;
       });
@@ -250,8 +252,8 @@ class BlocksArea extends React.Component {
       'name': this.state.name,
       'custom_elements': this.state.custom_elements,
       'new_element': this.state.new_element,
-      'inputs_number': numberOrZero(this.state.inputs_number),
-      'outputs_number': numberOrZero(this.state.outputs_number),
+      'inputs_number': this.state.inputs_number,
+      'outputs_number': this.state.outputs_number,
       'blocks': this.state.blocks,
       'wires': this.state.wires,
       'tests': this.state.tests
@@ -598,8 +600,7 @@ class BlocksArea extends React.Component {
       ref: this.inputs_number_ref,
       value: this.state.new_element.inputs_number,
       onChange: e => this.setState(state => {
-        state.new_element.inputs_number = '' + numberOrZero(e.target.value);
-        console.log('inputs_number', state.new_element.inputs_number);
+        state.new_element.inputs_number = '' + numberOr(e.target.value, 1);
         state.new_element.inputs_groups = cutToSum(state.new_element.inputs_groups, state.new_element.inputs_number);
         return state;
       })
@@ -611,7 +612,7 @@ class BlocksArea extends React.Component {
       ref: this.outputs_number_ref,
       value: this.state.new_element.outputs_number,
       onChange: e => this.setState(state => {
-        state.new_element.outputs_number = numberOrZero(e.target.value);
+        state.new_element.outputs_number = '' + numberOr(e.target.value, 1);
         state.new_element.outputs_groups = cutToSum(state.new_element.outputs_groups, state.new_element.outputs_number);
         return state;
       })
