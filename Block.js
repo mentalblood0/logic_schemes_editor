@@ -19,7 +19,7 @@ function getElementRelativeCenter(e) {
 
 class Block extends React.Component {
   constructor(props) {
-    console.log('block constructor');
+    console.log('block constructor', props);
     super(props);
     this.state = {
       'const_id': props.const_id,
@@ -34,10 +34,10 @@ class Block extends React.Component {
       'initital_dragging': props.dragging || false,
       'gripX': undefined,
       'gripY': undefined,
-      'inputs': props.inputs ? props.inputs : props.type_info['inputs'],
-      'outputs': props.outputs ? props.outputs : props.type_info['outputs'],
-      'inputs_groups': props.inputs_groups,
-      'outputs_groups': props.outputs_groups,
+      'inputs': props.inputs ? props.inputs : props.type_info.inputs,
+      'outputs': props.outputs ? props.outputs : props.type_info.outputs,
+      'inputs_groups': props.inputs_groups ? props.inputs_groups : props.type_info.inputs_groups,
+      'outputs_groups': props.outputs_groups ? props.outputs_groups : props.type_info.outputs_groups,
       'onStateChange': props.onStateChange,
       'onMount': props.onMount,
       'onStopInitialDragging': props.onStopInitialDragging,
@@ -216,7 +216,7 @@ class Block extends React.Component {
         'to_input_id': i
       }) : null
     }, /*#__PURE__*/React.createElement("div", {
-      className: "inputGroupSize unselectable"
+      className: "groupSize unselectable"
     }, input_group)))), /*#__PURE__*/React.createElement("div", {
       className: "name unselectable"
     }, visible_name), /*#__PURE__*/React.createElement("div", {
@@ -232,7 +232,7 @@ class Block extends React.Component {
         'from_output_id': i
       }) : null
     }, /*#__PURE__*/React.createElement("div", {
-      className: "inputGroupSize unselectable"
+      className: "groupSize unselectable"
     }, output_group))))));
   }
 

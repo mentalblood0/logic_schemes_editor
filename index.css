@@ -411,7 +411,7 @@ input[type=number] {
 	background-color: deepskyblue;
 }
 
-.inputGroupSize {
+.groupSize {
 	padding-top: 25%;
 	font-family: base_font;
 	font-weight: bold;

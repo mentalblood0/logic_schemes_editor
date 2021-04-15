@@ -5,23 +5,33 @@ const sum = m => (m.reduce((a, b) => a + b, 0));
 const default_elements = {
 	'INPUT': {
 		'inputs': [],
-		'outputs': ['x']
+		'outputs': ['x'],
+		'inputs_groups': [],
+		'outputs_groups': [1]
 	},
 	'OUTPUT': {
 		'inputs': ['x'],
-		'outputs': []
+		'outputs': [],
+		'inputs_groups': [1],
+		'outputs_groups': []
 	},
 	'NOT': {
 		'inputs': ['x'],
-		'outputs': ['!x']
+		'outputs': ['!x'],
+		'inputs_groups': [1],
+		'outputs_groups': [1]
 	},
 	'AND': {
 		'inputs': ['x', 'y'],
-		'outputs': ['x && y']
+		'outputs': ['x && y'],
+		'inputs_groups': [1, 1],
+		'outputs_groups': [1]
 	},
 	'OR': {
 		'inputs': ['x', 'y'],
-		'outputs': ['x || y']
+		'outputs': ['x || y'],
+		'inputs_groups': [1, 1],
+		'outputs_groups': [1]
 	}
 }
 
@@ -82,8 +92,8 @@ class BlocksArea extends React.Component {
 			'custom_elements': {},
 			'new_element': {
 				'type': 'new',
-				'inputs_number': 1,
-				'outputs_number': 1,
+				'inputs': [''],
+				'outputs': [''],
 				'inputs_groups': [1],
 				'outputs_groups': [1]
 			},
@@ -134,13 +144,13 @@ class BlocksArea extends React.Component {
 				e.preventDefault();
 				const delta = -e.deltaY / 100;
 				this.setState(state => {
-					const new_value = numberOr(state.new_element.inputs_number, 1) + delta;
-					if (new_value < 1)
+					const new_number = state.new_element.inputs.length + delta;
+					if (new_number < 1)
 						return state;
-					state.new_element.inputs_number = new_value;
+					state.new_element.inputs = filledArray(new_number, '');
 					state.new_element.inputs_groups = cutToSum(
 						state.new_element.inputs_groups,
-						state.new_element.inputs_number
+						new_number
 					);
 					return state;
 				});
@@ -149,13 +159,13 @@ class BlocksArea extends React.Component {
 				e.preventDefault();
 				const delta = -e.deltaY / 100;
 				this.setState(state => {
-					const new_value = numberOr(state.new_element.outputs_number, 1) + delta;
-					if (new_value < 1)
+					const new_number = numberOr(state.new_element.outputs.length, 1) + delta;
+					if (new_number < 1)
 						return state;
-					state.new_element.outputs_number = new_value;
+					state.new_element.outputs = filledArray(new_number, '');
 					state.new_element.outputs_groups = cutToSum(
 						state.new_element.outputs_groups,
-						state.new_element.outputs_number
+						new_number
 					);
 					return state;
 				});
@@ -378,21 +388,16 @@ class BlocksArea extends React.Component {
 		downloadFile(name, data_text);
 	}
 
-	handleMouseDown(e) {
+	handleMouseDown(e, element_type, element_info) {
 		if (e.button != 0)
 			return;
-		const blocks_wrapper_rect = this.state.blocks_wrapper_ref.current.getBoundingClientRect();
-		const scale = this.state.scale;
-		const new_element = this.state.new_element;
-		const inputs_number = new_element.inputs_number;
-		const outputs_number = new_element.outputs_number;
+		console.log(element_info)
 		this.add({
-			'blocks': [Object.assign(this.state.new_element, {
+			'blocks': [Object.assign(element_info, {
+				'type': element_type,
 				'x': e.clientX,
 				'y': e.clientY,
-				'dragging': true,
-				'inputs': inputs_number ? filledArray(inputs_number, '') : undefined,
-				'outputs': inputs_number ? filledArray(outputs_number, '') : undefined
+				'dragging': true
 			})]
 		});
 	}
@@ -485,6 +490,8 @@ class BlocksArea extends React.Component {
 	}
 
 	handleMouseUpOnInputOutput(input_output_info) {
+		if (!this.state.adding_wire)
+			return;
 		if (this.state.adding_wire_info.group_size != input_output_info.group_size)
 			return;
 		const new_wire_info = Object.assign({}, this.state.adding_wire_info);
@@ -621,7 +628,7 @@ class BlocksArea extends React.Component {
 				</div>
 				<div className="newBlockConfiguration">
 					<div className="block blockToAdd"
-						onMouseDown={this.handleMouseDown}>
+						onMouseDown={e => this.handleMouseDown(e, this.state.new_element.type, this.state.new_element)}>
 						<div className="content">
 							<input type="text" className="name"
 								value={this.state.new_element.type}
@@ -635,12 +642,13 @@ class BlocksArea extends React.Component {
 					<div className="inputsOutputsNumber">
 						<div className="inputsNumber">
 							<input type="number" min="1" ref={this.inputs_number_ref}
-								value={this.state.new_element.inputs_number}
+								value={this.state.new_element.inputs.length}
 								onChange={e => this.setState(state => {
-									state.new_element.inputs_number = '' + numberOr(e.target.value, 1);
+									const new_length = numberOr(e.target.value, 1)
+									state.new_element.inputs = filledArray(new_length, '');
 									state.new_element.inputs_groups = cutToSum(
 										state.new_element.inputs_groups,
-										state.new_element.inputs_number
+										new_length
 									);
 									return state;
 								})
@@ -648,12 +656,13 @@ class BlocksArea extends React.Component {
 						</div>
 						<div className="outputsNumber">
 							<input type="number" min="1" ref={this.outputs_number_ref}
-								value={this.state.new_element.outputs_number}
+								value={this.state.new_element.outputs.length}
 								onChange={e => this.setState(state => {
-									state.new_element.outputs_number = '' + numberOr(e.target.value, 1);
+									const new_length = numberOr(e.target.value, 1)
+									state.new_element.outputs = filledArray(new_length, '')
 									state.new_element.outputs_groups = cutToSum(
 										state.new_element.outputs_groups,
-										state.new_element.outputs_number
+										new_length
 									);
 									return state;
 								})}></input>
@@ -710,7 +719,7 @@ class BlocksArea extends React.Component {
 					Object.entries(this.state.custom_elements).map(
 						(element_type_and_element, i) =>
 						<div key={element_type_and_element[0]} className="block"
-							onMouseDown={e => this.handleMouseDown(e, element_type_and_element[0])}>
+							onMouseDown={e => this.handleMouseDown(e, element_type_and_element[0], element_type_and_element[1])}>
 							<div className="content">
 								<div className="name unselectable">{element_type_and_element[0]}</div>
 							</div>
@@ -721,7 +730,7 @@ class BlocksArea extends React.Component {
 					Object.entries(default_elements).map(
 						(element_type_and_element, i) =>
 						<div key={element_type_and_element[0]} className="block"
-							onMouseDown={e => this.handleMouseDown(e, element_type_and_element[0])}>
+							onMouseDown={e => this.handleMouseDown(e, element_type_and_element[0], element_type_and_element[1])}>
 							<div className="content">
 								<div className="name unselectable">{element_type_and_element[0]}</div>
 							</div>
