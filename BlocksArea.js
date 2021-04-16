@@ -313,8 +313,6 @@ class BlocksArea extends React.Component {
     console.log('getExportData, state:', this.state);
     const blocks = this.state.blocks;
     const tests = this.state.tests;
-    const inputs_number = Object.values(this.state.blocks).filter(b => b.type == 'INPUT').length;
-    const outputs_number = Object.values(this.state.blocks).filter(b => b.type == 'OUTPUT').length;
     const unpacked_wires = [];
     Object.values(this.state.wires).forEach(w => {
       const from_block = blocks[w.from_block_const_id];
@@ -337,7 +335,7 @@ class BlocksArea extends React.Component {
           console.log('n', n);
           const n_splited = n.split('-');
           const n_from = Number.parseInt(n_splited[0], 10);
-          new_unpucked_wire.from = 'INPUT ' + (n_from + i);
+          new_unpucked_wire.from = 'INPUT_' + (n_from + i) + '[1]';
         } else {
           const id_splited = from_block.id.split(' ');
           new_unpucked_wire.from = id_splited[0] + '_' + id_splited[1] + '[' + (from_output_id + 1) + ']';
@@ -347,7 +345,7 @@ class BlocksArea extends React.Component {
           const n = to_block.id.split(' ')[1];
           const n_splited = n.split('-');
           const n_from = Number.parseInt(n_splited[0], 10);
-          new_unpucked_wire.to = 'OUTPUT_' + (n_from + i);
+          new_unpucked_wire.to = 'OUTPUT_' + (n_from + i) + '[1]';
         } else {
           const id_splited = to_block.id.split(' ');
           new_unpucked_wire.to = id_splited[0] + '_' + id_splited[1] + '[' + (to_input_id + 1) + ']';
@@ -358,16 +356,12 @@ class BlocksArea extends React.Component {
     });
     const data = {
       [this.state.name]: {
-        // 'wires': Object.values(this.state.wires).map(w => ({
-        // 	'from': blocks[w.from_block_const_id].id + '[' + (w.from_output_id + 1) + ']',
-        // 	'to': blocks[w.to_block_const_id].id + '[' + (w.to_input_id + 1) + ']'
-        // })),
         'wires': unpacked_wires
       }
     };
     if (tests.length > 0) data[this.state.name]['tests'] = tests.map(t => ({
-      'inputs': t.slice(0, inputs_number),
-      'outputs': t.slice(-outputs_number)
+      'inputs': t.slice(0, this.state.inputs_number),
+      'outputs': t.slice(-this.state.outputs_number)
     }));
     return data;
   }
