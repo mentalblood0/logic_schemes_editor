@@ -174,13 +174,22 @@ class BlocksArea extends React.Component {
       if (!('blocks' in data)) return state;
 
       for (const b of data.blocks) {
-        const dict_with_blocks_with_such_name = Object.fromEntries(Object.entries(this.state.blocks).filter(([k, v]) => v.type == b.type));
         const current_const_ids = Object.values(state.blocks).map(v => v.const_id);
         const const_id = current_const_ids.length == 0 ? 1 : Math.max(...current_const_ids) + 1;
         if (state.blocks[const_id] != undefined) return state;
-        if (b.type == 'INPUT') b.id = b.type + ' ' + (state.inputs_number + 1);else if (b.type == 'OUTPUT') b.id = b.type + ' ' + (state.outputs_number + 1);else b.id = b.type + ' ' + (state.inputs_number + 1);
+
+        if (b.type == 'INPUT') {
+          b.id = b.type + ' ' + (state.inputs_number + 1);
+          state.inputs_number += 1;
+        } else if (b.type == 'OUTPUT') {
+          b.id = b.type + ' ' + (state.outputs_number + 1);
+          state.outputs_number += 1;
+        } else {
+          const dict_with_blocks_with_such_name = Object.fromEntries(Object.entries(this.state.blocks).filter(([k, v]) => v.type == b.type));
+          b.id = b.type + ' ' + (Object.keys(dict_with_blocks_with_such_name).length + 1);
+        }
+
         state.blocks[const_id] = b;
-        if (b.type == 'INPUT') state.inputs_number += 1;else if (b.type == 'OUTPUT') state.outputs_number += 1;
       }
 
       return state;
@@ -205,7 +214,7 @@ class BlocksArea extends React.Component {
         }
 
         return state;
-      });
+      }, () => console.log('after add:', this.state));
     });
   }
 
@@ -322,14 +331,20 @@ class BlocksArea extends React.Component {
           const n_splited = n.split('-');
           const n_from = Number.parseInt(n_splited[0], 10);
           new_unpucked_wire.from = 'INPUT ' + (n_from + i);
-        } else new_unpucked_wire.from = blocks[w.from_block_const_id].id + '[' + (from_output_id + 1) + ']';
+        } else {
+          const id_splited = from_block.id.split(' ');
+          new_unpucked_wire.from = id_splited[0] + '_' + id_splited[1] + '[' + (from_output_id + 1) + ']';
+        }
 
         if (to_block_type == 'OUTPUT' && to_block.id.includes('-')) {
-          const n = to_block.id.split(' ')[1];
+          const n = to_block.id.split('_')[1];
           const n_splited = n.split('-');
           const n_from = Number.parseInt(n_splited[0], 10);
-          new_unpucked_wire.to = 'OUTPUT ' + (n_from + i);
-        } else new_unpucked_wire.to = blocks[w.to_block_const_id].id + '[' + (to_input_id + 1) + ']';
+          new_unpucked_wire.to = 'OUTPUT_' + (n_from + i);
+        } else {
+          const id_splited = to_block.id.split(' ');
+          new_unpucked_wire.to = id_splited[0] + '_' + id_splited[1] + '[' + (to_input_id + 1) + ']';
+        }
 
         unpacked_wires.push(new_unpucked_wire);
       }

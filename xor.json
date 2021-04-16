@@ -1,164 +1,158 @@
 {
 	"name": "xor",
 	"custom_elements": {},
-	"new_element_type": "new",
-	"new_element_inputs_number": 1,
-	"new_element_outputs_number": 1,
+	"new_element": {
+		"type": "new",
+		"inputs": [
+			""
+		],
+		"outputs": [
+			""
+		],
+		"inputs_groups": [
+			1
+		],
+		"outputs_groups": [
+			1
+		]
+	},
 	"inputs_number": 2,
 	"outputs_number": 1,
 	"blocks": {
 		"1": {
 			"type": "INPUT",
-			"id": "INPUT_1",
+			"id": "INPUT 1",
 			"const_id": "1",
-			"x": 425.203125,
-			"y": 272,
+			"x": 398.5859375,
+			"y": 209,
 			"inputs": [],
 			"outputs": [
 				"x"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
 			"input_connectors_coordinates": [],
 			"output_connectors_coordinates": [
 				{
-					"x": 838.2596435546875,
-					"y": 421.92699432373047
+					"x": 576.40625,
+					"y": 254
 				}
 			]
 		},
 		"2": {
 			"type": "INPUT",
-			"id": "INPUT_2",
+			"id": "INPUT 2",
 			"const_id": "2",
-			"x": 419.578125,
-			"y": 369,
+			"x": 402.5859375,
+			"y": 328,
 			"inputs": [],
 			"outputs": [
 				"x"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
 			"input_connectors_coordinates": [],
 			"output_connectors_coordinates": [
 				{
-					"x": 837.760498046875,
-					"y": 551.0339965820312
+					"x": 580.40625,
+					"y": 373
 				}
 			]
 		},
 		"3": {
-			"type": "OR",
-			"id": "OR_1",
+			"type": "OUTPUT",
+			"id": "OUTPUT 1",
 			"const_id": "3",
-			"x": 729.1796875,
-			"y": 612,
+			"x": 1315.625,
+			"y": 433,
 			"inputs": [
-				"x",
-				"y"
+				"x"
 			],
-			"outputs": [
-				"x || y"
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
 			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1030.4227600097656,
-					"y": 874.4669799804688
-				},
-				{
-					"x": 1030.4227600097656,
-					"y": 970.2990112304688
+					"x": 1360.625,
+					"y": 478
 				}
 			],
-			"output_connectors_coordinates": [
-				{
-					"x": 1218.9464416503906,
-					"y": 874.4669799804688
-				}
-			]
+			"output_connectors_coordinates": []
 		},
 		"4": {
-			"type": "OR",
-			"id": "OR_2",
+			"type": "NOT",
+			"id": "NOT 1",
 			"const_id": "4",
-			"x": 1008.1796875,
-			"y": 281,
+			"x": 648.5546875,
+			"y": 210,
 			"inputs": [
-				"x",
-				"y"
+				"x"
 			],
 			"outputs": [
-				"x || y"
+				"!x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1
 			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1401.7717895507812,
-					"y": 433.90599822998047
-				},
-				{
-					"x": 1401.7717895507812,
-					"y": 529.7379989624023
+					"x": 693.546875,
+					"y": 255
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 1590.2954711914062,
-					"y": 433.90599822998047
+					"x": 852.4375,
+					"y": 255
 				}
 			]
 		},
 		"5": {
 			"type": "NOT",
-			"id": "NOT_1",
+			"id": "NOT 2",
 			"const_id": "5",
-			"x": 714.5546875,
-			"y": 281,
+			"x": 657.5546875,
+			"y": 326,
 			"inputs": [
 				"x"
 			],
 			"outputs": [
 				"!x"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1010.9569091796875,
-					"y": 433.90599822998047
+					"x": 702.546875,
+					"y": 371
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 1222.4403076171875,
-					"y": 433.90599822998047
+					"x": 861.4375,
+					"y": 371
 				}
 			]
 		},
 		"6": {
-			"type": "NOT",
-			"id": "NOT_2",
-			"const_id": "6",
-			"x": 710.5546875,
-			"y": 385,
-			"inputs": [
-				"x"
-			],
-			"outputs": [
-				"!x"
-			],
-			"input_connectors_coordinates": [
-				{
-					"x": 1005.6328735351562,
-					"y": 572.3300018310547
-				}
-			],
-			"output_connectors_coordinates": [
-				{
-					"x": 1217.1163330078125,
-					"y": 572.3300018310547
-				}
-			]
-		},
-		"7": {
 			"type": "AND",
-			"id": "AND_1",
-			"const_id": "7",
-			"x": 998.032109169562,
-			"y": 536.3459769807122,
+			"id": "AND 1",
+			"const_id": "6",
+			"x": 971.5390625,
+			"y": 419,
 			"inputs": [
 				"x",
 				"y"
@@ -166,176 +160,239 @@
 			"outputs": [
 				"x && y"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 728.6775817871094,
-					"y": 406.1356201171875
+					"x": 1016.53125,
+					"y": 464
 				},
 				{
-					"x": 728.6775817871094,
-					"y": 456.4359436035156
+					"x": 1016.53125,
+					"y": 536
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 843.8945007324219,
-					"y": 406.1356201171875
+					"x": 1181.453125,
+					"y": 464
+				}
+			]
+		},
+		"7": {
+			"type": "OR",
+			"id": "OR 1",
+			"const_id": "7",
+			"x": 640.1796875,
+			"y": 447,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x || y"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 685.171875,
+					"y": 492
+				},
+				{
+					"x": 685.171875,
+					"y": 564
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 826.8125,
+					"y": 492
 				}
 			]
 		},
 		"8": {
-			"type": "OUTPUT",
-			"id": "OUTPUT_1",
+			"type": "OR",
+			"id": "OR 2",
 			"const_id": "8",
-			"x": 1273.2442983175786,
-			"y": 646.5124741710541,
+			"x": 944.1796875,
+			"y": 232,
 			"inputs": [
-				"x"
+				"x",
+				"y"
 			],
-			"outputs": [],
+			"outputs": [
+				"x || y"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 920.9386596679688,
-					"y": 483.09246826171875
+					"x": 989.171875,
+					"y": 277
+				},
+				{
+					"x": 989.171875,
+					"y": 349
 				}
 			],
-			"output_connectors_coordinates": []
+			"output_connectors_coordinates": [
+				{
+					"x": 1130.8125,
+					"y": 277
+				}
+			]
 		}
 	},
 	"wires": {
 		"0": {
 			"id": 0,
-			"from_block_const_id": "2",
-			"to_block_const_id": "6",
+			"from_block_const_id": "1",
+			"to_block_const_id": "4",
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 629.421875,
-				"y": 414
+				"x": 576.40625,
+				"y": 254
 			},
 			"to_point": {
-				"x": 755.546875,
-				"y": 430
+				"x": 693.546875,
+				"y": 255
 			}
 		},
 		"1": {
 			"id": 1,
-			"from_block_const_id": "1",
+			"from_block_const_id": "2",
 			"to_block_const_id": "5",
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 629.796875,
-				"y": 317
+				"x": 580.40625,
+				"y": 373
 			},
 			"to_point": {
-				"x": 759.546875,
-				"y": 326
+				"x": 702.546875,
+				"y": 371
 			}
 		},
 		"2": {
 			"id": 2,
-			"from_block_const_id": "1",
-			"to_block_const_id": "3",
+			"from_block_const_id": "2",
+			"to_block_const_id": "7",
 			"from_output_id": 0,
-			"to_input_id": 0,
+			"to_input_id": 1,
 			"from_point": {
-				"x": 629.7968772011174,
-				"y": 316.9999957353346
+				"x": 580.40625,
+				"y": 373
 			},
 			"to_point": {
-				"x": 774.171870781191,
-				"y": 656.9999849590297
+				"x": 685.171875,
+				"y": 564
 			}
 		},
 		"3": {
 			"id": 3,
-			"from_block_const_id": "2",
-			"to_block_const_id": "3",
+			"from_block_const_id": "1",
+			"to_block_const_id": "7",
 			"from_output_id": 0,
-			"to_input_id": 1,
+			"to_input_id": 0,
 			"from_point": {
-				"x": 629.4218617932943,
-				"y": 413.9999974320294
+				"x": 576.40625,
+				"y": 254
 			},
 			"to_point": {
-				"x": 774.171870781191,
-				"y": 729.0000084376172
+				"x": 685.171875,
+				"y": 492
 			}
 		},
 		"4": {
 			"id": 4,
-			"from_block_const_id": "5",
-			"to_block_const_id": "4",
+			"from_block_const_id": "7",
+			"to_block_const_id": "6",
 			"from_output_id": 0,
-			"to_input_id": 0,
+			"to_input_id": 1,
 			"from_point": {
-				"x": 918.4374963314705,
-				"y": 325.99999867015805
+				"x": 826.8125,
+				"y": 492
 			},
 			"to_point": {
-				"x": 1053.1718929757933,
-				"y": 325.99999867015805
+				"x": 1016.53125,
+				"y": 536
 			}
 		},
 		"5": {
 			"id": 5,
-			"from_block_const_id": "6",
-			"to_block_const_id": "4",
+			"from_block_const_id": "8",
+			"to_block_const_id": "6",
 			"from_output_id": 0,
-			"to_input_id": 1,
+			"to_input_id": 0,
 			"from_point": {
-				"x": 914.4375154078228,
-				"y": 430.00000137569833
+				"x": 1130.8125,
+				"y": 277
 			},
 			"to_point": {
-				"x": 1053.1718929757933,
-				"y": 397.9999992204374
+				"x": 1016.53125,
+				"y": 464
 			}
 		},
 		"6": {
 			"id": 6,
-			"from_block_const_id": "4",
-			"to_block_const_id": "7",
+			"from_block_const_id": "6",
+			"to_block_const_id": "3",
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 1194.812525312852,
-				"y": 325.99999867015805
+				"x": 1181.453125,
+				"y": 464
 			},
 			"to_point": {
-				"x": 1043.0312525679701,
-				"y": 581.3437561447864
+				"x": 1360.625,
+				"y": 478
 			}
 		},
 		"7": {
 			"id": 7,
-			"from_block_const_id": "3",
-			"to_block_const_id": "7",
+			"from_block_const_id": "5",
+			"to_block_const_id": "8",
 			"from_output_id": 0,
 			"to_input_id": 1,
 			"from_point": {
-				"x": 915.8125031182497,
-				"y": 656.9999849590297
+				"x": 861.4375,
+				"y": 371
 			},
 			"to_point": {
-				"x": 1043.0312525679701,
-				"y": 653.3437452309117
+				"x": 989.171875,
+				"y": 349
 			}
 		},
 		"8": {
 			"id": 8,
-			"from_block_const_id": "7",
+			"from_block_const_id": "4",
 			"to_block_const_id": "8",
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 1207.9531108057379,
-				"y": 581.3437406023918
+				"x": 852.4375,
+				"y": 255
 			},
 			"to_point": {
-				"x": 1318.234350196246,
-				"y": 691.5000030656623
+				"x": 989.171875,
+				"y": 277
 			}
 		}
 	},
