@@ -334,6 +334,7 @@ class BlocksArea extends React.Component {
 
         if (from_block_type == 'INPUT' && from_block.id.includes('-')) {
           const n = from_block.id.split(' ')[1];
+          console.log('n', n);
           const n_splited = n.split('-');
           const n_from = Number.parseInt(n_splited[0], 10);
           new_unpucked_wire.from = 'INPUT ' + (n_from + i);
@@ -343,7 +344,7 @@ class BlocksArea extends React.Component {
         }
 
         if (to_block_type == 'OUTPUT' && to_block.id.includes('-')) {
-          const n = to_block.id.split('_')[1];
+          const n = to_block.id.split(' ')[1];
           const n_splited = n.split('-');
           const n_from = Number.parseInt(n_splited[0], 10);
           new_unpucked_wire.to = 'OUTPUT_' + (n_from + i);
