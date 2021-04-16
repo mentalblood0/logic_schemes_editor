@@ -18,7 +18,7 @@
 
 * Easily adding and editing tests
 
-  ![screenshot_tests](C:\Users\Necheporenko_s_iu\repositories\logic_schemes_editor\screenshot_tests.png)
+  ![screenshot_tests](screenshot_tests.png)
 
 * Exporting schemes to format compatible with [compiler](https://notabug.org/mentalblood/logic_schemes_compiler)
 
