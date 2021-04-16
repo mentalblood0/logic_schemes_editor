@@ -206,12 +206,13 @@ class BlocksArea extends React.Component {
 					state.outputs_number += 1;
 				}
 				else {
-					const dict_with_blocks_with_such_name = Object.fromEntries(
+					const dict_with_blocks_with_such_type = Object.fromEntries(
 						Object.entries(this.state.blocks).filter(([k,v]) => 
 						v.type == b.type
 					));
-					b.id = b.type + ' ' + (Object.keys(dict_with_blocks_with_such_name).length + 1);
+					b.id = b.type + ' ' + (Object.keys(dict_with_blocks_with_such_type).length + 1);
 				}
+				b.const_id = const_id;
 				state.blocks[const_id] = b;
 			}
 			return state;
@@ -236,7 +237,7 @@ class BlocksArea extends React.Component {
 					this.updateWireCoordinates(state, new_id, wire_type_relative_to_block, true);
 				}
 				return state;
-			}, () => console.log('after add:', this.state));
+			});
 		});
 	}
 
@@ -343,6 +344,7 @@ class BlocksArea extends React.Component {
 	}
 
 	getExportData() {
+		console.log('getExportData, state:', this.state);
 		const blocks = this.state.blocks;
 		const tests = this.state.tests;
 		const inputs_number = Object.values(this.state.blocks).filter(b => b.type == 'INPUT').length;
@@ -541,8 +543,6 @@ class BlocksArea extends React.Component {
 
 	removeBlock(const_id) {
 		this.setState(state => {
-			if (!state.blocks[const_id])
-				return state;
 			const type = state.blocks[const_id].type;
 			const id = state.blocks[const_id].id;
 			const number = Number.parseInt(id.split(' ').pop(), 10);
@@ -613,7 +613,9 @@ class BlocksArea extends React.Component {
 						const n_int = Number.parseInt(n, 10);
 						new_n = '' + (n_int + delta);
 					}
-					state.blocks[k].id = type + ' ' + new_n;
+					const new_id = type + ' ' + new_n;
+					state.blocks[k].setId(new_id)
+					state.blocks[k].id = new_id;
 				}
 	}
 
@@ -650,14 +652,8 @@ class BlocksArea extends React.Component {
 
 	handleAddBlockButtonClick() {
 		const name = this.state.new_element.type;
-		const inputs_number = this.state.new_element.inputs_number;
-		const outputs_number = this.state.new_element.outputs_number;
-		const new_element_info = {
-			'inputs': filledArray(inputs_number, ''),
-			'outputs': filledArray(outputs_number, '')
-		};
 		this.setState(state => {
-			this.state.custom_elements[name] = new_element_info;
+			this.state.custom_elements[name] = this.state.new_element;
 			return state;	
 		}, () => this.forceUpdate());
 	}
@@ -666,6 +662,8 @@ class BlocksArea extends React.Component {
 		this.setState({
 			'blocks': {},
 			'wires': {},
+			'inputs_number': 0,
+			'outputs_number': 0,
 			'tests': []
 		});
 	}
@@ -869,7 +867,7 @@ class BlocksArea extends React.Component {
 						<Block key={((block_id_and_block[1].type == 'INPUT') || (block_id_and_block[1].type == 'OUTPUT')) ?
 									(block_id_and_block[0] + ' ' + block_id_and_block[1].id) :
 									block_id_and_block[0]}
-							const_id={block_id_and_block[0]}
+							const_id={block_id_and_block[1].const_id}
 							id={block_id_and_block[1].id}
 							type={block_id_and_block[1].type}
 							x={block_id_and_block[1].x}
@@ -891,7 +889,7 @@ class BlocksArea extends React.Component {
 							onStopInitialDragging={this.onBlockStopInitialDragging}
 							updateInputsOutputsNames={this.updateInputsOutputsNames.bind(this)}
 							wireHere={this.wireHere.bind(this)}
-							type_info={this.getTypeInfo(block_id_and_block[1].type)}></Block>
+							getTypeInfo={this.getTypeInfo.bind(this)}></Block>
 					)
 				}
 				{

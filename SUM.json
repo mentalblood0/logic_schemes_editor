@@ -1,71 +1,88 @@
 {
-	"name": "MAIN",
-	"new_element_type": "AND_3",
-	"new_element_inputs_number": "3",
-	"new_element_outputs_number": 1,
+	"name": "sum",
+	"custom_elements": {
+		"AND_3": {
+			"type": "OR_3",
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				""
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"outputs_groups": [
+				1
+			],
+			"x": 188,
+			"y": 426,
+			"dragging": true,
+			"id": "OR_3 2",
+			"const_id": 9
+		},
+		"OR_3": {
+			"type": "OR_3",
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				""
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"outputs_groups": [
+				1
+			],
+			"x": 188,
+			"y": 426,
+			"dragging": true,
+			"id": "OR_3 2",
+			"const_id": 9
+		}
+	},
+	"new_element": {
+		"type": "OR_3",
+		"inputs": [
+			"",
+			"",
+			""
+		],
+		"outputs": [
+			""
+		],
+		"inputs_groups": [
+			1,
+			1,
+			1
+		],
+		"outputs_groups": [
+			1
+		],
+		"x": 188,
+		"y": 426,
+		"dragging": true,
+		"id": "OR_3 2",
+		"const_id": 9
+	},
 	"inputs_number": 3,
 	"outputs_number": 2,
 	"blocks": {
-		"1": {
-			"type": "INPUT",
-			"id": "INPUT_1",
-			"const_id": "1",
-			"x": 330.203125,
-			"y": 71,
-			"inputs": [],
-			"outputs": [
-				"x"
-			],
-			"input_connectors_coordinates": [],
-			"output_connectors_coordinates": [
-				{
-					"x": 534.796875,
-					"y": 116
-				}
-			]
-		},
-		"2": {
-			"type": "INPUT",
-			"id": "INPUT_2",
-			"const_id": "2",
-			"x": 321.578125,
-			"y": 422,
-			"inputs": [],
-			"outputs": [
-				"x"
-			],
-			"input_connectors_coordinates": [],
-			"output_connectors_coordinates": [
-				{
-					"x": 531.421875,
-					"y": 467
-				}
-			]
-		},
-		"3": {
-			"type": "INPUT",
-			"id": "INPUT_3",
-			"const_id": "3",
-			"x": 325.75,
-			"y": 863,
-			"inputs": [],
-			"outputs": [
-				"x"
-			],
-			"input_connectors_coordinates": [],
-			"output_connectors_coordinates": [
-				{
-					"x": 535.25,
-					"y": 908
-				}
-			]
-		},
 		"4": {
 			"type": "AND",
-			"id": "AND_1",
-			"const_id": "4",
-			"x": 708.5390625,
-			"y": 7,
+			"id": "AND 1",
+			"const_id": 4,
+			"x": 720.0078840358615,
+			"y": 102.69276930130317,
 			"inputs": [
 				"x",
 				"y"
@@ -73,29 +90,36 @@
 			"outputs": [
 				"x && y"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 753.53125,
-					"y": 52
+					"x": 394.47735595703125,
+					"y": 76.15604400634766
 				},
 				{
-					"x": 753.53125,
-					"y": 124
+					"x": 394.47735595703125,
+					"y": 113.28332328796387
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 918.453125,
-					"y": 52
+					"x": 479.5204162597656,
+					"y": 76.15604400634766
 				}
 			]
 		},
 		"5": {
 			"type": "AND",
-			"id": "AND_2",
-			"const_id": "5",
-			"x": 704.5390625,
-			"y": 182,
+			"id": "AND 2",
+			"const_id": 5,
+			"x": 731.8624713426559,
+			"y": 302.5268054407806,
 			"inputs": [
 				"x",
 				"y"
@@ -103,29 +127,36 @@
 			"outputs": [
 				"x && y"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 749.53125,
-					"y": 227
+					"x": 400.5927429199219,
+					"y": 179.1987533569336
 				},
 				{
-					"x": 749.53125,
-					"y": 299
+					"x": 400.5927429199219,
+					"y": 216.3260269165039
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 914.453125,
-					"y": 227
+					"x": 485.6357727050781,
+					"y": 179.1987533569336
 				}
 			]
 		},
 		"6": {
 			"type": "AND",
-			"id": "AND_3",
-			"const_id": "6",
-			"x": 705.5390625,
-			"y": 349,
+			"id": "AND 3",
+			"const_id": 6,
+			"x": 743.717032808557,
+			"y": 509.13490254452324,
 			"inputs": [
 				"x",
 				"y"
@@ -133,29 +164,36 @@
 			"outputs": [
 				"x && y"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 750.53125,
-					"y": 394
+					"x": 406.7000427246094,
+					"y": 285.7382507324219
 				},
 				{
-					"x": 750.53125,
-					"y": 466
+					"x": 406.7000427246094,
+					"y": 322.86553955078125
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 915.453125,
-					"y": 394
+					"x": 491.7430725097656,
+					"y": 285.7382507324219
 				}
 			]
 		},
 		"7": {
-			"type": "OR_3",
-			"id": "OR_3_1",
-			"const_id": "7",
-			"x": 719.3359375,
-			"y": 519,
+			"type": "AND_3",
+			"id": "AND_3 1",
+			"const_id": 7,
+			"x": 738.7984619474499,
+			"y": 986.3404472251641,
 			"inputs": [
 				"",
 				"",
@@ -164,33 +202,41 @@
 			"outputs": [
 				""
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 764.328125,
-					"y": 564
+					"x": 404.1700744628906,
+					"y": 531.8112182617188
 				},
 				{
-					"x": 764.328125,
-					"y": 636
+					"x": 404.1700744628906,
+					"y": 568.9385070800781
 				},
 				{
-					"x": 764.328125,
-					"y": 708
+					"x": 404.1700744628906,
+					"y": 606.0657653808594
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 937.65625,
-					"y": 564
+					"x": 505.5530090332031,
+					"y": 531.8112182617188
 				}
 			]
 		},
 		"8": {
-			"type": "AND_3",
-			"id": "AND_3_1",
-			"const_id": "8",
-			"x": 711.6953125,
-			"y": 758,
+			"type": "OR_3",
+			"id": "OR_3 1",
+			"const_id": 8,
+			"x": 744.6212621838474,
+			"y": 719.8504985917593,
 			"inputs": [
 				"",
 				"",
@@ -199,33 +245,41 @@
 			"outputs": [
 				""
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 756.6875,
-					"y": 803
+					"x": 407.1673278808594,
+					"y": 394.39678955078125
 				},
 				{
-					"x": 756.6875,
-					"y": 875
+					"x": 407.1673278808594,
+					"y": 431.52406311035156
 				},
 				{
-					"x": 756.6875,
-					"y": 947
+					"x": 407.1673278808594,
+					"y": 468.6513366699219
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 953.296875,
-					"y": 803
+					"x": 496.5451354980469,
+					"y": 394.39678955078125
 				}
 			]
 		},
 		"9": {
 			"type": "OR_3",
-			"id": "OR_3_2",
-			"const_id": "9",
-			"x": 1000.3359375,
-			"y": 114,
+			"id": "OR_3 2",
+			"const_id": 9,
+			"x": 1099.1679486873597,
+			"y": 269.3643547851926,
 			"inputs": [
 				"",
 				"",
@@ -234,76 +288,94 @@
 			"outputs": [
 				""
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1045.328125,
-					"y": 159
+					"x": 547.2463684082031,
+					"y": 150.35711669921875
 				},
 				{
-					"x": 1045.328125,
-					"y": 231
+					"x": 547.2463684082031,
+					"y": 184.79449462890625
 				},
 				{
-					"x": 1045.328125,
-					"y": 303
+					"x": 547.2463684082031,
+					"y": 219.23187255859375
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 1218.65625,
-					"y": 159
+					"x": 630.1487121582031,
+					"y": 150.35711669921875
 				}
 			]
 		},
 		"10": {
 			"type": "OUTPUT",
-			"id": "OUTPUT_1",
-			"const_id": "10",
-			"x": 1287.25,
-			"y": 114,
+			"id": "OUTPUT 1",
+			"const_id": 10,
+			"x": 1489.973782620363,
+			"y": 357.3626136775118,
 			"inputs": [
 				"x"
 			],
 			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1332.25,
-					"y": 159
+					"x": 734.1708068847656,
+					"y": 192.44723510742188
 				}
 			],
 			"output_connectors_coordinates": []
 		},
 		"11": {
 			"type": "NOT",
-			"id": "NOT_1",
-			"const_id": "11",
-			"x": 1039.5546875,
-			"y": 366,
+			"id": "NOT 1",
+			"const_id": 11,
+			"x": 1091.751420907034,
+			"y": 555.9840458021798,
 			"inputs": [
 				"x"
 			],
 			"outputs": [
 				"!x"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1084.546875,
-					"y": 411
+					"x": 543.7040100097656,
+					"y": 287.4414978027344
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 1243.4375,
-					"y": 411
+					"x": 619.7008972167969,
+					"y": 287.4414978027344
 				}
 			]
 		},
 		"12": {
 			"type": "AND",
-			"id": "AND_4",
-			"const_id": "12",
-			"x": 1036.5390625,
-			"y": 470,
+			"id": "AND 4",
+			"const_id": 12,
+			"x": 1101.2802981510408,
+			"y": 727.6961753862537,
 			"inputs": [
 				"x",
 				"y"
@@ -311,29 +383,36 @@
 			"outputs": [
 				"x && y"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1081.53125,
-					"y": 515
+					"x": 591.0794982910156,
+					"y": 398.44146728515625
 				},
 				{
-					"x": 1081.53125,
-					"y": 587
+					"x": 591.0794982910156,
+					"y": 435.56874084472656
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 1246.453125,
-					"y": 515
+					"x": 676.1225891113281,
+					"y": 398.44146728515625
 				}
 			]
 		},
 		"13": {
 			"type": "OR",
-			"id": "OR_1",
-			"const_id": "13",
-			"x": 1048.1796875,
-			"y": 643,
+			"id": "OR 1",
+			"const_id": 13,
+			"x": 1087.8318997388667,
+			"y": 970.2233588156257,
 			"inputs": [
 				"x",
 				"y"
@@ -341,223 +420,120 @@
 			"outputs": [
 				"x || y"
 			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1093.171875,
-					"y": 688
+					"x": 584.1503601074219,
+					"y": 523.5043182373047
 				},
 				{
-					"x": 1093.171875,
-					"y": 760
+					"x": 584.1503601074219,
+					"y": 560.6316070556641
 				}
 			],
 			"output_connectors_coordinates": [
 				{
-					"x": 1234.8125,
-					"y": 688
+					"x": 657.1883239746094,
+					"y": 523.5043182373047
 				}
 			]
 		},
 		"14": {
 			"type": "OUTPUT",
-			"id": "OUTPUT_2",
-			"const_id": "14",
-			"x": 1301.625,
-			"y": 636,
+			"id": "OUTPUT 2",
+			"const_id": 14,
+			"x": 1391.7084263975044,
+			"y": 928.137795369051,
 			"inputs": [
 				"x"
 			],
 			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
 			"input_connectors_coordinates": [
 				{
-					"x": 1346.625,
-					"y": 681
+					"x": 687.1706237792969,
+					"y": 465.4426574707031
 				}
 			],
 			"output_connectors_coordinates": []
+		},
+		"15": {
+			"type": "INPUT",
+			"id": "INPUT 1",
+			"const_id": 15,
+			"x": 300.53033927595357,
+			"y": 205.22665232523906,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 246.66116333007812,
+					"y": 129.0269660949707
+				}
+			]
+		},
+		"16": {
+			"type": "INPUT",
+			"id": "INPUT 2",
+			"const_id": 16,
+			"x": 298.5910644512253,
+			"y": 620.2314352260821,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 245.66207885742188,
+					"y": 343.02447509765625
+				}
+			]
+		},
+		"17": {
+			"type": "INPUT",
+			"id": "INPUT 3",
+			"const_id": 17,
+			"x": 286.9554155028563,
+			"y": 1048.8111862865007,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 239.66757202148438,
+					"y": 564.0236511230469
+				}
+			]
 		}
 	},
 	"wires": {
-		"0": {
-			"id": 0,
-			"from_block_const_id": "1",
-			"to_block_const_id": "4",
-			"from_output_id": 0,
-			"to_input_id": 0,
-			"from_point": {
-				"x": 534.796875,
-				"y": 116
-			},
-			"to_point": {
-				"x": 753.53125,
-				"y": 52
-			}
-		},
-		"1": {
-			"id": 1,
-			"from_block_const_id": "1",
-			"to_block_const_id": "5",
-			"from_output_id": 0,
-			"to_input_id": 0,
-			"from_point": {
-				"x": 534.796875,
-				"y": 116
-			},
-			"to_point": {
-				"x": 749.53125,
-				"y": 227
-			}
-		},
-		"2": {
-			"id": 2,
-			"from_block_const_id": "1",
-			"to_block_const_id": "7",
-			"from_output_id": 0,
-			"to_input_id": 0,
-			"from_point": {
-				"x": 534.796875,
-				"y": 116
-			},
-			"to_point": {
-				"x": 764.328125,
-				"y": 564
-			}
-		},
-		"3": {
-			"id": 3,
-			"from_block_const_id": "1",
-			"to_block_const_id": "8",
-			"from_output_id": 0,
-			"to_input_id": 0,
-			"from_point": {
-				"x": 534.796875,
-				"y": 116
-			},
-			"to_point": {
-				"x": 756.6875,
-				"y": 803
-			}
-		},
-		"4": {
-			"id": 4,
-			"from_block_const_id": "2",
-			"to_block_const_id": "4",
-			"from_output_id": 0,
-			"to_input_id": 1,
-			"from_point": {
-				"x": 531.421875,
-				"y": 467
-			},
-			"to_point": {
-				"x": 753.53125,
-				"y": 124
-			}
-		},
-		"5": {
-			"id": 5,
-			"from_block_const_id": "2",
-			"to_block_const_id": "6",
-			"from_output_id": 0,
-			"to_input_id": 0,
-			"from_point": {
-				"x": 531.421875,
-				"y": 467
-			},
-			"to_point": {
-				"x": 750.53125,
-				"y": 394
-			}
-		},
-		"6": {
-			"id": 6,
-			"from_block_const_id": "2",
-			"to_block_const_id": "7",
-			"from_output_id": 0,
-			"to_input_id": 1,
-			"from_point": {
-				"x": 531.421875,
-				"y": 467
-			},
-			"to_point": {
-				"x": 764.328125,
-				"y": 636
-			}
-		},
-		"7": {
-			"id": 7,
-			"from_block_const_id": "2",
-			"to_block_const_id": "8",
-			"from_output_id": 0,
-			"to_input_id": 1,
-			"from_point": {
-				"x": 531.421875,
-				"y": 467
-			},
-			"to_point": {
-				"x": 756.6875,
-				"y": 875
-			}
-		},
-		"8": {
-			"id": 8,
-			"from_block_const_id": "3",
-			"to_block_const_id": "5",
-			"from_output_id": 0,
-			"to_input_id": 1,
-			"from_point": {
-				"x": 535.25,
-				"y": 908
-			},
-			"to_point": {
-				"x": 749.53125,
-				"y": 299
-			}
-		},
-		"9": {
-			"id": 9,
-			"from_block_const_id": "3",
-			"to_block_const_id": "6",
-			"from_output_id": 0,
-			"to_input_id": 1,
-			"from_point": {
-				"x": 535.25,
-				"y": 908
-			},
-			"to_point": {
-				"x": 750.53125,
-				"y": 466
-			}
-		},
-		"10": {
-			"id": 10,
-			"from_block_const_id": "3",
-			"to_block_const_id": "7",
-			"from_output_id": 0,
-			"to_input_id": 2,
-			"from_point": {
-				"x": 535.25,
-				"y": 908
-			},
-			"to_point": {
-				"x": 764.328125,
-				"y": 708
-			}
-		},
-		"11": {
-			"id": 11,
-			"from_block_const_id": "3",
-			"to_block_const_id": "8",
-			"from_output_id": 0,
-			"to_input_id": 2,
-			"from_point": {
-				"x": 535.25,
-				"y": 908
-			},
-			"to_point": {
-				"x": 756.6875,
-				"y": 947
-			}
-		},
 		"12": {
 			"id": 12,
 			"from_block_const_id": "4",
@@ -565,12 +541,12 @@
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 918.453125,
-				"y": 52
+				"x": 929.9219335859625,
+				"y": 147.68750019233278
 			},
 			"to_point": {
-				"x": 1045.328125,
-				"y": 159
+				"x": 1144.156210103396,
+				"y": 314.3593794967492
 			}
 		},
 		"13": {
@@ -580,12 +556,12 @@
 			"from_output_id": 0,
 			"to_input_id": 1,
 			"from_point": {
-				"x": 914.453125,
-				"y": 227
+				"x": 941.7813084765247,
+				"y": 347.5156382276788
 			},
 			"to_point": {
-				"x": 1045.328125,
-				"y": 231
+				"x": 1144.156210103396,
+				"y": 386.3593818586451
 			}
 		},
 		"14": {
@@ -595,42 +571,42 @@
 			"from_output_id": 0,
 			"to_input_id": 2,
 			"from_point": {
-				"x": 915.453125,
-				"y": 394
+				"x": 953.6249874171053,
+				"y": 554.1250008971446
 			},
 			"to_point": {
-				"x": 1045.328125,
-				"y": 303
+				"x": 1144.156210103396,
+				"y": 458.359384220541
 			}
 		},
 		"15": {
 			"id": 15,
 			"from_block_const_id": "9",
-			"to_block_const_id": "10",
+			"to_block_const_id": "11",
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 1218.65625,
-				"y": 159
+				"x": 1317.4844163911641,
+				"y": 314.3593794967492
 			},
 			"to_point": {
-				"x": 1332.25,
-				"y": 159
+				"x": 1136.750018680375,
+				"y": 600.9687660587687
 			}
 		},
 		"16": {
 			"id": 16,
 			"from_block_const_id": "9",
-			"to_block_const_id": "11",
+			"to_block_const_id": "10",
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 1218.65625,
-				"y": 159
+				"x": 1317.4844163911641,
+				"y": 314.3593794967492
 			},
 			"to_point": {
-				"x": 1084.546875,
-				"y": 411
+				"x": 1534.9687754295824,
+				"y": 402.359361115286
 			}
 		},
 		"17": {
@@ -640,57 +616,27 @@
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 1243.4375,
-				"y": 411
+				"x": 1295.6406307814177,
+				"y": 600.9687660587687
 			},
 			"to_point": {
-				"x": 1081.53125,
-				"y": 515
+				"x": 1146.2655926497025,
+				"y": 772.6874994266765
 			}
 		},
 		"18": {
 			"id": 18,
-			"from_block_const_id": "7",
-			"to_block_const_id": "12",
-			"from_output_id": 0,
-			"to_input_id": 1,
-			"from_point": {
-				"x": 937.65625,
-				"y": 564
-			},
-			"to_point": {
-				"x": 1081.53125,
-				"y": 587
-			}
-		},
-		"19": {
-			"id": 19,
-			"from_block_const_id": "8",
-			"to_block_const_id": "13",
-			"from_output_id": 0,
-			"to_input_id": 1,
-			"from_point": {
-				"x": 953.296875,
-				"y": 803
-			},
-			"to_point": {
-				"x": 1093.171875,
-				"y": 760
-			}
-		},
-		"20": {
-			"id": 20,
 			"from_block_const_id": "12",
 			"to_block_const_id": "13",
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 1246.453125,
-				"y": 515
+				"x": 1311.1875330428584,
+				"y": 772.6874994266765
 			},
 			"to_point": {
-				"x": 1093.171875,
-				"y": 688
+				"x": 1132.8280729345684,
+				"y": 1015.2187025505559
 			}
 		},
 		"21": {
@@ -700,12 +646,222 @@
 			"from_output_id": 0,
 			"to_input_id": 0,
 			"from_point": {
-				"x": 1234.8125,
-				"y": 688
+				"x": 1274.4687083964932,
+				"y": 1015.2187025505559
 			},
 			"to_point": {
-				"x": 1346.625,
-				"y": 681
+				"x": 1436.7030682810127,
+				"y": 973.1249721056168
+			}
+		},
+		"22": {
+			"id": 22,
+			"from_block_const_id": "8",
+			"to_block_const_id": "12",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 962.9374806126007,
+				"y": 764.8437649294445
+			},
+			"to_point": {
+				"x": 1146.2655904487244,
+				"y": 844.6874935587272
+			}
+		},
+		"23": {
+			"id": 23,
+			"from_block_const_id": "7",
+			"to_block_const_id": "13",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 980.4062229836644,
+				"y": 1031.3281070829696
+			},
+			"to_point": {
+				"x": 1132.8280872122184,
+				"y": 1087.2187615099456
+			}
+		},
+		"24": {
+			"id": 24,
+			"from_block_const_id": "15",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 478.343784284184,
+				"y": 250.21874705903195
+			},
+			"to_point": {
+				"x": 765.000005332804,
+				"y": 147.68749889240073
+			}
+		},
+		"25": {
+			"id": 25,
+			"from_block_const_id": "15",
+			"to_block_const_id": "5",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 478.343784284184,
+				"y": 250.21874705903195
+			},
+			"to_point": {
+				"x": 776.8594213134087,
+				"y": 347.5156310077741
+			}
+		},
+		"26": {
+			"id": 26,
+			"from_block_const_id": "15",
+			"to_block_const_id": "8",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 478.343784284184,
+				"y": 250.21874705903195
+			},
+			"to_point": {
+				"x": 789.6093484111913,
+				"y": 764.8437649294445
+			}
+		},
+		"27": {
+			"id": 27,
+			"from_block_const_id": "15",
+			"to_block_const_id": "7",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 478.343784284184,
+				"y": 250.21874705903195
+			},
+			"to_point": {
+				"x": 783.796850314394,
+				"y": 1031.3281070829696
+			}
+		},
+		"28": {
+			"id": 28,
+			"from_block_const_id": "16",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 476.4062849185849,
+				"y": 665.2187288224801
+			},
+			"to_point": {
+				"x": 765.000005332804,
+				"y": 219.68749691389084
+			}
+		},
+		"29": {
+			"id": 29,
+			"from_block_const_id": "16",
+			"to_block_const_id": "6",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 476.4062849185849,
+				"y": 665.2187288224801
+			},
+			"to_point": {
+				"x": 788.7031540717064,
+				"y": 554.1249961072516
+			}
+		},
+		"30": {
+			"id": 30,
+			"from_block_const_id": "16",
+			"to_block_const_id": "8",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 476.4062849185849,
+				"y": 665.2187288224801
+			},
+			"to_point": {
+				"x": 789.6093484111913,
+				"y": 836.8437518543152
+			}
+		},
+		"31": {
+			"id": 31,
+			"from_block_const_id": "16",
+			"to_block_const_id": "7",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 476.4062849185849,
+				"y": 665.2187288224801
+			},
+			"to_point": {
+				"x": 783.796850314394,
+				"y": 1103.3281235988256
+			}
+		},
+		"32": {
+			"id": 32,
+			"from_block_const_id": "17",
+			"to_block_const_id": "5",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 464.78128872499036,
+				"y": 1093.7968671741896
+			},
+			"to_point": {
+				"x": 776.8594213134087,
+				"y": 419.51561793264466
+			}
+		},
+		"33": {
+			"id": 33,
+			"from_block_const_id": "17",
+			"to_block_const_id": "6",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 464.78128872499036,
+				"y": 1093.7968671741896
+			},
+			"to_point": {
+				"x": 788.7031540717064,
+				"y": 626.1250126231076
+			}
+		},
+		"34": {
+			"id": 34,
+			"from_block_const_id": "17",
+			"to_block_const_id": "8",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 464.78128872499036,
+				"y": 1093.7968671741896
+			},
+			"to_point": {
+				"x": 789.6093484111913,
+				"y": 908.8437387791857
+			}
+		},
+		"35": {
+			"id": 35,
+			"from_block_const_id": "17",
+			"to_block_const_id": "7",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 464.78128872499036,
+				"y": 1093.7968671741896
+			},
+			"to_point": {
+				"x": 783.796850314394,
+				"y": 1175.3280809327107
 			}
 		}
 	},
@@ -732,13 +888,6 @@
 			1
 		],
 		[
-			0,
-			1,
-			1,
-			1,
-			0
-		],
-		[
 			1,
 			0,
 			0,
@@ -746,8 +895,8 @@
 			1
 		],
 		[
-			1,
 			0,
+			1,
 			1,
 			1,
 			0
@@ -756,6 +905,13 @@
 			1,
 			1,
 			0,
+			1,
+			0
+		],
+		[
+			1,
+			0,
+			1,
 			1,
 			0
 		],

@@ -21,6 +21,7 @@ class Block extends React.Component {
   constructor(props) {
     console.log('block constructor');
     super(props);
+    const type_info = props.getTypeInfo(props.type);
     this.state = {
       'const_id': props.const_id,
       'id': props.id,
@@ -63,6 +64,7 @@ class Block extends React.Component {
     return {
       'getInputsGroups': (() => this.state.inputs_groups).bind(this),
       'getOutputsGroups': (() => this.state.outputs_groups).bind(this),
+      'setId': (id => this.state.id = id).bind(this),
       'getInfo': this.getInfo.bind(this),
       'type': state.type,
       'id': state.id,
@@ -204,8 +206,9 @@ class Block extends React.Component {
     const x = this.state.x;
     const y = this.state.y;
     const type = this.state.type;
-    const name = this.state.id;
-    const visible_name = type == 'INPUT' || type == 'OUTPUT' ? name : type;
+    const name = this.state.id; // const visible_name = ((type == 'INPUT') || (type == 'OUTPUT')) ? name : type;
+
+    const visible_name = name;
     const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
     return /*#__PURE__*/React.createElement("div", {
       ref: this._ref,

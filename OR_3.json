@@ -1,0 +1,263 @@
+{
+	"name": "OR_3",
+	"custom_elements": {},
+	"new_element": {
+		"type": "new",
+		"inputs": [
+			""
+		],
+		"outputs": [
+			""
+		],
+		"inputs_groups": [
+			1
+		],
+		"outputs_groups": [
+			1
+		]
+	},
+	"inputs_number": 3,
+	"outputs_number": 1,
+	"blocks": {
+		"1": {
+			"type": "INPUT",
+			"id": "INPUT 1",
+			"const_id": "1",
+			"x": 456.5859375,
+			"y": 225,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 634.40625,
+					"y": 270
+				}
+			]
+		},
+		"2": {
+			"type": "INPUT",
+			"id": "INPUT 2",
+			"const_id": "2",
+			"x": 455.5859375,
+			"y": 353,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 633.40625,
+					"y": 398
+				}
+			]
+		},
+		"3": {
+			"type": "INPUT",
+			"id": "INPUT 3",
+			"const_id": "3",
+			"x": 457.5859375,
+			"y": 488,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 635.40625,
+					"y": 533
+				}
+			]
+		},
+		"4": {
+			"type": "OR",
+			"id": "OR 1",
+			"const_id": "4",
+			"x": 770.1796875,
+			"y": 229,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x || y"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 815.171875,
+					"y": 274
+				},
+				{
+					"x": 815.171875,
+					"y": 346
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 956.8125,
+					"y": 274
+				}
+			]
+		},
+		"5": {
+			"type": "OR",
+			"id": "OR 2",
+			"const_id": "5",
+			"x": 767.1796875,
+			"y": 422,
+			"inputs": [
+				"x",
+				"y"
+			],
+			"outputs": [
+				"x || y"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 812.171875,
+					"y": 467
+				},
+				{
+					"x": 812.171875,
+					"y": 539
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 953.8125,
+					"y": 467
+				}
+			]
+		},
+		"6": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 1",
+			"const_id": "6",
+			"x": 1029.625,
+			"y": 436,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1074.625,
+					"y": 481
+				}
+			],
+			"output_connectors_coordinates": []
+		}
+	},
+	"wires": {
+		"0": {
+			"id": 0,
+			"from_block_const_id": "4",
+			"to_block_const_id": "5",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 956.8125,
+				"y": 274
+			},
+			"to_point": {
+				"x": 812.171875,
+				"y": 467
+			}
+		},
+		"1": {
+			"id": 1,
+			"from_block_const_id": "3",
+			"to_block_const_id": "5",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 635.40625,
+				"y": 533
+			},
+			"to_point": {
+				"x": 812.171875,
+				"y": 539
+			}
+		},
+		"2": {
+			"id": 2,
+			"from_block_const_id": "2",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 633.40625,
+				"y": 398
+			},
+			"to_point": {
+				"x": 815.171875,
+				"y": 346
+			}
+		},
+		"3": {
+			"id": 3,
+			"from_block_const_id": "1",
+			"to_block_const_id": "4",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 634.40625,
+				"y": 270
+			},
+			"to_point": {
+				"x": 815.171875,
+				"y": 274
+			}
+		},
+		"4": {
+			"id": 4,
+			"from_block_const_id": "5",
+			"to_block_const_id": "6",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 953.8125,
+				"y": 467
+			},
+			"to_point": {
+				"x": 1074.625,
+				"y": 481
+			}
+		}
+	},
+	"tests": []
+}
