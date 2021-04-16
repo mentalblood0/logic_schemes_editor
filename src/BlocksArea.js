@@ -83,6 +83,10 @@ function numberOr(x, i) {
 	return isNaN(x) ? i : x;
 }
 
+function deepCopy(o) {
+	return JSON.parse(JSON.stringify(o));
+}
+
 class BlocksArea extends React.Component {
 	constructor(props) {
 		super(props);
@@ -427,7 +431,7 @@ class BlocksArea extends React.Component {
 		if (e.button != 0)
 			return;
 		this.add({
-			'blocks': [Object.assign(element_info, {
+			'blocks': [Object.assign(deepCopy(element_info), {
 				'type': element_type,
 				'x': e.clientX,
 				'y': e.clientY,
@@ -651,11 +655,12 @@ class BlocksArea extends React.Component {
 	}
 
 	handleAddBlockButtonClick() {
+		console.log('handleAddBlockButtonClick');
 		const name = this.state.new_element.type;
 		this.setState(state => {
-			this.state.custom_elements[name] = this.state.new_element;
+			this.state.custom_elements[name] = deepCopy(this.state.new_element);
 			return state;	
-		}, () => this.forceUpdate());
+		}, () => console.log('after handleAddBlockButtonClick', this.state.custom_elements));
 	}
 
 	clear() {

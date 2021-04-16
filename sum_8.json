@@ -1,0 +1,1710 @@
+{
+	"name": "sum_8",
+	"custom_elements": {
+		"sum": {
+			"type": "sum",
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"outputs_groups": [
+				1,
+				1
+			]
+		}
+	},
+	"new_element": {
+		"type": "sum",
+		"inputs": [
+			"",
+			"",
+			""
+		],
+		"outputs": [
+			"",
+			""
+		],
+		"inputs_groups": [
+			1,
+			1,
+			1
+		],
+		"outputs_groups": [
+			1,
+			1
+		]
+	},
+	"inputs_number": 17,
+	"outputs_number": 9,
+	"blocks": {
+		"1": {
+			"type": "sum",
+			"id": "sum 1",
+			"const_id": 1,
+			"x": 5666.403204784808,
+			"y": 1419.8598734187217,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				1,
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 5711.390625,
+					"y": 1464.859375
+				},
+				{
+					"x": 5711.390625,
+					"y": 1536.859375
+				},
+				{
+					"x": 5711.390625,
+					"y": 1608.859375
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 5872.125,
+					"y": 1464.859375
+				},
+				{
+					"x": 5872.125,
+					"y": 1536.859375
+				}
+			]
+		},
+		"2": {
+			"type": "INPUT",
+			"id": "INPUT 1",
+			"const_id": 2,
+			"x": 112.5177080869567,
+			"y": -660.1570069848206,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 290.34375,
+					"y": -615.15625
+				}
+			]
+		},
+		"3": {
+			"type": "INPUT",
+			"id": "INPUT 2",
+			"const_id": 3,
+			"x": 103.02714818684092,
+			"y": -324.8682913258648,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 280.84375,
+					"y": -279.859375
+				}
+			]
+		},
+		"4": {
+			"type": "INPUT",
+			"id": "INPUT 3",
+			"const_id": 4,
+			"x": 94.25354847919968,
+			"y": 6.948058080046259,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 272.078125,
+					"y": 51.9375
+				}
+			]
+		},
+		"5": {
+			"type": "INPUT",
+			"id": "INPUT 4",
+			"const_id": 5,
+			"x": 85.51739082990599,
+			"y": 344.24956652762654,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 263.34375,
+					"y": 389.234375
+				}
+			]
+		},
+		"6": {
+			"type": "INPUT",
+			"id": "INPUT 5",
+			"const_id": 6,
+			"x": 88.99355233331676,
+			"y": 650.9019663894527,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 266.8125,
+					"y": 695.890625
+				}
+			]
+		},
+		"7": {
+			"type": "INPUT",
+			"id": "INPUT 6",
+			"const_id": 7,
+			"x": 88.97675112256525,
+			"y": 956.9646457000797,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 266.796875,
+					"y": 1001.953125
+				}
+			]
+		},
+		"8": {
+			"type": "INPUT",
+			"id": "INPUT 7",
+			"const_id": 8,
+			"x": 109.42545291121982,
+			"y": 1263.7086125254107,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 287.25,
+					"y": 1308.703125
+				}
+			]
+		},
+		"9": {
+			"type": "INPUT",
+			"id": "INPUT 8",
+			"const_id": 9,
+			"x": 107.60588640900573,
+			"y": 1607.9133029319075,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 285.421875,
+					"y": 1652.90625
+				}
+			]
+		},
+		"10": {
+			"type": "INPUT",
+			"id": "INPUT 9",
+			"const_id": 10,
+			"x": 670.3905127563474,
+			"y": -923.6659236729338,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 848.203125,
+					"y": -878.65625
+				}
+			]
+		},
+		"11": {
+			"type": "INPUT",
+			"id": "INPUT 10",
+			"const_id": 11,
+			"x": 1341.4043859051505,
+			"y": -943.0120487428342,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 1519.21875,
+					"y": -898
+				}
+			]
+		},
+		"12": {
+			"type": "INPUT",
+			"id": "INPUT 11",
+			"const_id": 12,
+			"x": 2026.9760512232915,
+			"y": -920.3451727607934,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 2204.796875,
+					"y": -875.34375
+				}
+			]
+		},
+		"13": {
+			"type": "INPUT",
+			"id": "INPUT 12",
+			"const_id": 13,
+			"x": 2727.4910591139833,
+			"y": -929.3808227693155,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 2905.3125,
+					"y": -884.375
+				}
+			]
+		},
+		"14": {
+			"type": "INPUT",
+			"id": "INPUT 13",
+			"const_id": 14,
+			"x": 3369.58214139176,
+			"y": -930.1146502956076,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 3547.40625,
+					"y": -885.109375
+				}
+			]
+		},
+		"15": {
+			"type": "INPUT",
+			"id": "INPUT 14",
+			"const_id": 15,
+			"x": 4080.7932660772453,
+			"y": -940.6178640265124,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 4258.609375,
+					"y": -895.609375
+				}
+			]
+		},
+		"16": {
+			"type": "INPUT",
+			"id": "INPUT 15",
+			"const_id": 16,
+			"x": 4780.767312973452,
+			"y": -929.1880658337492,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 4958.59375,
+					"y": -884.1875
+				}
+			]
+		},
+		"17": {
+			"type": "INPUT",
+			"id": "INPUT 16",
+			"const_id": 17,
+			"x": 5503.022648916408,
+			"y": -926.793881117427,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 5680.84375,
+					"y": -881.78125
+				}
+			]
+		},
+		"18": {
+			"type": "INPUT",
+			"id": "INPUT 17",
+			"const_id": 18,
+			"x": 5542.00404811618,
+			"y": 1845.6827927018326,
+			"inputs": [],
+			"outputs": [
+				"x"
+			],
+			"outputs_groups": [
+				1
+			],
+			"inputs_groups": [],
+			"input_connectors_coordinates": [],
+			"output_connectors_coordinates": [
+				{
+					"x": 5719.828125,
+					"y": 1890.671875
+				}
+			]
+		},
+		"19": {
+			"type": "sum",
+			"id": "sum 2",
+			"const_id": 19,
+			"x": 4931.197189655842,
+			"y": 1077.3522767012837,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				1,
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 4976.1875,
+					"y": 1122.34375
+				},
+				{
+					"x": 4976.1875,
+					"y": 1194.34375
+				},
+				{
+					"x": 4976.1875,
+					"y": 1266.34375
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 5136.921875,
+					"y": 1122.34375
+				},
+				{
+					"x": 5136.921875,
+					"y": 1194.34375
+				}
+			]
+		},
+		"20": {
+			"type": "sum",
+			"id": "sum 3",
+			"const_id": 20,
+			"x": 4203.29977982248,
+			"y": 809.399466325527,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				1,
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 4248.296875,
+					"y": 854.390625
+				},
+				{
+					"x": 4248.296875,
+					"y": 926.390625
+				},
+				{
+					"x": 4248.296875,
+					"y": 998.390625
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 4409.03125,
+					"y": 854.390625
+				},
+				{
+					"x": 4409.03125,
+					"y": 926.390625
+				}
+			]
+		},
+		"21": {
+			"type": "sum",
+			"id": "sum 4",
+			"const_id": 21,
+			"x": 3508.9205709705725,
+			"y": 493.64926720285274,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				1,
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 3553.90625,
+					"y": 538.640625
+				},
+				{
+					"x": 3553.90625,
+					"y": 610.640625
+				},
+				{
+					"x": 3553.90625,
+					"y": 682.640625
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 3714.640625,
+					"y": 538.640625
+				},
+				{
+					"x": 3714.640625,
+					"y": 610.640625
+				}
+			]
+		},
+		"22": {
+			"type": "sum",
+			"id": "sum 5",
+			"const_id": 22,
+			"x": 2873.4099726716786,
+			"y": 189.05458558739673,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				1,
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 2918.40625,
+					"y": 234.046875
+				},
+				{
+					"x": 2918.40625,
+					"y": 306.046875
+				},
+				{
+					"x": 2918.40625,
+					"y": 378.046875
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 3079.140625,
+					"y": 234.046875
+				},
+				{
+					"x": 3079.140625,
+					"y": 306.046875
+				}
+			]
+		},
+		"23": {
+			"type": "sum",
+			"id": "sum 6",
+			"const_id": 23,
+			"x": 2143.5924295283485,
+			"y": -127.19968310804586,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				1,
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 2188.578125,
+					"y": -82.1875
+				},
+				{
+					"x": 2188.578125,
+					"y": -10.1875
+				},
+				{
+					"x": 2188.578125,
+					"y": 61.8125
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 2349.3125,
+					"y": -82.1875
+				},
+				{
+					"x": 2349.3125,
+					"y": -10.1875
+				}
+			]
+		},
+		"24": {
+			"type": "sum",
+			"id": "sum 7",
+			"const_id": 24,
+			"x": 1486.7567025667524,
+			"y": -398.8540527010181,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				1,
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1531.75,
+					"y": -353.84375
+				},
+				{
+					"x": 1531.75,
+					"y": -281.84375
+				},
+				{
+					"x": 1531.75,
+					"y": -209.84375
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1692.484375,
+					"y": -353.84375
+				},
+				{
+					"x": 1692.484375,
+					"y": -281.84375
+				}
+			]
+		},
+		"25": {
+			"type": "sum",
+			"id": "sum 8",
+			"const_id": 25,
+			"x": 801.5391203932934,
+			"y": -743.490052873524,
+			"inputs": [
+				"",
+				"",
+				""
+			],
+			"outputs": [
+				"",
+				""
+			],
+			"outputs_groups": [
+				1,
+				1
+			],
+			"inputs_groups": [
+				1,
+				1,
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 846.53125,
+					"y": -698.484375
+				},
+				{
+					"x": 846.53125,
+					"y": -626.484375
+				},
+				{
+					"x": 846.53125,
+					"y": -554.484375
+				}
+			],
+			"output_connectors_coordinates": [
+				{
+					"x": 1007.265625,
+					"y": -698.484375
+				},
+				{
+					"x": 1007.265625,
+					"y": -626.484375
+				}
+			]
+		},
+		"26": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 1",
+			"const_id": 26,
+			"x": 960.0428686525297,
+			"y": -1139.0701988519165,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1005.03125,
+					"y": -1094.0625
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"27": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 2",
+			"const_id": 27,
+			"x": 1127.998756462089,
+			"y": -673.9617178820332,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1172.984375,
+					"y": -628.953125
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"28": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 3",
+			"const_id": 28,
+			"x": 1838.581490159119,
+			"y": -329.4366883853239,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 1883.578125,
+					"y": -284.421875
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"29": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 4",
+			"const_id": 29,
+			"x": 2488.872169555015,
+			"y": -58.12333115449804,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 2533.859375,
+					"y": -13.109375
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"30": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 5",
+			"const_id": 30,
+			"x": 3199.454706113317,
+			"y": 260.5621338481662,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 3244.453125,
+					"y": 305.546875
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"31": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 6",
+			"const_id": 31,
+			"x": 3841.1323287703503,
+			"y": 570.6345421119676,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 3886.125,
+					"y": 615.625
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"32": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 7",
+			"const_id": 32,
+			"x": 4530.114851321204,
+			"y": 889.3200728275413,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 4575.109375,
+					"y": 934.3125
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"33": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 8",
+			"const_id": 33,
+			"x": 5249.310592472414,
+			"y": 1160.6334300583674,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 5294.296875,
+					"y": 1205.625
+				}
+			],
+			"output_connectors_coordinates": []
+		},
+		"34": {
+			"type": "OUTPUT",
+			"id": "OUTPUT 9",
+			"const_id": 34,
+			"x": 5990.039115110716,
+			"y": 1496.5452056774852,
+			"inputs": [
+				"x"
+			],
+			"outputs": [],
+			"outputs_groups": [],
+			"inputs_groups": [
+				1
+			],
+			"input_connectors_coordinates": [
+				{
+					"x": 6035.03125,
+					"y": 1541.53125
+				}
+			],
+			"output_connectors_coordinates": []
+		}
+	},
+	"wires": {
+		"0": {
+			"id": 0,
+			"from_block_const_id": "17",
+			"to_block_const_id": "1",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 5680.84375,
+				"y": -881.78125
+			},
+			"to_point": {
+				"x": 5711.390625,
+				"y": 1464.859375
+			}
+		},
+		"1": {
+			"id": 1,
+			"from_block_const_id": "9",
+			"to_block_const_id": "1",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 285.421875,
+				"y": 1652.90625
+			},
+			"to_point": {
+				"x": 5711.390625,
+				"y": 1536.859375
+			}
+		},
+		"2": {
+			"id": 2,
+			"from_block_const_id": "8",
+			"to_block_const_id": "19",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 287.25,
+				"y": 1308.703125
+			},
+			"to_point": {
+				"x": 4976.1875,
+				"y": 1194.34375
+			}
+		},
+		"3": {
+			"id": 3,
+			"from_block_const_id": "16",
+			"to_block_const_id": "19",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 4958.59375,
+				"y": -884.1875
+			},
+			"to_point": {
+				"x": 4976.1875,
+				"y": 1122.34375
+			}
+		},
+		"4": {
+			"id": 4,
+			"from_block_const_id": "18",
+			"to_block_const_id": "1",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 5719.828125,
+				"y": 1890.671875
+			},
+			"to_point": {
+				"x": 5711.390625,
+				"y": 1608.859375
+			}
+		},
+		"5": {
+			"id": 5,
+			"from_block_const_id": "1",
+			"to_block_const_id": "19",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 5872.125,
+				"y": 1464.859375
+			},
+			"to_point": {
+				"x": 4976.1875,
+				"y": 1266.34375
+			}
+		},
+		"7": {
+			"id": 7,
+			"from_block_const_id": "7",
+			"to_block_const_id": "20",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 266.796875,
+				"y": 1001.953125
+			},
+			"to_point": {
+				"x": 4248.296875,
+				"y": 926.390625
+			}
+		},
+		"8": {
+			"id": 8,
+			"from_block_const_id": "15",
+			"to_block_const_id": "20",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 4258.609375,
+				"y": -895.609375
+			},
+			"to_point": {
+				"x": 4248.296875,
+				"y": 854.390625
+			}
+		},
+		"9": {
+			"id": 9,
+			"from_block_const_id": "19",
+			"to_block_const_id": "20",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 5136.921875,
+				"y": 1122.34375
+			},
+			"to_point": {
+				"x": 4248.296875,
+				"y": 998.390625
+			}
+		},
+		"10": {
+			"id": 10,
+			"from_block_const_id": "6",
+			"to_block_const_id": "21",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 266.8125,
+				"y": 695.890625
+			},
+			"to_point": {
+				"x": 3553.90625,
+				"y": 610.640625
+			}
+		},
+		"11": {
+			"id": 11,
+			"from_block_const_id": "20",
+			"to_block_const_id": "21",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 4409.03125,
+				"y": 854.390625
+			},
+			"to_point": {
+				"x": 3553.90625,
+				"y": 682.640625
+			}
+		},
+		"12": {
+			"id": 12,
+			"from_block_const_id": "2",
+			"to_block_const_id": "25",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 290.34375,
+				"y": -615.15625
+			},
+			"to_point": {
+				"x": 846.53125,
+				"y": -626.484375
+			}
+		},
+		"13": {
+			"id": 13,
+			"from_block_const_id": "10",
+			"to_block_const_id": "25",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 848.203125,
+				"y": -878.65625
+			},
+			"to_point": {
+				"x": 846.53125,
+				"y": -698.484375
+			}
+		},
+		"14": {
+			"id": 14,
+			"from_block_const_id": "3",
+			"to_block_const_id": "24",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 280.84375,
+				"y": -279.859375
+			},
+			"to_point": {
+				"x": 1531.75,
+				"y": -281.84375
+			}
+		},
+		"15": {
+			"id": 15,
+			"from_block_const_id": "11",
+			"to_block_const_id": "24",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1519.21875,
+				"y": -898
+			},
+			"to_point": {
+				"x": 1531.75,
+				"y": -353.84375
+			}
+		},
+		"16": {
+			"id": 16,
+			"from_block_const_id": "12",
+			"to_block_const_id": "23",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 2204.796875,
+				"y": -875.34375
+			},
+			"to_point": {
+				"x": 2188.578125,
+				"y": -82.1875
+			}
+		},
+		"17": {
+			"id": 17,
+			"from_block_const_id": "4",
+			"to_block_const_id": "23",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 272.078125,
+				"y": 51.9375
+			},
+			"to_point": {
+				"x": 2188.578125,
+				"y": -10.1875
+			}
+		},
+		"18": {
+			"id": 18,
+			"from_block_const_id": "13",
+			"to_block_const_id": "22",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 2905.3125,
+				"y": -884.375
+			},
+			"to_point": {
+				"x": 2918.40625,
+				"y": 234.046875
+			}
+		},
+		"19": {
+			"id": 19,
+			"from_block_const_id": "5",
+			"to_block_const_id": "22",
+			"from_output_id": 0,
+			"to_input_id": 1,
+			"from_point": {
+				"x": 263.34375,
+				"y": 389.234375
+			},
+			"to_point": {
+				"x": 2918.40625,
+				"y": 306.046875
+			}
+		},
+		"20": {
+			"id": 20,
+			"from_block_const_id": "21",
+			"to_block_const_id": "22",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 3714.640625,
+				"y": 538.640625
+			},
+			"to_point": {
+				"x": 2918.40625,
+				"y": 378.046875
+			}
+		},
+		"21": {
+			"id": 21,
+			"from_block_const_id": "22",
+			"to_block_const_id": "23",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 3079.140625,
+				"y": 234.046875
+			},
+			"to_point": {
+				"x": 2188.578125,
+				"y": 61.8125
+			}
+		},
+		"22": {
+			"id": 22,
+			"from_block_const_id": "23",
+			"to_block_const_id": "24",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 2349.3125,
+				"y": -82.1875
+			},
+			"to_point": {
+				"x": 1531.75,
+				"y": -209.84375
+			}
+		},
+		"23": {
+			"id": 23,
+			"from_block_const_id": "24",
+			"to_block_const_id": "25",
+			"from_output_id": 0,
+			"to_input_id": 2,
+			"from_point": {
+				"x": 1692.484375,
+				"y": -353.84375
+			},
+			"to_point": {
+				"x": 846.53125,
+				"y": -554.484375
+			}
+		},
+		"24": {
+			"id": 24,
+			"from_block_const_id": "14",
+			"to_block_const_id": "21",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 3547.40625,
+				"y": -885.109375
+			},
+			"to_point": {
+				"x": 3553.90625,
+				"y": 538.640625
+			}
+		},
+		"25": {
+			"id": 25,
+			"from_block_const_id": "25",
+			"to_block_const_id": "26",
+			"from_output_id": 0,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1007.265625,
+				"y": -698.484375
+			},
+			"to_point": {
+				"x": 1005.03125,
+				"y": -1094.0625
+			}
+		},
+		"33": {
+			"id": 33,
+			"from_block_const_id": "25",
+			"to_block_const_id": "27",
+			"from_output_id": 1,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1007.265625,
+				"y": -626.484375
+			},
+			"to_point": {
+				"x": 1172.984375,
+				"y": -628.953125
+			}
+		},
+		"34": {
+			"id": 34,
+			"from_block_const_id": "1",
+			"to_block_const_id": "34",
+			"from_output_id": 1,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 5872.125,
+				"y": 1536.859375
+			},
+			"to_point": {
+				"x": 6035.03125,
+				"y": 1541.53125
+			}
+		},
+		"35": {
+			"id": 35,
+			"from_block_const_id": "19",
+			"to_block_const_id": "33",
+			"from_output_id": 1,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 5136.921875,
+				"y": 1194.34375
+			},
+			"to_point": {
+				"x": 5294.296875,
+				"y": 1205.625
+			}
+		},
+		"36": {
+			"id": 36,
+			"from_block_const_id": "20",
+			"to_block_const_id": "32",
+			"from_output_id": 1,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 4409.03125,
+				"y": 926.390625
+			},
+			"to_point": {
+				"x": 4575.109375,
+				"y": 934.3125
+			}
+		},
+		"37": {
+			"id": 37,
+			"from_block_const_id": "21",
+			"to_block_const_id": "31",
+			"from_output_id": 1,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 3714.640625,
+				"y": 610.640625
+			},
+			"to_point": {
+				"x": 3886.125,
+				"y": 615.625
+			}
+		},
+		"38": {
+			"id": 38,
+			"from_block_const_id": "22",
+			"to_block_const_id": "30",
+			"from_output_id": 1,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 3079.140625,
+				"y": 306.046875
+			},
+			"to_point": {
+				"x": 3244.453125,
+				"y": 305.546875
+			}
+		},
+		"39": {
+			"id": 39,
+			"from_block_const_id": "23",
+			"to_block_const_id": "29",
+			"from_output_id": 1,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 2349.3125,
+				"y": -10.1875
+			},
+			"to_point": {
+				"x": 2533.859375,
+				"y": -13.109375
+			}
+		},
+		"40": {
+			"id": 40,
+			"from_block_const_id": "24",
+			"to_block_const_id": "28",
+			"from_output_id": 1,
+			"to_input_id": 0,
+			"from_point": {
+				"x": 1692.484375,
+				"y": -281.84375
+			},
+			"to_point": {
+				"x": 1883.578125,
+				"y": -284.421875
+			}
+		}
+	},
+	"tests": [
+		[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0
+		],
+		[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1
+		],
+		[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1
+		],
+		[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0
+		],
+		[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0
+		],
+		[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0
+		],
+		[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			0
+		]
+	]
+}
