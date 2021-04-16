@@ -274,6 +274,8 @@ class BlocksArea extends React.Component {
   getSaveData() {
     return {
       'name': this.state.name,
+      'scale': this.state.scale,
+      'offset': this.state.offset,
       'custom_elements': this.state.custom_elements,
       'new_element': this.state.new_element,
       'inputs_number': this.state.inputs_number,
