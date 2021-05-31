@@ -20,7 +20,7 @@
 
   ![screenshot_tests](screenshot_tests.png)
 
-* Exporting schemes to format compatible with [compiler](https://notabug.org/mentalblood/logic_schemes_compiler)
+* Exporting schemes to format compatible with [compiler](https://github.com/MentalBlood/logic_schemes_compiler)
 
 ## Usage
 
