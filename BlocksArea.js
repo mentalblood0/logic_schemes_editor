@@ -145,7 +145,7 @@ class BlocksArea extends React.Component {
   componentDidMount() {
     this.state.event_listeners = [[this.inputs_number_ref.current, 'wheel', e => {
       e.preventDefault();
-      const delta = -e.deltaY / 100;
+      const delta = -Math.sign(e.deltaY);
       this.setState(state => {
         const new_number = state.new_element.inputs.length + delta;
         if (new_number < 1) return state;
@@ -155,7 +155,7 @@ class BlocksArea extends React.Component {
       });
     }], [this.outputs_number_ref.current, 'wheel', e => {
       e.preventDefault();
-      const delta = -e.deltaY / 100;
+      const delta = -Math.sign(e.deltaY);
       this.setState(state => {
         const new_number = numberOr(state.new_element.outputs.length, 1) + delta;
         if (new_number < 1) return state;
@@ -312,7 +312,6 @@ class BlocksArea extends React.Component {
   }
 
   getExportData() {
-    console.log('getExportData, state:', this.state);
     const blocks = this.state.blocks;
     const tests = this.state.tests;
     const unpacked_wires = [];
@@ -334,7 +333,6 @@ class BlocksArea extends React.Component {
 
         if (from_block_type == 'INPUT' && from_block.id.includes('-')) {
           const n = from_block.id.split(' ')[1];
-          console.log('n', n);
           const n_splited = n.split('-');
           const n_from = Number.parseInt(n_splited[0], 10);
           new_unpucked_wire.from = 'INPUT_' + (n_from + i) + '[1]';
@@ -581,7 +579,7 @@ class BlocksArea extends React.Component {
   }
 
   handleMouseWheel(e) {
-    const delta = 1 + -e.deltaY / 1000;
+    const delta = 1 + -Math.sign(e.deltaY) / 10;
     const mouse_x = e.clientX;
     const mouse_y = e.clientY;
     this.setState(state => {
@@ -593,12 +591,11 @@ class BlocksArea extends React.Component {
   }
 
   handleAddBlockButtonClick() {
-    console.log('handleAddBlockButtonClick');
     const name = this.state.new_element.type;
     this.setState(state => {
       this.state.custom_elements[name] = deepCopy(this.state.new_element);
       return state;
-    }, () => console.log('after handleAddBlockButtonClick', this.state.custom_elements));
+    });
   }
 
   clear() {
