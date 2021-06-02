@@ -339,7 +339,7 @@ class BlocksArea extends React.Component {
 	}
 
 	setLoadData(data) {
-		this.setState(data);
+		this.clear(undefined, () => this.setState(data));
 	}
 
 	load() {
@@ -657,14 +657,14 @@ class BlocksArea extends React.Component {
 		});
 	}
 
-	clear() {
+	clear(event, then) {
 		this.setState({
 			'blocks': {},
 			'wires': {},
 			'inputs_number': 0,
 			'outputs_number': 0,
 			'tests': []
-		});
+		}, () => then ? then() : undefined);
 	}
 
 	wireHere(block_const_id, type, index) {
