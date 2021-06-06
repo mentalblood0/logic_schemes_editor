@@ -206,7 +206,7 @@ class Block extends React.Component {
 		if (this.state.wireHere(this.state.const_id, type, i))
 			return;
 		e.stopPropagation();
-		const delta = -e.deltaY / 100;
+		const delta = -Math.sign(e.deltaY);
 		
 		const groups_variable_name = {
 			'INPUT': 'outputs_groups',
