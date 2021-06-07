@@ -184,7 +184,7 @@ class BlocksArea extends React.Component {
 			[this._ref.current, 'drop', e => e.preventDefault()]
 		];
 		for (const e_l of this.state.event_listeners)
-			e_l[0].addEventListener(e_l[1], e_l[2], (e_l[1] === 'wheel') ? {'passive': true} : undefined);
+			e_l[0].addEventListener(e_l[1], e_l[2]);
 	}
 
 	componentWillUnmount() {

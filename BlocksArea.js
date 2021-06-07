@@ -166,9 +166,7 @@ class BlocksArea extends React.Component {
     }], //fucking drag and drop
     [this._ref.current, 'drag', e => e.preventDefault()], [this._ref.current, 'dragstart', e => e.preventDefault()], [this._ref.current, 'dragend', e => e.preventDefault()], [this._ref.current, 'dragover', e => e.preventDefault()], [this._ref.current, 'dragenter', e => e.preventDefault()], [this._ref.current, 'dragleave', e => e.preventDefault()], [this._ref.current, 'drop', e => e.preventDefault()]];
 
-    for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2], e_l[1] === 'wheel' ? {
-      'passive': true
-    } : undefined);
+    for (const e_l of this.state.event_listeners) e_l[0].addEventListener(e_l[1], e_l[2]);
   }
 
   componentWillUnmount() {
