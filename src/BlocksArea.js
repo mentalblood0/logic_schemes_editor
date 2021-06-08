@@ -1,4 +1,4 @@
-'use strict'
+/** @jsx h */
 
 const sum = m => (m.reduce((a, b) => a + b, 0));
 
@@ -87,7 +87,7 @@ function deepCopy(o) {
 	return JSON.parse(JSON.stringify(o));
 }
 
-class BlocksArea extends React.Component {
+class BlocksArea extends preact.Component {
 	constructor(props) {
 		super(props);
 
@@ -136,10 +136,10 @@ class BlocksArea extends React.Component {
 		this.removeWires = this.removeWires.bind(this);
 		this.getTypeInfo = this.getTypeInfo.bind(this);
 
-		this._ref = React.createRef();
-		this.inputs_number_ref = React.createRef();
-		this.outputs_number_ref = React.createRef();
-		this.state.blocks_wrapper_ref = React.createRef();
+		this._ref = preact.createRef();
+		this.inputs_number_ref = preact.createRef();
+		this.outputs_number_ref = preact.createRef();
+		this.state.blocks_wrapper_ref = preact.createRef();
 	}
 
 	componentDidMount() {

@@ -1,4 +1,4 @@
-'use strict';
+/** @jsx h */
 
 function getElementCenter(e) {
 	const rect = e.getBoundingClientRect();
@@ -17,7 +17,7 @@ function getElementRelativeCenter(e) {
 	};
 }
 
-class Block extends React.Component {
+class Block extends preact.Component {
 	constructor(props) {
 		super(props);
 
@@ -57,9 +57,9 @@ class Block extends React.Component {
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
 		this.handleMouseDownOnInputOutput = this.handleMouseDownOnInputOutput.bind(this);
 
-		this._ref = React.createRef();
-		this.input_connectors_refs = Array(Object.keys(this.state.inputs).length).fill(undefined).map(e => React.createRef());
-		this.output_connectors_refs = Array(this.state.outputs.length).fill(undefined).map(e => React.createRef());
+		this._ref = preact.createRef();
+		this.input_connectors_refs = Array(Object.keys(this.state.inputs).length).fill(undefined).map(e => preact.createRef());
+		this.output_connectors_refs = Array(this.state.outputs.length).fill(undefined).map(e => preact.createRef());
 	}
 
 	getInfo(state) {

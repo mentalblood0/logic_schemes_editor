@@ -1,12 +1,13 @@
-'use strict';
+"use strict";
 
+/** @jsx h */
 function filledArray(l, n) {
   return Array.from({
     length: l
   }, (_, i) => n);
 }
 
-class TestsEditor extends React.Component {
+class TestsEditor extends preact.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,24 +26,24 @@ class TestsEditor extends React.Component {
     const inputs = this.state.inputs;
     const outputs = this.state.outputs;
     const tests = this.state.tests;
-    if (inputs.length == 0 || outputs.length == 0) return /*#__PURE__*/React.createElement("div", {
+    if (inputs.length == 0 || outputs.length == 0) return h("div", {
       className: "testsEditor"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "noInputsOutputsMessage"
     }, "There should be inputs and outputs to add tests"));
-    return /*#__PURE__*/React.createElement("div", {
+    return h("div", {
       className: "testsEditor"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "tables"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "testsTableWrapper inputs"
-    }, /*#__PURE__*/React.createElement("table", {
+    }, h("table", {
       className: "testsTable inputs"
-    }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null), inputs.map((name, i) => /*#__PURE__*/React.createElement("td", {
+    }, h("tbody", null, h("tr", null, h("td", null), inputs.map((name, i) => h("td", {
       key: i
-    }, name))), tests.map((t, test_i) => /*#__PURE__*/React.createElement("tr", {
+    }, name))), tests.map((t, test_i) => h("tr", {
       key: test_i
-    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+    }, h("td", null, h("div", {
       className: "removeRowButton animated unselectable",
       onClick: e => {
         const tests_length = this.state.tests.length;
@@ -52,7 +53,7 @@ class TestsEditor extends React.Component {
           return state;
         });
       }
-    }, "-")), t.slice(0, inputs.length).map((v, input_i) => /*#__PURE__*/React.createElement("td", {
+    }, "-")), t.slice(0, inputs.length).map((v, input_i) => h("td", {
       key: input_i,
       className: 'checkbox ' + (tests[test_i][input_i] ? 'checked' : 'unchecked'),
       onClick: e => {
@@ -61,15 +62,15 @@ class TestsEditor extends React.Component {
           return state;
         });
       }
-    }))))))), /*#__PURE__*/React.createElement("div", {
+    }))))))), h("div", {
       className: "testsTableWrapper outputs"
-    }, /*#__PURE__*/React.createElement("table", {
+    }, h("table", {
       className: "testsTable outputs"
-    }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, outputs.map((name, i) => /*#__PURE__*/React.createElement("td", {
+    }, h("tbody", null, h("tr", null, outputs.map((name, i) => h("td", {
       key: i
-    }, name))), tests.map((t, test_i) => /*#__PURE__*/React.createElement("tr", {
+    }, name))), tests.map((t, test_i) => h("tr", {
       key: test_i
-    }, t.slice(inputs.length, t.length).map((v, output_i) => /*#__PURE__*/React.createElement("td", {
+    }, t.slice(inputs.length, t.length).map((v, output_i) => h("td", {
       key: output_i,
       className: 'checkbox ' + (tests[test_i][inputs.length + output_i] ? 'checked' : 'unchecked'),
       onClick: e => {
@@ -78,7 +79,7 @@ class TestsEditor extends React.Component {
           return state;
         });
       }
-    })))))))), /*#__PURE__*/React.createElement("div", {
+    })))))))), h("div", {
       className: "addRowButton animated unselectable",
       onClick: e => {
         const tests_length = this.state.tests.length;

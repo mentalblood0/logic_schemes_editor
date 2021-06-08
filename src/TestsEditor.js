@@ -1,10 +1,10 @@
-'use strict';
+/** @jsx h */
 
 function filledArray(l, n) {
 	return Array.from({length: l}, (_, i) => n);
 }
 
-class TestsEditor extends React.Component {
+class TestsEditor extends preact.Component {
 	constructor(props) {
 		super(props);
 

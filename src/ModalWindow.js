@@ -1,4 +1,4 @@
-'use strict';
+/** @jsx h */
 
 function ModalWindow(props) {
 	return (

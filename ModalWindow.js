@@ -1,12 +1,13 @@
-'use strict';
+"use strict";
 
+/** @jsx h */
 function ModalWindow(props) {
-  return /*#__PURE__*/React.createElement("div", {
+  return h("div", {
     className: props.className
-  }, /*#__PURE__*/React.createElement("div", {
+  }, h("div", {
     className: "modalWindowOverlay",
     onClick: props.close_function
-  }), /*#__PURE__*/React.createElement("div", {
+  }), h("div", {
     className: "modalWindow"
   }, props.children));
 }

@@ -1,10 +1,10 @@
-'use strict';
+/** @jsx h */
 
 function distance(a, b) {
 	return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 }
 
-class Wire extends React.Component {
+class Wire extends preact.Component {
 	constructor(props) {
 		super(props);
 

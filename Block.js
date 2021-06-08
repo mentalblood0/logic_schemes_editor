@@ -1,5 +1,6 @@
-'use strict';
+"use strict";
 
+/** @jsx h */
 function getElementCenter(e) {
   const rect = e.getBoundingClientRect();
   const parent_rect = e.parentElement.parentElement.parentElement.parentElement.getBoundingClientRect();
@@ -17,7 +18,7 @@ function getElementRelativeCenter(e) {
   };
 }
 
-class Block extends React.Component {
+class Block extends preact.Component {
   constructor(props) {
     super(props);
     const type_info = props.getTypeInfo(props.type);
@@ -53,9 +54,9 @@ class Block extends React.Component {
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleMouseDownOnInputOutput = this.handleMouseDownOnInputOutput.bind(this);
-    this._ref = React.createRef();
-    this.input_connectors_refs = Array(Object.keys(this.state.inputs).length).fill(undefined).map(e => React.createRef());
-    this.output_connectors_refs = Array(this.state.outputs.length).fill(undefined).map(e => React.createRef());
+    this._ref = preact.createRef();
+    this.input_connectors_refs = Array(Object.keys(this.state.inputs).length).fill(undefined).map(e => preact.createRef());
+    this.output_connectors_refs = Array(this.state.outputs.length).fill(undefined).map(e => preact.createRef());
   }
 
   getInfo(state) {
@@ -209,7 +210,7 @@ class Block extends React.Component {
 
     const visible_name = name;
     const max_connectors = Math.max(this.state.inputs.length, this.state.outputs.length);
-    return /*#__PURE__*/React.createElement("div", {
+    return h("div", {
       ref: this._ref,
       className: "block",
       onMouseUp: e => e.button == 0 ? this.handleMouseUp(e) : null,
@@ -220,14 +221,14 @@ class Block extends React.Component {
         'top': y,
         'zIndex': this.state.dragging ? 101 : 0
       }
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "content",
       onMouseDown: e => {
         if (e.target.classList.contains('content') || e.target.classList.contains('name')) this.handleMouseDown(e);
       }
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "inputs"
-    }, this.state.inputs_groups.map((input_group, i) => /*#__PURE__*/React.createElement("div", {
+    }, this.state.inputs_groups.map((input_group, i) => h("div", {
       ref: this.input_connectors_refs[i],
       key: i,
       className: "input",
@@ -238,13 +239,13 @@ class Block extends React.Component {
         'to_input_id': i
       }) : null,
       onWheel: e => this.handleMouseWheelOnInputOutput(i, e)
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "groupSize unselectable"
-    }, input_group)))), /*#__PURE__*/React.createElement("div", {
+    }, input_group)))), h("div", {
       className: "name unselectable"
-    }, visible_name), /*#__PURE__*/React.createElement("div", {
+    }, visible_name), h("div", {
       className: "outputs"
-    }, this.state.outputs_groups.map((output_group, i) => /*#__PURE__*/React.createElement("div", {
+    }, this.state.outputs_groups.map((output_group, i) => h("div", {
       ref: this.output_connectors_refs[i],
       key: i,
       className: "output",
@@ -255,7 +256,7 @@ class Block extends React.Component {
         'from_output_id': i
       }) : null,
       onWheel: e => this.handleMouseWheelOnInputOutput(i, e)
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "groupSize unselectable"
     }, output_group))))));
   }

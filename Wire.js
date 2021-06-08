@@ -1,10 +1,11 @@
-'use strict';
+"use strict";
 
+/** @jsx h */
 function distance(a, b) {
   return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 }
 
-class Wire extends React.Component {
+class Wire extends preact.Component {
   constructor(props) {
     super(props);
     const from_point = props.from_point;
@@ -22,7 +23,7 @@ class Wire extends React.Component {
     const to_point = this.state.to_point;
     const length = this.state.length;
     const angle = this.state.angle;
-    return /*#__PURE__*/React.createElement("div", {
+    return h("div", {
       className: "wire",
       style: {
         'left': 'calc(' + from_point.x + 'px' + ' + ' + '0vmin)',
@@ -43,7 +44,7 @@ function Wire_f(props) {
   const to_point = props.to_point;
   const length = distance(from_point, to_point);
   const angle = Math.atan2(to_point.y - from_point.y, to_point.x - from_point.x);
-  return /*#__PURE__*/React.createElement("div", {
+  return h("div", {
     className: "wire",
     style: {
       'left': 'calc(' + from_point.x + 'px' + ' + ' + '0vmin)',

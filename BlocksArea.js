@@ -1,5 +1,6 @@
-'use strict';
+"use strict";
 
+/** @jsx h */
 const sum = m => m.reduce((a, b) => a + b, 0);
 
 const default_elements = {
@@ -89,7 +90,7 @@ function deepCopy(o) {
   return JSON.parse(JSON.stringify(o));
 }
 
-class BlocksArea extends React.Component {
+class BlocksArea extends preact.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -136,10 +137,10 @@ class BlocksArea extends React.Component {
     this.handleMouseWheel = this.handleMouseWheel.bind(this);
     this.removeWires = this.removeWires.bind(this);
     this.getTypeInfo = this.getTypeInfo.bind(this);
-    this._ref = React.createRef();
-    this.inputs_number_ref = React.createRef();
-    this.outputs_number_ref = React.createRef();
-    this.state.blocks_wrapper_ref = React.createRef();
+    this._ref = preact.createRef();
+    this.inputs_number_ref = preact.createRef();
+    this.outputs_number_ref = preact.createRef();
+    this.state.blocks_wrapper_ref = preact.createRef();
   }
 
   componentDidMount() {
@@ -621,54 +622,54 @@ class BlocksArea extends React.Component {
     const outputs_number = this.state.outputs_number;
     const tests_number = this.state.tests.length;
     const max_tests_number = 2 ** inputs_number;
-    return /*#__PURE__*/React.createElement("div", {
+    return h("div", {
       className: "blocksArea",
       ref: this._ref
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "sidePanel",
       style: {
         'zIndex': 10,
         'display': this.state.dragging_block ? 'none' : 'block'
       }
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "controls"
-    }, /*#__PURE__*/React.createElement("input", {
+    }, h("input", {
       type: "text",
       className: "schemeName unselectable",
       value: this.state.name,
       onChange: e => this.setState({
         'name': e.target.value
       })
-    }), /*#__PURE__*/React.createElement("button", {
+    }), h("button", {
       className: "exportButton animated animated-lightblue unselectable",
       onClick: this.export
-    }, "export"), /*#__PURE__*/React.createElement("button", {
+    }, "export"), h("button", {
       className: "saveButton animated animated-green unselectable",
       onClick: this.save
-    }, "save"), /*#__PURE__*/React.createElement("button", {
+    }, "save"), h("button", {
       className: "loadButton animated animated-blue unselectable",
       onClick: this.load
-    }, "load"), /*#__PURE__*/React.createElement("button", {
+    }, "load"), h("button", {
       className: "clearButton animated animated-red unselectable",
       onClick: this.clear
-    }, "clear")), /*#__PURE__*/React.createElement("div", {
+    }, "clear")), h("div", {
       className: "tests"
-    }, inputs_number > 0 && outputs_number > 0 ? /*#__PURE__*/React.createElement("div", {
+    }, inputs_number > 0 && outputs_number > 0 ? h("div", {
       className: "coverageInfo unselectable",
       id: tests_number + ' ' + max_tests_number
-    }, "Coverage:", /*#__PURE__*/React.createElement("br", null), tests_number, "/", max_tests_number, " (", Math.floor(tests_number / max_tests_number * 100), "%)") : null, /*#__PURE__*/React.createElement("button", {
+    }, "Coverage:", h("br", null), tests_number, "/", max_tests_number, " (", Math.floor(tests_number / max_tests_number * 100), "%)") : null, h("button", {
       className: "editTestsButton animated animated-lightblue unselectable",
       onClick: () => this.setState({
         'tests_editor_opened': true
       })
-    }, "edit tests")), /*#__PURE__*/React.createElement("div", {
+    }, "edit tests")), h("div", {
       className: "newBlockConfiguration"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "block blockToAdd",
       onMouseDown: e => this.handleMouseDown(e, this.state.new_element.type, this.state.new_element)
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "content"
-    }, /*#__PURE__*/React.createElement("input", {
+    }, h("input", {
       type: "text",
       className: "name",
       value: this.state.new_element.type,
@@ -677,11 +678,11 @@ class BlocksArea extends React.Component {
         return state;
       }),
       onMouseDown: e => e.stopPropagation()
-    }))), /*#__PURE__*/React.createElement("div", {
+    }))), h("div", {
       className: "inputsOutputsNumber"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "inputsNumber"
-    }, /*#__PURE__*/React.createElement("input", {
+    }, h("input", {
       type: "number",
       min: "1",
       ref: this.inputs_number_ref,
@@ -692,9 +693,9 @@ class BlocksArea extends React.Component {
         state.new_element.inputs_groups = cutToSum(state.new_element.inputs_groups, new_length);
         return state;
       })
-    })), /*#__PURE__*/React.createElement("div", {
+    })), h("div", {
       className: "outputsNumber"
-    }, /*#__PURE__*/React.createElement("input", {
+    }, h("input", {
       type: "number",
       min: "1",
       ref: this.outputs_number_ref,
@@ -705,11 +706,11 @@ class BlocksArea extends React.Component {
         state.new_element.outputs_groups = cutToSum(state.new_element.outputs_groups, new_length);
         return state;
       })
-    }))), /*#__PURE__*/React.createElement("div", {
+    }))), h("div", {
       className: "inputsOutputsGroups"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "inputsGroups"
-    }, this.state.new_element.inputs_groups.map((g, i) => /*#__PURE__*/React.createElement("div", {
+    }, this.state.new_element.inputs_groups.map((g, i) => h("div", {
       key: i,
       className: "inputGroup unselectable",
       onMouseDown: e => {
@@ -721,9 +722,9 @@ class BlocksArea extends React.Component {
         });
       },
       onContextMenu: e => e.preventDefault()
-    }, g))), /*#__PURE__*/React.createElement("div", {
+    }, g))), h("div", {
       className: "outputsGroups"
-    }, this.state.new_element.outputs_groups.map((g, i) => /*#__PURE__*/React.createElement("div", {
+    }, this.state.new_element.outputs_groups.map((g, i) => h("div", {
       key: i,
       className: "outputGroup unselectable",
       onMouseDown: e => {
@@ -735,32 +736,32 @@ class BlocksArea extends React.Component {
         });
       },
       onContextMenu: e => e.preventDefault()
-    }, g)))), /*#__PURE__*/React.createElement("button", {
+    }, g)))), h("button", {
       className: "addBlockButton animated animated-green unselectable",
       onClick: this.handleAddBlockButtonClick
-    }, "+")), /*#__PURE__*/React.createElement("div", {
+    }, "+")), h("div", {
       className: "blocks"
-    }, Object.entries(this.state.custom_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
+    }, Object.entries(this.state.custom_elements).map((element_type_and_element, i) => h("div", {
       key: element_type_and_element[0],
       className: "block",
       onMouseDown: e => this.handleMouseDown(e, element_type_and_element[0], element_type_and_element[1])
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "content"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "name unselectable"
-    }, element_type_and_element[0])))), Object.entries(default_elements).map((element_type_and_element, i) => /*#__PURE__*/React.createElement("div", {
+    }, element_type_and_element[0])))), Object.entries(default_elements).map((element_type_and_element, i) => h("div", {
       key: element_type_and_element[0],
       className: "block",
       onMouseDown: e => this.handleMouseDown(e, element_type_and_element[0], element_type_and_element[1])
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "content"
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "name unselectable"
-    }, element_type_and_element[0])))))), this.state.tests_editor_opened ? /*#__PURE__*/React.createElement(ModalWindow, {
+    }, element_type_and_element[0])))))), this.state.tests_editor_opened ? h(ModalWindow, {
       close_function: () => this.setState({
         'tests_editor_opened': false
       })
-    }, /*#__PURE__*/React.createElement(TestsEditor, {
+    }, h(TestsEditor, {
       inputs: Array.from({
         length: inputs_number
       }, (_, i) => i + 1),
@@ -771,14 +772,14 @@ class BlocksArea extends React.Component {
       onUnmount: tests => this.setState({
         'tests': tests
       })
-    })) : null, /*#__PURE__*/React.createElement("div", {
+    })) : null, h("div", {
       className: "schemeArea",
       onWheel: this.handleMouseWheel,
       onMouseDown: this.handleMouseDownOnSchemeArea,
       onMouseMove: this.handleMouseMove,
       onMouseUp: this.handleMouseUp,
       onContextMenu: e => e.preventDefault()
-    }, /*#__PURE__*/React.createElement("div", {
+    }, h("div", {
       className: "blocksWrapper",
       ref: this.state.blocks_wrapper_ref,
       style: {
@@ -786,7 +787,7 @@ class BlocksArea extends React.Component {
         'top': offset.y,
         'transform': 'scale(' + scale + ')'
       }
-    }, Object.entries(this.state.blocks).map((block_id_and_block, i) => /*#__PURE__*/React.createElement(Block, {
+    }, Object.entries(this.state.blocks).map((block_id_and_block, i) => h(Block, {
       key: block_id_and_block[1].type == 'INPUT' || block_id_and_block[1].type == 'OUTPUT' ? block_id_and_block[0] + ' ' + block_id_and_block[1].id : block_id_and_block[0],
       const_id: block_id_and_block[1].const_id,
       id: block_id_and_block[1].id,
@@ -811,12 +812,12 @@ class BlocksArea extends React.Component {
       updateInputsOutputsNames: this.updateInputsOutputsNames.bind(this),
       wireHere: this.wireHere.bind(this),
       getTypeInfo: this.getTypeInfo.bind(this)
-    })), Object.values(this.state.wires).map(wire => /*#__PURE__*/React.createElement(Wire, {
+    })), Object.values(this.state.wires).map(wire => h(Wire, {
       key: wire.from_point.x + ' ' + wire.from_point.y + ' ' + wire.to_point.x + ' ' + wire.to_point.y,
       from_point: wire.from_point,
       to_point: wire.to_point,
       scale: scale
-    })), this.state.adding_wire ? /*#__PURE__*/React.createElement(Wire_f, {
+    })), this.state.adding_wire ? h(Wire_f, {
       from_point: scalePoint(this.state.adding_wire_info.from_point, 1 / scale),
       to_point: scalePoint(this.state.adding_wire_info.to_point, 1 / scale),
       scale: scale
