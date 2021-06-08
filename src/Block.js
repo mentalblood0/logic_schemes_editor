@@ -19,7 +19,7 @@ function getElementRelativeCenter(e) {
 
 class Block extends preact.Component {
 	constructor(props) {
-		super(props);
+		super();
 
 		const type_info = props.getTypeInfo(props.type);
 

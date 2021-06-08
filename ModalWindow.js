@@ -1,13 +1,1 @@
-"use strict";
-
-/** @jsx h */
-function ModalWindow(props) {
-  return h("div", {
-    className: props.className
-  }, h("div", {
-    className: "modalWindowOverlay",
-    onClick: props.close_function
-  }), h("div", {
-    className: "modalWindow"
-  }, props.children));
-}
+"use strict";function ModalWindow(a){return h("div",{className:a.className},h("div",{className:"modalWindowOverlay",onClick:a.close_function}),h("div",{className:"modalWindow"},a.children))}

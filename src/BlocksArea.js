@@ -88,8 +88,8 @@ function deepCopy(o) {
 }
 
 class BlocksArea extends preact.Component {
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this.state = {
 			'name': 'test',
@@ -899,7 +899,7 @@ class BlocksArea extends preact.Component {
 					)
 				}
 				{
-					this.state.adding_wire ?
+					this.state.adding_wire_info ?
 					<Wire_f
 						from_point={scalePoint(this.state.adding_wire_info.from_point, 1 / scale)}
 						to_point={scalePoint(this.state.adding_wire_info.to_point, 1 / scale)}

@@ -1,8 +1,1 @@
-"use strict";
-
-/** @jsx h */
-const {
-  h
-} = preact;
-const rootElement = document.getElementById('root');
-preact.render(h(BlocksArea, null), rootElement);
+"use strict";const{h:h}=preact,rootElement=document.getElementById("root");preact.render(h(BlocksArea,null),rootElement);
