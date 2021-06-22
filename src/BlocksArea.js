@@ -514,8 +514,10 @@ class BlocksArea extends preact.Component {
 	}
 
 	handleMouseUp() {
+		console.log('mouse up')
 		this.setState({
 			'adding_wire': false,
+			'adding_wire_info': undefined,
 			'dragging_block': false,
 			'dragging_scheme': false,
 			'dragging_scheme_from_point': undefined
