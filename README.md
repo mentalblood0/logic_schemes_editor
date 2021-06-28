@@ -1,5 +1,7 @@
 # Logic schemes editor
 
+[![forthebadge](https://forthebadge.com/images/badges/contains-tasty-spaghetti-code.svg)](https://forthebadge.com)
+
 ## Features
 
 * Easy blocks and wires adding (left mouse button)
