@@ -4,25 +4,25 @@
 
 ## Features
 
-* Easy blocks and wires adding (left mouse button)
+- Easy blocks and wires adding (left mouse button)
 
-* Blocks and wires removing (right mouse button on block or input/output)
+- Blocks and wires removing (right mouse button on block or input/output)
 
-* Custom blocks creating
+- Custom blocks creating
 
-* Custom blocks inputs/outputs grouping
+- Custom blocks inputs/outputs grouping
 
   ![screenshot_grouping](screenshot_grouping.png)
 
-* Workspace dragging and scaling (mouse wheel)
+- Workspace dragging and scaling (mouse wheel)
 
-* Saving / loading schemes
+- Saving / loading schemes
 
-* Easily adding and editing tests
+- Easily adding and editing tests
 
   ![screenshot_tests](screenshot_tests.png)
 
-* Exporting schemes to format compatible with [compiler](https://github.com/MentalBlood/logic_schemes_compiler)
+- Exporting schemes to format compatible with [compiler](https://codeberg.org/mentalblood/logic_schemes_compiler)
 
 ## Usage
 
